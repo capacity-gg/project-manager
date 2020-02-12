@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h1 class="project-title">Project Name</h1>
-    <div class="event-toolbar">
+    <div id="event-toolbar" class="event-toolbar">
       <div 
         class='fc-event' 
         v-for="event in eventsUnique" 
@@ -66,7 +66,23 @@ export default {
       ]
     }
   },
-  methods: {}
+  mounted() {
+    this.setupDraggable();
+  },
+  methods: {
+    setupDraggable() {
+      new Draggable(document.getElementById("event-toolbar"), {
+        itemSelector: ".fc-event",
+        eventData: function(eventEl) {
+          let event = {
+            title: eventEl.innerText
+          };
+          console.log(event);
+          return event;
+        }
+      });
+    }
+  }
 }
 </script>
 
