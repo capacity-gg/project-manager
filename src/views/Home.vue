@@ -1,33 +1,39 @@
 <template>
   <div class="home">
     <h1 class="project-title">Project Name</h1>
+    <div class="event-toolbar">
+      <div 
+        class='fc-event' 
+        v-for="event in eventsUnique" 
+        :key="event.title"
+      >{{ event.title }}</div>
+    </div>
     <FullCalendar 
       defaultView="dayGridWeek" 
       :titleFormat="title"
       :header="calendarHeaders"
+      :columnHeaderFormat="column"
       :plugins="calendarPlugins"
       :editable="true"
-      :weekends="true"
-      :dragScroll="true"
       :droppable="true"
-      :events="events"
-      :columnHeader="true"
-      :columnHeaderFormat="column"
+      :events="eventsScheduled"
     />
   </div>
 </template>
 
 <script>
+
 //import HelloWorld from '@/components/HelloWorld'
 import FullCalendar from '@fullcalendar/vue'
 import momentPlugin from '@fullcalendar/moment';
 import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin/*, { Draggable }*/ from '@fullcalendar/interaction';
+import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 
 export default {
   components: {
     //HelloWorld,
-    FullCalendar
+    FullCalendar,
+    Draggable
   },
   data: function () {
     return {
@@ -43,12 +49,20 @@ export default {
         interactionPlugin,
         momentPlugin
       ],
-      events: [
+      eventsScheduled: [
         { title: 'Dan', date: '2020-02-10' },
         { title: 'Jamie', date: '2020-02-11' },
         { title: 'Dan', date: '2020-02-14' },
         { title: 'Jamie', date: '2020-02-14' },
         { title: 'Melissa', date: '2020-02-14' }
+      ],
+      eventsUnique: [
+        { title: 'Melissa' },
+        { title: 'Dan' },
+        { title: 'Jamie' },
+        { title: 'Daryl' },
+        { title: 'Benji' },
+        { title: 'Ellerey' }
       ]
     }
   },
@@ -69,12 +83,30 @@ export default {
   text-align: left;
 }
 
+.event-toolbar {
+  background: #333;
+  height: 56px;
+  margin: 10px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px;
+  position: relative;
+  white-space: nowrap;
+  width: 100%;
+
+  .fc-event {
+    display: inline-block;
+    margin: 0 10px 0 0;
+    width: 200px;
+  }
+}
+
 .fc-toolbar.fc-header-toolbar {
   position: absolute;
   right: 10px;
+  text-transform: uppercase;
   top: 10px;
   width: 400px;
-  text-transform: uppercase;
 }
 
 .fc-button {
