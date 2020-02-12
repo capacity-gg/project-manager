@@ -17,6 +17,7 @@
       :editable="true"
       :droppable="true"
       :events="eventsScheduled"
+      :height="height"
     />
   </div>
 </template>
@@ -35,9 +36,10 @@ export default {
     FullCalendar,
     Draggable
   },
-  data: function () {
+  data: function() {
     return {
       title: '{{MMM D}}',
+      height: 'auto',
       column: '{{D}}',
       calendarHeaders: {
         left: 'prev',
@@ -90,6 +92,16 @@ export default {
 
 @import '~@fullcalendar/core/main.css';
 @import '~@fullcalendar/daygrid/main.css';
+
+.home {
+  overflow: hidden;
+  padding: 60px 0 0;
+  position: relative;
+}
+
+.fc-view-container {
+  overflow: hidden;
+}
 
 .project-title {
   left: 10px;
