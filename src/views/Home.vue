@@ -6,7 +6,10 @@
         class='fc-event' 
         v-for="event in eventsUnique" 
         :key="event.title"
-      >{{ event.title }}</div>
+      >
+        <span class="fc-event-name">{{ event.title }}</span>
+        <span class="fc-event-count">0</span>
+      </div>
     </div>
     <FullCalendar 
       defaultView="dayGridWeek" 
@@ -32,9 +35,7 @@ import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 
 export default {
   components: {
-    //HelloWorld,
-    FullCalendar,
-    Draggable
+    FullCalendar
   },
   data: function() {
     return {
@@ -76,10 +77,12 @@ export default {
       new Draggable(document.getElementById("event-toolbar"), {
         itemSelector: ".fc-event",
         eventData: function(eventEl) {
+          var elements = eventEl.getElementsByClassName("fc-event-name");
+          var title = (elements.length > 0) ? elements[0].innerText : "";
+          
           let event = {
-            title: eventEl.innerText
+            title: title
           };
-          console.log(event);
           return event;
         }
       });
@@ -121,13 +124,32 @@ export default {
   position: relative;
   white-space: nowrap;
   width: 100%;
+}
 
-  .fc-event {
+.fc-dragging.fc-event,
+.event-toolbar .fc-event {
     display: inline-block;
     margin: 0 10px 0 0;
     width: 200px;
+
+    span {
+      display: inline-block;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      padding: 0 10px;
+    }
+
+    .fc-event-name {
+      text-align: left;
+      width: calc(75% - 20px);
+    }
+
+    .fc-event-count {
+      text-align: right;
+      width: calc(25% - 20px);
+    }
   }
-}
 
 .fc-toolbar.fc-header-toolbar {
   position: absolute;
