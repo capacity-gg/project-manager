@@ -141,19 +141,55 @@ export default {
   width: 100%;
 }
 
+.fc-button-primary,
+.fc-event {
+  span {
+    color: #fff;
+    display: inline-block;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    padding: 0 10px;
+  }
+}
+.fc-button-primary,
+.fc-button {
+  border-radius: 50%;
+  height: 40px;
+  padding: 0;
+  width: 40px;
+
+  span.fc-icon {
+    font-size: 32px;
+    line-height: 32px;
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+}
+
+.fc-button-primary,
+.fc-button,
+.fc-event {
+  background: #3788d8;
+  border-color: #3788d8;
+
+  &:focus,
+  &:active,
+  &:hover {
+    background-color: #1b446c;
+    border-color: #1b446c;
+    box-shadow: none;
+    cursor: pointer;
+  }
+}
+
 .fc-dragging.fc-event,
 .event-toolbar .fc-event {
     display: inline-block;
     margin: 0 10px 0 0;
     width: 200px;
-
-    span {
-      display: inline-block;
-      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      padding: 0 10px;
-    }
 
     .fc-event-name {
       text-align: left;
@@ -172,11 +208,6 @@ export default {
   text-transform: uppercase;
   top: 10px;
   width: 400px;
-}
-
-.fc-button {
-  background: #3788d8;
-  border-color: #3788d8;
 }
 
 /*
