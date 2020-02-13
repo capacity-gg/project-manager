@@ -8,7 +8,7 @@
         :key="event.title"
       >
         <span class="fc-event-name">{{ event.title }}</span>
-        <span class="fc-event-count">0</span>
+        <span class="fc-event-count">{{ event.count }}</span>
       </div>
     </div>
     <FullCalendar 
@@ -60,17 +60,21 @@ export default {
         { title: 'Melissa', date: '2020-02-14' }
       ],
       eventsUnique: [
-        { title: 'Melissa' },
-        { title: 'Dan' },
-        { title: 'Jamie' },
-        { title: 'Daryl' },
-        { title: 'Benji' },
-        { title: 'Ellerey' }
+        { title: 'Melissa', count: '0' },
+        { title: 'Dan', count: '0' },
+        { title: 'Jamie', count: '0' },
+        { title: 'Daryl', count: '0' },
+        { title: 'Benji', count: '0' },
+        { title: 'Ellerey', count: '0' }
       ]
     }
   },
   mounted() {
-    this.setupDraggable();
+    var self = this;
+
+    self.setupDraggable();
+
+    self.calculateCount();
   },
   methods: {
     setupDraggable() {
@@ -79,13 +83,24 @@ export default {
         eventData: function(eventEl) {
           var elements = eventEl.getElementsByClassName("fc-event-name");
           var title = (elements.length > 0) ? elements[0].innerText : "";
-          
+
           let event = {
             title: title
           };
           return event;
         }
       });
+    },
+    calculateCount() {
+      var self = this;
+
+      for (var x = 0; x < self.eventsUnique.length; x++) {
+        for (var y = 0; y < self.eventsScheduled.length; y++) {
+          if (self.eventsUnique[x].title == self.eventsScheduled[y].title) {
+            self.eventsUnique[x].count++;
+          }
+        }
+      }
     }
   }
 }
