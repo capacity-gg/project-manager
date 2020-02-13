@@ -21,6 +21,7 @@
       :droppable="true"
       :events="eventsScheduled"
       :height="height"
+      @drop="handleDrop"
     />
   </div>
 </template>
@@ -95,12 +96,30 @@ export default {
       var self = this;
 
       for (var x = 0; x < self.eventsUnique.length; x++) {
+        self.eventsUnique[x].count = 0;
+      }
+
+      for (var x = 0; x < self.eventsUnique.length; x++) {
         for (var y = 0; y < self.eventsScheduled.length; y++) {
           if (self.eventsUnique[x].title == self.eventsScheduled[y].title) {
             self.eventsUnique[x].count++;
           }
         }
       }
+    },
+    handleDrop(dropInfo) {
+      var self = this;
+
+      var scheduledEvent = {
+        title: dropInfo.draggedEl.firstElementChild.textContent,
+        date: dropInfo.dateStr
+      };
+
+      self.eventsScheduled.push(scheduledEvent);
+
+      self.$nextTick(() => {
+        this.calculateCount();
+      });
     }
   }
 }
