@@ -21,7 +21,8 @@
       :droppable="true"
       :events="eventsScheduled"
       :height="height"
-      @drop="handleDrop"
+      @eventReceive="handleDrop"
+      @eventClick="handleClick"
     />
   </div>
 </template>
@@ -86,7 +87,7 @@ export default {
           var title = (elements.length > 0) ? elements[0].innerText : "";
 
           let event = {
-            title: title
+              title: title
           };
           return event;
         }
@@ -96,23 +97,32 @@ export default {
       var self = this;
 
       for (var x = 0; x < self.eventsUnique.length; x++) {
-        self.eventsUnique[x].count = 0;
+          self.eventsUnique[x].count = 0;
       }
 
       for (var x = 0; x < self.eventsUnique.length; x++) {
         for (var y = 0; y < self.eventsScheduled.length; y++) {
           if (self.eventsUnique[x].title == self.eventsScheduled[y].title) {
-            self.eventsUnique[x].count++;
+              self.eventsUnique[x].count++;
           }
         }
       }
     },
-    handleDrop(dropInfo) {
+    convertDate(date) {
+      var date_month = date.getMonth() + 1;
+      var date_day = date.getDate();
+
+      var dateStr_month = (date_month < 10) ? ("0" + date_month) : date_month;
+      var dateStr_day = (date_day < 10) ? ("0" + date_day) : date_day;
+      
+      return (date.getFullYear() + "-" + dateStr_month + "-" + dateStr_day);
+    },
+    handleDrop(info) {
       var self = this;
 
       var scheduledEvent = {
-        title: dropInfo.draggedEl.firstElementChild.textContent,
-        date: dropInfo.dateStr
+        title: info.draggedEl.firstElementChild.textContent,
+        date: self.convertDate(new Date(info.event.start))
       };
 
       self.eventsScheduled.push(scheduledEvent);
@@ -120,6 +130,21 @@ export default {
       self.$nextTick(() => {
         this.calculateCount();
       });
+
+      return false;
+    },
+    handleClick(info) {
+      var self = this;
+
+      var date = self.convertDate(new Date(info.event.start));
+      
+      for (var x = 0; x < self.eventsScheduled.length; x++) {
+        if (self.eventsScheduled[x].date == date &&
+            self.eventsScheduled[x].title == info.event.title) {
+            self.eventsScheduled.splice(x);
+            break;
+        }
+      }
     }
   }
 }
