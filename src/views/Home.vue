@@ -13,6 +13,7 @@
     </div>
     <FullCalendar 
       defaultView="dayGridWeek" 
+      ref="fullCalendar"
       :titleFormat="title"
       :header="calendarHeaders"
       :columnHeaderFormat="column"
@@ -54,13 +55,6 @@ export default {
         interactionPlugin,
         momentPlugin
       ],
-      eventsScheduled: [
-        { title: 'Dan', date: '2020-02-10' },
-        { title: 'Jamie', date: '2020-02-11' },
-        { title: 'Dan', date: '2020-02-14' },
-        { title: 'Jamie', date: '2020-02-14' },
-        { title: 'Melissa', date: '2020-02-14' }
-      ],
       eventsUnique: [
         { title: 'Melissa', count: '0' },
         { title: 'Dan', count: '0' },
@@ -68,11 +62,21 @@ export default {
         { title: 'Daryl', count: '0' },
         { title: 'Benji', count: '0' },
         { title: 'Ellerey', count: '0' }
-      ]
+      ],
+      eventsScheduled: [
+        { title: 'Dan', date: '2020-02-10' },
+        { title: 'Jamie', date: '2020-02-11' },
+        { title: 'Dan', date: '2020-02-14' },
+        { title: 'Jamie', date: '2020-02-14' },
+        { title: 'Melissa', date: '2020-02-14' }
+      ],
+      eventsNew: []
     }
   },
   mounted() {
     var self = this;
+
+    self.eventsNew = self.eventsNew.concat(self.eventsScheduled);
 
     self.setupDraggable();
 
@@ -85,10 +89,7 @@ export default {
         eventData: function(eventEl) {
           var elements = eventEl.getElementsByClassName("fc-event-name");
           var title = (elements.length > 0) ? elements[0].innerText : "";
-
-          let event = {
-              title: title
-          };
+          let event = { title: title };
           return event;
         }
       });
@@ -96,17 +97,15 @@ export default {
     calculateCount() {
       var self = this;
 
-      for (var x = 0; x < self.eventsUnique.length; x++) {
-          self.eventsUnique[x].count = 0;
-      }
+      self.eventsUnique.forEach(function(unique_event) {
+        unique_event.count = 0;
 
-      for (var x = 0; x < self.eventsUnique.length; x++) {
-        for (var y = 0; y < self.eventsScheduled.length; y++) {
-          if (self.eventsUnique[x].title == self.eventsScheduled[y].title) {
-              self.eventsUnique[x].count++;
+        self.eventsNew.forEach(function(new_event) {
+          if (unique_event.title == new_event.title) {
+              unique_event.count++;
           }
-        }
-      }
+        });
+      });
     },
     convertDate(date) {
       var date_month = date.getMonth() + 1;
@@ -125,26 +124,32 @@ export default {
         date: self.convertDate(new Date(info.event.start))
       };
 
-      self.eventsScheduled.push(scheduledEvent);
+      self.eventsNew.push(scheduledEvent);
 
-      self.$nextTick(() => {
-        this.calculateCount();
-      });
-
-      return false;
+      // Updated unique events count after adding event
+      self.$nextTick(() => { self.calculateCount(); });
     },
     handleClick(info) {
       var self = this;
-
       var date = self.convertDate(new Date(info.event.start));
+      var events = self.$refs.fullCalendar.getApi().getEvents();
       
-      for (var x = 0; x < self.eventsScheduled.length; x++) {
-        if (self.eventsScheduled[x].date == date &&
-            self.eventsScheduled[x].title == info.event.title) {
-            self.eventsScheduled.splice(x);
+      for (var x = 0; x < events.length; x++) {
+        // Find event with matching name
+        if (events[x].title == info.event.title) {
+          var this_date = self.convertDate(new Date(events[x].start));
+
+          // Ensure matching event is on the same day
+          if (this_date == date) {
+            self.eventsNew.splice(x, 1);
+            events[x].remove();
             break;
+          }
         }
       }
+      
+      // Updated unique events count after removing event
+      self.$nextTick(() => { self.calculateCount(); });
     }
   }
 }
