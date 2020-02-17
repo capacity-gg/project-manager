@@ -11,6 +11,7 @@
         <span class="fc-event-count">{{ event.count }}</span>
       </div>
     </div>
+    <csvImport v-model="parseCSV" v-if="!hasImportedCSV"/>
     <FullCalendar 
       defaultView="dayGridWeek" 
       ref="fullCalendar"
@@ -20,7 +21,6 @@
       :plugins="calendarPlugins"
       :editable="true"
       :droppable="true"
-      :events="eventsScheduled"
       :height="height"
       @eventReceive="handleDrop"
       @eventClick="handleClick"
@@ -30,7 +30,7 @@
 
 <script>
 
-//import HelloWorld from '@/components/HelloWorld'
+import csvImport from '@/components/CSV_Import'
 import FullCalendar from '@fullcalendar/vue'
 import momentPlugin from '@fullcalendar/moment';
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -38,7 +38,8 @@ import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 
 export default {
   components: {
-    FullCalendar
+    FullCalendar,
+    csvImport
   },
   data: function() {
     return {
@@ -63,24 +64,33 @@ export default {
         { title: 'Benji', count: '0' },
         { title: 'Ellerey', count: '0' }
       ],
-      eventsScheduled: [
-        { title: 'Dan', date: '2020-02-10' },
-        { title: 'Jamie', date: '2020-02-11' },
-        { title: 'Dan', date: '2020-02-14' },
-        { title: 'Jamie', date: '2020-02-14' },
-        { title: 'Melissa', date: '2020-02-14' }
-      ],
-      eventsNew: []
+      eventsNew: [],
+      importedCSV: [],
+      hasImportedCSV: false
     }
   },
   mounted() {
     var self = this;
 
-    self.eventsNew = self.eventsNew.concat(self.eventsScheduled);
-
     self.setupDraggable();
 
     self.calculateCount();
+  },
+  computed: {
+    parseCSV: {
+      get: function() {
+        return this.importedCSV;
+      },
+      set: function(value) {
+        var self = this;
+
+        self.importedCSV = value;
+
+        self.importedCSV.forEach(function(row) { self.importCSVRow(row); });
+
+        self.hasImportedCSV = true;
+      } 
+    }
   },
   methods: {
     setupDraggable() {
@@ -116,15 +126,27 @@ export default {
       
       return (date.getFullYear() + "-" + dateStr_month + "-" + dateStr_day);
     },
+    importCSVRow(row) {
+      var self = this;
+
+      self.$refs.fullCalendar.getApi().addEvent(row);
+
+      self.addEventTolist(row);
+    },
     handleDrop(info) {
       var self = this;
 
-      var scheduledEvent = {
+      var droppedEvent = {
         title: info.draggedEl.firstElementChild.textContent,
         date: self.convertDate(new Date(info.event.start))
       };
 
-      self.eventsNew.push(scheduledEvent);
+      self.addEventTolist(droppedEvent);
+    },
+    addEventTolist(event) {
+      var self = this;
+
+      self.eventsNew.push(event);
 
       // Updated unique events count after adding event
       self.$nextTick(() => { self.calculateCount(); });
