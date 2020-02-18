@@ -157,10 +157,10 @@ export default {
       var self = this;
 
       // Ensure this event is not a duplicate
-      //self.removeEventFromList(event);
+      if (self.getFilteredEvents(event.title, event.date).length > 1) { self.removeEventFromList(event); }
 
       self.eventsNew.push(event);
-
+      
       self.onEventsUpdated();
     },
     removeEventFromList(event) {
@@ -182,6 +182,23 @@ export default {
       }
 
       self.onEventsUpdated();
+    },
+    getFilteredEvents(title, date) {
+      var self = this;
+      var events = self.$refs.fullCalendar.getApi().getEvents();
+      var foundEvents = [];
+
+      for (var x = 0; x < events.length; x++) {
+        // Find event with matching name
+        if (events[x].title == title) {
+          var thisDate = self.convertDate(new Date(events[x].start));
+
+          // Ensure matching event is on the same day
+          if (thisDate == date) { foundEvents.push(events[x]); }
+        }
+      }
+
+      return foundEvents;
     },
     onEventsUpdated() {
       var self = this;
