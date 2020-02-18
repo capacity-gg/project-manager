@@ -14,7 +14,7 @@
                 </slot>
                 <div class="form-group" v-if="canSubmit">
                     <slot name="submit" :load="load">
-                        <div class="fc-button" @click.prevent="load">Submit</div>
+                        <div class="fc-button fc-button--primary" @click.prevent="load">Import</div>
                     </slot>
                 </div>
             </div>
@@ -75,9 +75,10 @@ export default {
     },
     methods: {
         buildMappedCsv() {
-            const self = this;
+            var self = this;
+            var csv = lodash.drop(self.csv);
 
-            return lodash.map(self.csv, (row) => {
+            return lodash.map(csv, (row) => {
                 let newRow = {};
 
                 lodash.forEach(self.map, (column, field) => {
@@ -134,10 +135,6 @@ export default {
 
 <style lang='scss' scoped>
 
-.form-group {
-  margin: 10px 0;
-}
-
 .csv-import-file {
   background: #eee;
   border: 1px solid #ccc;
@@ -151,20 +148,6 @@ export default {
   padding: 10px;
   position: relative;
   top: 10px;
-}
-
-.fc-button {
-  color: #ffffff;
-  height: 30px;
-  line-height: 30px;
-  padding: 5px;
-  text-transform: uppercase;
-  width: 200px;
-
-  &.disabled {
-    background-color: #122f4b;
-    cursor: not-allowed;
-  }
 }
 
 .invalid-feedback {

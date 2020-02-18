@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1 class="project-title">Project Name</h1>
+    <h1 class="project-title">{{ projectName }}</h1>
     <div id="event-toolbar" class="event-toolbar">
       <div 
         class='fc-event' 
@@ -12,6 +12,7 @@
       </div>
     </div>
     <csvImport v-model="parseCSV" v-if="!hasImportedCSV"/>
+    <div class="fc-button fc-button--primary" @click.prevent="exportTableToCSV">Export</div>
     <FullCalendar 
       defaultView="dayGridWeek" 
       ref="fullCalendar"
@@ -43,6 +44,7 @@ export default {
   },
   data: function() {
     return {
+      projectName: "Project Name",
       title: '{{MMM D}}',
       height: 'auto',
       column: '{{D}}',
@@ -117,6 +119,31 @@ export default {
         });
       });
     },
+    exportTableToCSV() {
+      var content = this.eventsNew;
+
+      if (content == undefined || content.length == 0) { return; }
+
+      var data = "data:text/csv;charset=utf-8," + [
+        Object.keys(content[0]).join(","),
+        ...content.map(item => Object.values(item).join(","))
+      ]
+      .join("\n")
+      .replace(/(^\[)|(\]$)/gm, "");
+
+      const link = document.createElement("a");
+
+      link.setAttribute("href", encodeURI(data));
+      link.setAttribute("download", this.projectName + ".csv");
+      link.click();
+    },
+    importCSVRow(row) {
+      var self = this;
+
+      self.$refs.fullCalendar.getApi().addEvent(row);
+
+      self.addEventTolist(row);
+    },
     convertDate(date) {
       var date_month = date.getMonth() + 1;
       var date_day = date.getDate();
@@ -125,13 +152,6 @@ export default {
       var dateStr_day = (date_day < 10) ? ("0" + date_day) : date_day;
       
       return (date.getFullYear() + "-" + dateStr_month + "-" + dateStr_day);
-    },
-    importCSVRow(row) {
-      var self = this;
-
-      self.$refs.fullCalendar.getApi().addEvent(row);
-
-      self.addEventTolist(row);
     },
     handleDrop(info) {
       var self = this;
@@ -362,6 +382,21 @@ export default {
 
 .fc-today {
   background: #fcf8e3 !important;
+}
+
+.fc-button.fc-button--primary {
+  color: #ffffff;
+  height: 30px;
+  line-height: 30px;
+  margin: 10px 0;
+  padding: 5px;
+  text-transform: uppercase;
+  width: 200px;
+
+  &.disabled {
+    background-color: #122f4b;
+    cursor: not-allowed;
+  }
 }
 
 </style>
