@@ -136,41 +136,57 @@ export default {
     handleDrop(info) {
       var self = this;
 
-      var droppedEvent = {
+      var thisEvent = {
         title: info.draggedEl.firstElementChild.textContent,
         date: self.convertDate(new Date(info.event.start))
       };
 
-      self.addEventTolist(droppedEvent);
+      self.addEventTolist(thisEvent);
+    },
+    handleClick(info) {
+      var self = this;
+
+      var thisEvent = {
+        title: info.event.title,
+        date: self.convertDate(new Date(info.event.start))
+      }
+
+      self.removeEventFromList(thisEvent)
     },
     addEventTolist(event) {
       var self = this;
 
+      // Ensure this event is not a duplicate
+      //self.removeEventFromList(event);
+
       self.eventsNew.push(event);
 
-      // Updated unique events count after adding event
-      self.$nextTick(() => { self.calculateCount(); });
+      self.onEventsUpdated();
     },
-    handleClick(info) {
+    removeEventFromList(event) {
       var self = this;
-      var date = self.convertDate(new Date(info.event.start));
       var events = self.$refs.fullCalendar.getApi().getEvents();
       
       for (var x = 0; x < events.length; x++) {
         // Find event with matching name
-        if (events[x].title == info.event.title) {
-          var this_date = self.convertDate(new Date(events[x].start));
+        if (events[x].title == event.title) {
+          var thisDate = self.convertDate(new Date(events[x].start));
 
           // Ensure matching event is on the same day
-          if (this_date == date) {
+          if (thisDate == event.date) {
             self.eventsNew.splice(x, 1);
             events[x].remove();
             break;
           }
         }
       }
-      
-      // Updated unique events count after removing event
+
+      self.onEventsUpdated();
+    },
+    onEventsUpdated() {
+      var self = this;
+
+      // Updated unique events count after adding/removing event in calendar
       self.$nextTick(() => { self.calculateCount(); });
     }
   }
