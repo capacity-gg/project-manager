@@ -422,21 +422,10 @@ export default {
   width: 400px;
 }
 
-.fc-unthemed {
-  height: 100%;
-  overflow: visible;
-
-  .fc-view-container {  
-    .fc-body,
-    table,
-    tbody,
-    tr,
-    td,
-    div {
-      height: 100vh;
-      overflow: visible;
-    }
-  }
+.fc-unthemed .fc-content-skeleton {
+  height: 100vh;
+  overflow: hidden;
+  padding: 0;
 }
 
 .fc-event,
