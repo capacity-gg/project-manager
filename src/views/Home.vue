@@ -422,20 +422,22 @@ export default {
   width: 400px;
 }
 
-/*
-.fc-unthemed th, 
-.fc-unthemed td, 
-.fc-unthemed thead, 
-.fc-unthemed tbody, 
-.fc-unthemed .fc-divider, 
-.fc-unthemed .fc-row, 
-.fc-unthemed .fc-content, 
-.fc-unthemed .fc-popover, 
-.fc-unthemed .fc-list-view, 
-.fc-unthemed .fc-list-heading td {
-  border: 0px;
+.fc-unthemed {
+  height: 100%;
+  overflow: visible;
+
+  .fc-view-container {  
+    .fc-body,
+    table,
+    tbody,
+    tr,
+    td,
+    div {
+      height: 100vh;
+      overflow: visible;
+    }
+  }
 }
-*/
 
 .fc-event,
 .fc-day-header {
