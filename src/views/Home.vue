@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-    <div id="event-toolbar" class="event-toolbar">
+    <div id="event-toolbar" class="event-toolbar fc-unselectable">
       <div 
         class='fc-event' 
         v-for="event in eventsUnique" 
@@ -122,7 +122,7 @@ export default {
       var self = this;
 
       self.isDown = true;
-      self.draggable.classList.add('active');
+      self.draggable.classList.add('dragging');
       self.startX = e.pageX - self.draggable.offsetLeft;
       self.scrollLeft = self.draggable.scrollLeft;
     },
@@ -130,7 +130,7 @@ export default {
       var self = this;
 
       self.isDown = false;
-      self.draggable.classList.remove('active');
+      self.draggable.classList.remove('dragging');
     },
     dragScrollMove(e) {
       var self = this;
@@ -542,6 +542,11 @@ export default {
 
 .fc-today {
   background: #fcf8e3 !important;
+}
+
+.fc-dragging,
+.dragging {
+  cursor: grabbing !important;
 }
 
 .fc-button.fc-button--primary {
