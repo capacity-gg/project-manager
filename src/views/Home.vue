@@ -340,7 +340,24 @@ export default {
   padding: 10px;
   position: relative;
   white-space: nowrap;
-  width: 100%;
+  width: calc(100% - 10px);
+
+  &::-webkit-scrollbar {
+    background-color: #eee;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #eee;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #777;
+  }
+
+  &::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  }
 }
 
 .button--primary {
