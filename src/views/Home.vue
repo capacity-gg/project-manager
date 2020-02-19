@@ -1,6 +1,28 @@
 <template>
   <div class="home">
-    <h1 class="project-title">{{ projectName }}</h1>
+    <div class="project-header">
+      <div class="button--primary" @click.prevent="setSettingsVisibility(true)">
+        <span class="fc-icon fc-icon-plus-square"></span>  
+      </div>
+      <h1 class="project-title">{{ projectName }}</h1>
+    </div>
+    <div v-if="areSettingsVisible" class="modal__background" @click.prevent="setSettingsVisibility(false)">
+      <div class="modal modal--settings" @click="emptyFunction">
+        <div class="modal--header">Settings</div>
+        <div class="modal--row">
+          <div class="modal--label">Project Name</div>
+          <input type="text" v-model="projectName" :val="projectName" placeholder="Example name">
+        </div>
+        <div class="modal--row">
+          <div class="modal--label">Import</div>
+          <csvImport v-model="parseCSV"/>
+        </div>
+        <div class="modal--row">
+          <div class="modal--label">Export</div>
+          <div class="fc-button fc-button--primary" @click.prevent="exportTableToCSV">Export</div>
+        </div>
+      </div>
+    </div>
     <div id="event-toolbar" class="event-toolbar">
       <div 
         class='fc-event' 
@@ -11,8 +33,6 @@
         <span class="fc-event-count">{{ event.count }}</span>
       </div>
     </div>
-    <csvImport v-model="parseCSV" v-if="!hasImportedCSV"/>
-    <div class="fc-button fc-button--primary" @click.prevent="exportTableToCSV">Export</div>
     <FullCalendar 
       defaultView="dayGridWeek" 
       ref="fullCalendar"
@@ -44,7 +64,7 @@ export default {
   },
   data: function() {
     return {
-      projectName: "Project Name",
+      projectName: "Example Project",
       title: '{{MMM D}}',
       height: 'auto',
       column: '{{D}}',
@@ -68,7 +88,7 @@ export default {
       ],
       eventsNew: [],
       importedCSV: [],
-      hasImportedCSV: false
+      areSettingsVisible: false
     }
   },
   mounted() {
@@ -89,8 +109,6 @@ export default {
         self.importedCSV = value;
 
         self.importedCSV.forEach(function(row) { self.importCSVRow(row); });
-
-        self.hasImportedCSV = true;
       } 
     }
   },
@@ -118,6 +136,14 @@ export default {
           }
         });
       });
+    },
+    emptyFunction(event) {
+      console.log("empty function");
+
+      event.stopPropagation();
+    },
+    setSettingsVisibility(IsVisible) {
+      this.areSettingsVisible = IsVisible;
     },
     exportTableToCSV() {
       var content = this.eventsNew;
@@ -236,27 +262,79 @@ export default {
 @import '~@fullcalendar/daygrid/main.css';
 
 .home {
+  height: 100vh;
   overflow: hidden;
-  padding: 60px 0 0;
+  //padding: 60px 0 0;
   position: relative;
+  width: 100vw;
 }
 
 .fc-view-container {
   overflow: hidden;
 }
 
-.project-title {
+.project-header {
   left: 10px;
   margin: 0;
   position: absolute;
   top: 10px;
+}
+
+.project-title {
+  display: inline-block;
+  margin: 0 10px;
   text-align: left;
+}
+
+.modal__background {
+  background: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+}
+
+.modal {
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  height: 400px;
+  left: calc(50% - 300px);
+  padding: 10px;
+  position: relative;
+  top: calc(50% - 200px);
+  width: 600px;
+
+  input[type="text"] {
+    color: #333;
+    height: 22px;
+    line-height: 22px;
+    padding: 0 4px;
+    width: calc(100% - 10px);
+  }
+}
+
+.modal--header {
+  font-size: 24px;
+  font-weight: 600;
+  padding: 10px;
+}
+
+.modal--row {
+  margin: 0 0 20px;
+}
+
+.modal--label {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 10px;
+  padding: 4px 0;
 }
 
 .event-toolbar {
   background: #333;
   height: 56px;
-  margin: 10px 0;
+  margin: 60px 0 10px;
   overflow-x: auto;
   overflow-y: hidden;
   padding: 10px;
@@ -265,6 +343,15 @@ export default {
   width: 100%;
 }
 
+.button--primary {
+  display: inline-block;
+  
+  span {
+    font-size: 22px !important;
+  }
+}
+
+.button--primary,
 .fc-button-primary,
 .fc-event {
   span {
@@ -277,22 +364,23 @@ export default {
     padding: 0 10px;
   }
 }
+
+.button--primary,
 .fc-button-primary,
 .fc-button {
   border-radius: 50%;
-  height: 40px;
   padding: 0;
-  width: 40px;
 
   span.fc-icon {
     font-size: 32px;
     line-height: 32px;
     height: 32px;
-    padding: 0;
+    padding: 2px;
     width: 32px;
   }
 }
 
+.button--primary,
 .fc-button-primary,
 .fc-button,
 .fc-event {
