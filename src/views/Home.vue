@@ -7,7 +7,7 @@
       <h1 class="project-title">{{ projectName }}</h1>
     </div>
     <div v-if="areSettingsVisible" class="modal__background" @click.prevent="setSettingsVisibility(false)">
-      <div class="modal modal--settings" @click="emptyFunction">
+      <div class="modal modal--settings" @click="stopPropagation">
         <div class="modal--header">Settings</div>
         <div class="modal--row">
           <div class="modal--label">Project Name</div>
@@ -89,7 +89,11 @@ export default {
       ],
       eventsNew: [],
       importedCSV: [],
-      areSettingsVisible: false
+      areSettingsVisible: false,
+      draggable: null,
+      isDown: false,
+      scrollLeft: 0,
+      startX: 0
     }
   },
   mounted() {
@@ -97,7 +101,7 @@ export default {
 
     self.setupDraggable();
 
-    self.calculateCount();
+    self.calculateCount();  
   },
   computed: {
     parseCSV: {
@@ -114,8 +118,36 @@ export default {
     }
   },
   methods: {
+    dragScrollStart(e) {
+      var self = this;
+
+      self.isDown = true;
+      self.draggable.classList.add('active');
+      self.startX = e.pageX - self.draggable.offsetLeft;
+      self.scrollLeft = self.draggable.scrollLeft;
+    },
+    dragScrollEnd(e) {
+      var self = this;
+
+      self.isDown = false;
+      self.draggable.classList.remove('active');
+    },
+    dragScrollMove(e) {
+      var self = this;
+
+      if (self.isDown == false) { return; }
+      e.preventDefault();
+
+      const x = e.pageX - self.draggable.offsetLeft;
+      const walk = (x - self.startX) * 3;
+      self.draggable.scrollLeft = self.scrollLeft - walk;
+    },
     setupDraggable() {
-      new Draggable(document.getElementById("event-toolbar"), {
+      var self = this;
+
+      self.draggable = document.getElementById("event-toolbar")
+
+      new Draggable(self.draggable, {
         itemSelector: ".fc-event",
         eventData: function(eventEl) {
           var elements = eventEl.getElementsByClassName("fc-event-name");
@@ -124,6 +156,12 @@ export default {
           return event;
         }
       });
+
+      // Bind event listeners to handle scrolling on drag
+      self.draggable.addEventListener('mousedown', self.dragScrollStart);
+      self.draggable.addEventListener('mouseleave', self.dragScrollEnd);
+      self.draggable.addEventListener('mouseup', self.dragScrollEnd);
+      self.draggable.addEventListener('mousemove', self.dragScrollMove);
     },
     calculateCount() {
       var self = this;
@@ -138,10 +176,8 @@ export default {
         });
       });
     },
-    emptyFunction(event) {
-      console.log("empty function");
-
-      event.stopPropagation();
+    stopPropagation(e) {
+      e.stopPropagation();
     },
     setSettingsVisibility(IsVisible) {
       this.areSettingsVisible = IsVisible;
