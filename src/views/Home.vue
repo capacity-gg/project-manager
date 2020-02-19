@@ -43,7 +43,8 @@
       :editable="true"
       :droppable="true"
       :height="height"
-      @eventReceive="handleDrop"
+      @eventDrop="handleDrop"
+      @eventReceive="handleReceive"
       @eventClick="handleClick"
     />
   </div>
@@ -182,8 +183,33 @@ export default {
     handleDrop(info) {
       var self = this;
 
+      var oldEvent = {
+        title: info.oldEvent.title,
+        date: self.convertDate(new Date(info.oldEvent.start))
+      };
+
+      var newEvent = {
+        title: info.event.title,
+        date: self.convertDate(new Date(info.event.start))
+      };
+
+      for (var x = 0; x < self.eventsNew.length; x++) {
+        if (self.eventsNew[x].date == oldEvent.date &&
+            self.eventsNew[x].title == oldEvent.title) {
+            self.eventsNew[x].date = newEvent.date;
+            break;
+        }
+      }
+
+      if (self.getFilteredEvents(newEvent.title, newEvent.date).length > 1) { 
+          self.removeEventFromList(newEvent); 
+      }
+    },
+    handleReceive(info) {
+      var self = this;
+
       var thisEvent = {
-        title: info.draggedEl.firstElementChild.textContent,
+        title: info.event.title,
         date: self.convertDate(new Date(info.event.start))
       };
 
@@ -203,10 +229,12 @@ export default {
       var self = this;
 
       // Ensure this event is not a duplicate
-      if (self.getFilteredEvents(event.title, event.date).length > 1) { self.removeEventFromList(event); }
-
-      self.eventsNew.push(event);
+      if (self.getFilteredEvents(event.title, event.date).length > 1) { 
+          self.removeEventFromList(event); 
+      }
       
+      self.eventsNew.push(event);
+
       self.onEventsUpdated();
     },
     removeEventFromList(event) {
