@@ -1,8 +1,10 @@
 <template>
   <div class="home">
     <div class="project-header">
-      <div class="button--primary" @click.prevent="setSettingsVisibility(true)">
-        <span class="fc-icon fc-icon-plus-square"></span>  
+      <div class="button--primary" style="margin: 0 12px;" @click.prevent="setSettingsVisibility(true)">
+        <span class="icon">
+          <font-awesome-icon icon="cog"/>
+        </span>  
       </div>
       <h1 class="project-title">{{ projectName }}</h1>
     </div>
@@ -23,14 +25,26 @@
         </div>
       </div>
     </div>
-    <div id="event-toolbar" class="event-toolbar fc-unselectable">
-      <div 
-        class='fc-event' 
-        v-for="event in eventsUnique" 
-        :key="event.title"
-      >
-        <span class="fc-event-name">{{ event.title }}</span>
-        <span class="fc-event-count">{{ event.count }}</span>
+    <div class="top-bar">
+      <div class="calendar-toggle-container">
+        <div class="button--primary button--square" @click.prevent="toggleMilestonesVisibility">
+          <span class="icon" v-if="areMilestonesVisible">
+            <font-awesome-icon icon="exclamation"/>
+          </span>  
+          <span class="icon" v-else>
+            <font-awesome-icon icon="user"/>
+          </span>  
+        </div>
+      </div>
+      <div id="event-toolbar" class="event-toolbar fc-unselectable">
+        <div 
+          class='fc-event' 
+          v-for="event in eventsUnique" 
+          :key="event.title"
+        >
+          <span class="fc-event-name">{{ event.title }}</span>
+          <span class="fc-event-count">{{ event.count }}</span>
+        </div>
       </div>
     </div>
     <FullCalendar 
@@ -90,6 +104,7 @@ export default {
       eventsNew: [],
       importedCSV: [],
       areSettingsVisible: false,
+      areMilestonesVisible: false,
       draggable: null,
       isDown: false,
       scrollLeft: 0,
@@ -126,7 +141,7 @@ export default {
       self.startX = e.pageX - self.draggable.offsetLeft;
       self.scrollLeft = self.draggable.scrollLeft;
     },
-    dragScrollEnd(e) {
+    dragScrollEnd() {
       var self = this;
 
       self.isDown = false;
@@ -178,6 +193,9 @@ export default {
     },
     stopPropagation(e) {
       e.stopPropagation();
+    },
+    toggleMilestonesVisibility() {
+      this.areMilestonesVisible = !this.areMilestonesVisible;
     },
     setSettingsVisibility(IsVisible) {
       this.areSettingsVisible = IsVisible;
@@ -328,7 +346,6 @@ export default {
 .home {
   height: 100vh;
   overflow: hidden;
-  //padding: 60px 0 0;
   position: relative;
   width: 100vw;
 }
@@ -346,7 +363,7 @@ export default {
 
 .project-title {
   display: inline-block;
-  margin: 0 10px;
+  margin: 0 0 0 18px;
   text-align: left;
 }
 
@@ -395,19 +412,41 @@ export default {
   padding: 4px 0;
 }
 
-.event-toolbar {
-  background: #333;
-  height: 56px;
+.top-bar {
   margin: 60px 0 10px;
+  
+  .calendar-toggle-container {
+    width: 60px;
+
+    .button--primary,
+    .icon {      
+      height: 44px;
+      line-height: 44px;
+      padding: 0;
+      width: 44px;
+    }
+  }
+
+  .calendar-toggle-container,
+  .event-toolbar {
+    background: #333;
+    display: inline-block;
+    height: 56px;
+    padding: 10px;
+    vertical-align: middle;
+  }
+}
+
+.event-toolbar {
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 10px;
   position: relative;
   white-space: nowrap;
-  width: calc(100% - 10px);
+  width: calc(100% - 100px);
 
   &::-webkit-scrollbar {
     background-color: #eee;
+    border-radius: 10px;
     height: 6px;
   }
   &::-webkit-scrollbar-track {
@@ -452,6 +491,7 @@ export default {
   border-radius: 50%;
   padding: 0;
 
+  span.icon,
   span.fc-icon {
     font-size: 32px;
     line-height: 32px;
@@ -476,6 +516,10 @@ export default {
     box-shadow: none;
     cursor: pointer;
   }
+}
+
+.button--square {
+  border-radius: 5px;
 }
 
 .fc-dragging.fc-event,
