@@ -1,12 +1,17 @@
 <template>
   <div class="home">
-    <div class="project-header">
-      <div class="button--primary" style="margin: 0 12px;" @click.prevent="setSettingsVisibility(true)">
-        <span class="icon">
-          <font-awesome-icon icon="cog"/>
-        </span>  
+    <div class="nav-bar">
+      <h1 class="title">Project Management Tool</h1>
+      <div class="nav-bar__buttons">
+        <div class="button button--primary button--square" @click.prevent="setSettingsVisibility(true)">
+          <span class="icon">
+            <font-awesome-icon icon="cog"/>
+          </span>  
+        </div>
       </div>
-      <h1 class="project-title">{{ projectName }}</h1>
+    </div>
+    <div class="project-header">
+      <h2 class="project-title">{{ projectName }}</h2>
     </div>
     <div v-if="areSettingsVisible" class="modal__background" @click.prevent="setSettingsVisibility(false)">
       <div class="modal modal--settings" @click="stopPropagation">
@@ -259,8 +264,6 @@ export default {
       return (date.getFullYear() + "-" + dateStr_month + "-" + dateStr_day);
     },
     handleRender(info) {
-      //console.log(info);
-
       var self = this;
       var isRendered = true;
 
@@ -392,6 +395,35 @@ export default {
 @import '~@fullcalendar/core/main.css';
 @import '~@fullcalendar/daygrid/main.css';
 
+$color-primary-light: #3788d8;
+$color-primary-dark: #1b446c;
+$color-primary-darkest: #122f4b;
+
+$color-gray-lightest: #f9f9f9;
+$color-gray-light: #f1f1f1;
+$color-gray-mid: #dbdbdb;
+$color-gray-dark: #3f3f3f;
+$color-gray-darkest: #2a2a2a;
+
+h1 {
+  font-size: 28px !important;
+}
+h2 {
+  font-size: 24px !important;
+}
+h3 {
+  font-size: 22px !important;
+}
+h4 {
+  font-size: 18px !important;
+}
+h5 {
+  font-size: 16px !important;
+}
+h6 {
+  font-size: 12px !important;
+}
+
 .home {
   height: 100vh;
   overflow: hidden;
@@ -401,19 +433,6 @@ export default {
 
 .fc-view-container {
   overflow: hidden;
-}
-
-.project-header {
-  left: 10px;
-  margin: 0;
-  position: absolute;
-  top: 10px;
-}
-
-.project-title {
-  display: inline-block;
-  margin: 0 0 0 18px;
-  text-align: left;
 }
 
 .modal__background {
@@ -436,7 +455,7 @@ export default {
   width: 600px;
 
   input[type="text"] {
-    color: #333;
+    color: $color-gray-dark;
     height: 22px;
     line-height: 22px;
     padding: 0 4px;
@@ -461,12 +480,39 @@ export default {
   padding: 4px 0;
 }
 
+.nav-bar {
+  background: $color-gray-dark;
+  height: 66px;
+  width: 100%;
+
+  .title {
+    color: $color-gray-lightest;
+    display: inline-block;
+    margin: 0 0 0 20px;
+    height: 100%;
+    line-height: 66px;
+    text-align: left;
+    vertical-align: middle;
+    width: calc(100% - 80px);
+  }
+
+  .nav-bar__buttons {
+    display: inline-block;
+    height: 100%;
+
+    .button {
+      margin: 0 12px;
+      vertical-align: middle;
+    }
+  }
+}
+
 .top-bar {
   margin: 60px 0 10px;
 
   .calendar-toggle-container,
   .event-toolbar {
-    background: #333;
+    background: $color-gray-mid;
     display: inline-block;
     height: 56px;
     vertical-align: middle;
@@ -494,15 +540,15 @@ export default {
     width: calc(100% - 80px);
 
     &::-webkit-scrollbar {
-      background-color: #eee;
+      background-color: $color-gray-light;
       border-radius: 10px;
       height: 6px;
     }
     &::-webkit-scrollbar-track {
-      background-color: #eee;
+      background-color: $color-gray-light;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: #777;
+      background-color: $color-gray-dark;
     }
 
     &::-webkit-scrollbar-track,
@@ -551,18 +597,33 @@ export default {
   }
 }
 
+.fc-button.fc-button--primary {
+  color: $color-gray-lightest;
+  height: 30px;
+  line-height: 30px;
+  margin: 10px 0;
+  padding: 5px;
+  text-transform: uppercase;
+  width: 200px;
+
+  &.disabled {
+    background-color: $color-primary-darkest;
+    cursor: not-allowed;
+  }
+}
+
 .button--primary,
 .fc-button-primary,
 .fc-button,
 .fc-event {
-  background: #3788d8;
-  border-color: #3788d8;
+  background: $color-primary-light;
+  border-color: $color-primary-light;
 
   &:focus,
   &:active,
   &:hover {
-    background-color: #1b446c;
-    border-color: #1b446c;
+    background-color: $color-primary-dark;
+    border-color: $color-primary-dark;
     box-shadow: none;
     cursor: pointer;
   }
@@ -593,12 +654,25 @@ export default {
     text-align: center;
 }
 
+.project-header,
 .fc-toolbar.fc-header-toolbar {
+  margin: 0;
   position: absolute;
+  top: 80px;
+}
+
+.project-header {
+  .project-title {
+    display: inline-block;
+    margin: 0 0 0 18px;
+    text-align: left;
+  }
+}
+
+.fc-toolbar.fc-header-toolbar {
   right: 10px;
   text-transform: uppercase;
-  top: 10px;
-  width: 400px;
+  width: 360px;
 }
 
 .fc-unthemed .fc-content-skeleton {
@@ -619,7 +693,7 @@ export default {
   position: relative;
 
   span {    
-    background: #333;
+    background: $color-gray-dark;
     border-radius: 5px;
     color: #fff;
     display: inline-block;
@@ -635,7 +709,7 @@ export default {
 
 .fc-sun,
 .fc-sat {
-  background: #f1f1f1;
+  background: $color-gray-light;
 }
 
 .fc-today {
@@ -645,21 +719,6 @@ export default {
 .fc-dragging,
 .dragging {
   cursor: grabbing !important;
-}
-
-.fc-button.fc-button--primary {
-  color: #ffffff;
-  height: 30px;
-  line-height: 30px;
-  margin: 10px 0;
-  padding: 5px;
-  text-transform: uppercase;
-  width: 200px;
-
-  &.disabled {
-    background-color: #122f4b;
-    cursor: not-allowed;
-  }
 }
 
 </style>
