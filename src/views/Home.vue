@@ -37,13 +37,24 @@
         </div>
       </div>
       <div id="event-toolbar" class="event-toolbar fc-unselectable">
-        <div 
-          class='fc-event' 
-          v-for="event in eventsUnique" 
-          :key="event.title"
-        >
-          <span class="fc-event-name">{{ event.title }}</span>
-          <span class="fc-event-count">{{ event.count }}</span>
+        <div v-if="areMilestonesVisible">
+          <div 
+            class='fc-event event-milestone' 
+            v-for="event in milestoneEvents" 
+            :key="event.title"
+          >
+            <span class="fc-event-name">{{ event.title }}</span>
+          </div>
+        </div>
+        <div v-else>
+          <div 
+            class='fc-event' 
+            v-for="event in userEvents" 
+            :key="event.title"
+          >
+            <span class="fc-event-name">{{ event.title }}</span>
+            <span class="fc-event-count">{{ event.count }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -57,6 +68,7 @@
       :editable="true"
       :droppable="true"
       :height="height"
+      :eventRender="handleRender"
       @eventDrop="handleDrop"
       @eventReceive="handleReceive"
       @eventClick="handleClick"
@@ -93,7 +105,7 @@ export default {
         interactionPlugin,
         momentPlugin
       ],
-      eventsUnique: [
+      userEvents: [
         { title: 'Melissa', count: '0' },
         { title: 'Dan', count: '0' },
         { title: 'Jamie', count: '0' },
@@ -101,14 +113,22 @@ export default {
         { title: 'Benji', count: '0' },
         { title: 'Ellerey', count: '0' }
       ],
+      milestoneEvents: [
+        { title: 'Presentation' },
+        { title: 'Feedback' },
+        { title: 'Delivery' }
+      ],
       eventsNew: [],
       importedCSV: [],
       areSettingsVisible: false,
       areMilestonesVisible: false,
-      draggable: null,
-      isDown: false,
-      scrollLeft: 0,
-      startX: 0
+      eventToolbar: {
+        draggable: null,
+        isDragging: false,
+        dragLeft: 0,
+        dragStart: 0
+      },
+      fullCalendarApi: null
     }
   },
   mounted() {
@@ -116,7 +136,7 @@ export default {
 
     self.setupDraggable();
 
-    self.calculateCount();  
+    self.calculateCount();
   },
   computed: {
     parseCSV: {
@@ -136,33 +156,33 @@ export default {
     dragScrollStart(e) {
       var self = this;
 
-      self.isDown = true;
-      self.draggable.classList.add('dragging');
-      self.startX = e.pageX - self.draggable.offsetLeft;
-      self.scrollLeft = self.draggable.scrollLeft;
+      self.eventToolbar.isDragging = true;
+      self.eventToolbar.draggable.classList.add('dragging');
+      self.eventToolbar.dragStart = e.pageX - self.eventToolbar.draggable.offsetLeft;
+      self.eventToolbar.dragLeft = self.eventToolbar.draggable.scrollLeft;
     },
     dragScrollEnd() {
       var self = this;
 
-      self.isDown = false;
-      self.draggable.classList.remove('dragging');
+      self.eventToolbar.isDragging = false;
+      self.eventToolbar.draggable.classList.remove('dragging');
     },
     dragScrollMove(e) {
       var self = this;
 
-      if (self.isDown == false) { return; }
+      if (self.eventToolbar.isDragging == false) { return; }
       e.preventDefault();
 
-      const x = e.pageX - self.draggable.offsetLeft;
-      const walk = (x - self.startX) * 3;
-      self.draggable.scrollLeft = self.scrollLeft - walk;
+      const x = e.pageX - self.eventToolbar.draggable.offsetLeft;
+      const walk = (x - self.eventToolbar.dragStart) * 3;
+      self.eventToolbar.draggable.scrollLeft = self.eventToolbar.dragLeft - walk;
     },
     setupDraggable() {
       var self = this;
 
-      self.draggable = document.getElementById("event-toolbar")
+      self.eventToolbar.draggable = document.getElementById("event-toolbar")
 
-      new Draggable(self.draggable, {
+      new Draggable(self.eventToolbar.draggable, {
         itemSelector: ".fc-event",
         eventData: function(eventEl) {
           var elements = eventEl.getElementsByClassName("fc-event-name");
@@ -173,15 +193,15 @@ export default {
       });
 
       // Bind event listeners to handle scrolling on drag
-      self.draggable.addEventListener('mousedown', self.dragScrollStart);
-      self.draggable.addEventListener('mouseleave', self.dragScrollEnd);
-      self.draggable.addEventListener('mouseup', self.dragScrollEnd);
-      self.draggable.addEventListener('mousemove', self.dragScrollMove);
+      self.eventToolbar.draggable.addEventListener('mousedown', self.dragScrollStart);
+      self.eventToolbar.draggable.addEventListener('mouseleave', self.dragScrollEnd);
+      self.eventToolbar.draggable.addEventListener('mouseup', self.dragScrollEnd);
+      self.eventToolbar.draggable.addEventListener('mousemove', self.dragScrollMove);
     },
     calculateCount() {
       var self = this;
 
-      self.eventsUnique.forEach(function(unique_event) {
+      self.userEvents.forEach(function(unique_event) {
         unique_event.count = 0;
 
         self.eventsNew.forEach(function(new_event) {
@@ -195,7 +215,11 @@ export default {
       e.stopPropagation();
     },
     toggleMilestonesVisibility() {
-      this.areMilestonesVisible = !this.areMilestonesVisible;
+      var self = this;
+
+      self.areMilestonesVisible = !self.areMilestonesVisible;
+
+      self.$refs.fullCalendar.getApi().rerenderEvents();
     },
     setSettingsVisibility(IsVisible) {
       this.areSettingsVisible = IsVisible;
@@ -233,6 +257,31 @@ export default {
       var dateStr_day = (date_day < 10) ? ("0" + date_day) : date_day;
       
       return (date.getFullYear() + "-" + dateStr_month + "-" + dateStr_day);
+    },
+    handleRender(info) {
+      //console.log(info);
+
+      var self = this;
+      var isRendered = true;
+
+      if (self.areMilestonesVisible) {
+        self.milestoneEvents.forEach(function(event) {
+          if (event.title == info.event.title) {
+            isRendered = true;
+            return;
+          }
+        });
+      }
+      else {
+        self.milestoneEvents.forEach(function(event) {
+          if (event.title == info.event.title) {
+            isRendered = false;
+            return;
+          }
+        });
+      }
+
+      return isRendered;
     },
     handleDrop(info) {
       var self = this;
@@ -524,20 +573,24 @@ export default {
 
 .fc-dragging.fc-event,
 .event-toolbar .fc-event {
-    display: inline-block;
-    margin: 0 10px 0 0;
-    width: 200px;
+  display: inline-block;
+  margin: 0 10px 0 0;
+  width: 200px;
 
-    .fc-event-name {
-      text-align: left;
-      width: calc(75% - 20px);
-    }
-
-    .fc-event-count {
-      text-align: right;
-      width: calc(25% - 20px);
-    }
+  .fc-event-name {
+    text-align: left;
+    width: calc(75% - 20px);
   }
+
+  .fc-event-count {
+    text-align: right;
+    width: calc(25% - 20px);
+  }
+}
+
+.event-toolbar .event-milestone .fc-event-name {
+    text-align: center;
+}
 
 .fc-toolbar.fc-header-toolbar {
   position: absolute;
