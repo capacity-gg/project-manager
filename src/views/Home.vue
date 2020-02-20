@@ -463,9 +463,18 @@ export default {
 
 .top-bar {
   margin: 60px 0 10px;
+
+  .calendar-toggle-container,
+  .event-toolbar {
+    background: #333;
+    display: inline-block;
+    height: 56px;
+    vertical-align: middle;
+  }
   
   .calendar-toggle-container {
     width: 60px;
+    padding: 10px;
 
     .button--primary,
     .icon {      
@@ -476,39 +485,31 @@ export default {
     }
   }
 
-  .calendar-toggle-container,
   .event-toolbar {
-    background: #333;
-    display: inline-block;
-    height: 56px;
-    padding: 10px;
-    vertical-align: middle;
-  }
-}
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 0;
+    position: relative;
+    white-space: nowrap;
+    width: calc(100% - 80px);
 
-.event-toolbar {
-  overflow-x: auto;
-  overflow-y: hidden;
-  position: relative;
-  white-space: nowrap;
-  width: calc(100% - 100px);
+    &::-webkit-scrollbar {
+      background-color: #eee;
+      border-radius: 10px;
+      height: 6px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #eee;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #777;
+    }
 
-  &::-webkit-scrollbar {
-    background-color: #eee;
-    border-radius: 10px;
-    height: 6px;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: #eee;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #777;
-  }
-
-  &::-webkit-scrollbar-track,
-  &::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    &::-webkit-scrollbar-track,
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    }
   }
 }
 
