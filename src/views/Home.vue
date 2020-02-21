@@ -556,8 +556,10 @@ span {
 .project-header,
 .fc-toolbar.fc-header-toolbar {
   margin: 0;
+  overflow: hidden;
   position: absolute;
   top: 80px;
+  width: calc(100% - 384px);
 }
 
 .project-header {
@@ -566,6 +568,8 @@ span {
     line-height: 44px;
     margin: 0 0 0 18px;
     text-align: left;
+    width: calc(100% - 18px);
+    white-space: nowrap;
   }
 }
 
@@ -723,6 +727,16 @@ span {
 
 .event-toolbar .event-milestone .fc-event-name {
     text-align: center;
+}
+
+.fc-toolbar.fc-header-toolbar {
+  
+  .fc-left,
+  .fc-right {
+    &:focus {
+      outline: none;
+    }
+  }
 }
 
 /**
