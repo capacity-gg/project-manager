@@ -78,6 +78,9 @@
       @eventReceive="handleReceive"
       @eventClick="handleClick"
     />
+  <div class="footer">
+    <span class="copyright">Copyright © Capacity 2020</span>
+  </div>
   </div>
 </template>
 
@@ -537,7 +540,7 @@ span {
 
   .nav-bar__buttons {
     display: inline-block;
-    height: 100%;
+    height: auto;
     margin: 0px 12px;
 
     .button {
@@ -567,9 +570,23 @@ span {
 }
 
 .fc-toolbar.fc-header-toolbar {
-  right: 10px;
+  right: 12px;
   text-transform: uppercase;
   width: 360px;
+}
+
+/**
+ * Footer
+ */
+
+.footer {
+  background: $color-gray-darkest;
+  height: 44px;
+
+  .copyright {
+    color: white;
+    line-height: 44px;
+  }
 }
 
 /**
@@ -599,24 +616,6 @@ span {
     position: relative;
     white-space: nowrap;
     width: calc(100% - 80px);
-
-    &::-webkit-scrollbar {
-      background-color: $color-gray-light;
-      border-radius: 10px;
-      height: 6px;
-    }
-    &::-webkit-scrollbar-track {
-      background-color: $color-gray-light;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: $color-gray-dark;
-    }
-
-    &::-webkit-scrollbar-track,
-    &::-webkit-scrollbar-thumb {
-      border-radius: 10px;
-      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    }
   }
 }
 
@@ -736,7 +735,9 @@ span {
 
 .fc-unthemed .fc-content-skeleton {
   height: 100vh;
-  overflow: hidden;
+  max-height: calc(100vh - 311px);
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: 0;
 }
 
@@ -786,5 +787,33 @@ span {
 .dragging {
   cursor: grabbing !important;
 }
+
+/**
+ * Scrollbars 
+ */
+
+div {
+  &::-webkit-scrollbar {
+    background-color: $color-gray-light;
+    border-radius: 10px;
+    height: 6px;
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: $color-gray-light;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-gray-dark;
+  }
+
+  &::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  }
+}
+
+
+
 
 </style>
