@@ -407,7 +407,7 @@ $color-primary-darkest: #102840;
 
 $color-secondary-light: #fef8f5;
 $color-secondary-mid: #fbe4d8;
-$color-secondary-dark: #f9d7c4;
+$color-secondary-dark: #f4b493;
 
 $color-gray-lightest: #f9f9f9;
 $color-gray-light: #f1f1f1;
@@ -757,7 +757,7 @@ span {
   position: relative;
 
   span {    
-    background: $color-primary-darkest;
+    background: $color-gray-darkest;
     color: $color-gray-lightest;
     font-size: 24px;
     height: $button-size-large;
@@ -770,7 +770,7 @@ span {
 }
 
 .fc-day-header.fc-today span {
-  background: $color-primary-dark !important;
+  background: $color-secondary-dark;
 }
 
 .fc-today {
