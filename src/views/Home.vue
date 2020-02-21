@@ -3,7 +3,7 @@
     <div class="nav-bar">
       <h1 class="title">Project Management Tool</h1>
       <div class="nav-bar__buttons">
-        <div class="button button--primary button--square" @click.prevent="setSettingsVisibility(true)">
+        <div class="button button--icon" @click.prevent="setSettingsVisibility(true)">
           <span class="icon">
             <font-awesome-icon icon="cog"/>
           </span>  
@@ -26,13 +26,13 @@
         </div>
         <div class="modal--row">
           <div class="modal--label">Export</div>
-          <div class="fc-button fc-button--primary" @click.prevent="exportTableToCSV">Export</div>
+          <div class="button button--large" @click.prevent="exportTableToCSV">Export</div>
         </div>
       </div>
     </div>
     <div class="top-bar">
       <div class="calendar-toggle-container">
-        <div class="button--primary button--square" @click.prevent="toggleMilestonesVisibility">
+        <div class="button button--icon" @click.prevent="toggleMilestonesVisibility">
           <span class="icon" v-if="areMilestonesVisible">
             <font-awesome-icon icon="exclamation"/>
           </span>  
@@ -44,7 +44,7 @@
       <div id="event-toolbar" class="event-toolbar fc-unselectable">
         <div v-if="areMilestonesVisible">
           <div 
-            class='fc-event event-milestone' 
+            class='button button--primary fc-event event-milestone' 
             v-for="event in milestoneEvents" 
             :key="event.title"
           >
@@ -53,7 +53,7 @@
         </div>
         <div v-else>
           <div 
-            class='fc-event' 
+            class='button button--primary fc-event' 
             v-for="event in userEvents" 
             :key="event.title"
           >
@@ -395,15 +395,40 @@ export default {
 @import '~@fullcalendar/core/main.css';
 @import '~@fullcalendar/daygrid/main.css';
 
+/**
+ * Variable
+ */
+
+$color-primary-lightest: #ebf3fb;
 $color-primary-light: #3788d8;
+$color-primary-mid: #2c6cac;
 $color-primary-dark: #1b446c;
-$color-primary-darkest: #122f4b;
+$color-primary-darkest: #102840;
+
+$color-secondary-light: #fef8f5;
+$color-secondary-mid: #fbe4d8;
+$color-secondary-dark: #f9d7c4;
 
 $color-gray-lightest: #f9f9f9;
 $color-gray-light: #f1f1f1;
-$color-gray-mid: #dbdbdb;
-$color-gray-dark: #3f3f3f;
-$color-gray-darkest: #2a2a2a;
+$color-gray-mid: #dddddd;
+$color-gray-dark: #555555;
+$color-gray-darkest: #333333;
+
+$button-size-small: 22px;
+$button-size-default: 30px;
+$button-size-large: 44px;
+$button-radius: 3px;
+
+$button-color: $color-gray-lightest;
+$button-bg-color: $color-primary-light;
+$button-bg-color-hover: $color-primary-dark;
+$button-bg-color-disabled: $color-primary-darkest;
+$button-border-color: $color-primary-mid;
+
+/**
+ * General
+ */
 
 h1 {
   font-size: 28px !important;
@@ -424,6 +449,14 @@ h6 {
   font-size: 12px !important;
 }
 
+
+body,
+div,
+span {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 12px;
+}
+
 .home {
   height: 100vh;
   overflow: hidden;
@@ -431,14 +464,16 @@ h6 {
   width: 100vw;
 }
 
-.fc-view-container {
-  overflow: hidden;
-}
+/**
+ * Modal
+ */
 
 .modal__background {
   background: rgba(0, 0, 0, 0.5);
   height: 100%;
   position: absolute;
+  right: 0;
+  top: 0;
   width: 100%;
   z-index: 1000;
 }
@@ -480,8 +515,12 @@ h6 {
   padding: 4px 0;
 }
 
+/**
+ * Navigation Bar
+ */
+
 .nav-bar {
-  background: $color-gray-dark;
+  background: $color-gray-darkest;
   height: 66px;
   width: 100%;
 
@@ -493,22 +532,52 @@ h6 {
     line-height: 66px;
     text-align: left;
     vertical-align: middle;
-    width: calc(100% - 80px);
+    width: calc(100% - 90px);
   }
 
   .nav-bar__buttons {
     display: inline-block;
     height: 100%;
+    margin: 0px 12px;
 
     .button {
-      margin: 0 12px;
       vertical-align: middle;
     }
   }
 }
 
+/**
+ * Header
+ */
+
+.project-header,
+.fc-toolbar.fc-header-toolbar {
+  margin: 0;
+  position: absolute;
+  top: 80px;
+}
+
+.project-header {
+  .project-title {
+    display: inline-block;
+    line-height: 44px;
+    margin: 0 0 0 18px;
+    text-align: left;
+  }
+}
+
+.fc-toolbar.fc-header-toolbar {
+  right: 10px;
+  text-transform: uppercase;
+  width: 360px;
+}
+
+/**
+ * Top Bar 
+ */
+
 .top-bar {
-  margin: 60px 0 10px;
+  margin: 68px 0 10px;
 
   .calendar-toggle-container,
   .event-toolbar {
@@ -521,14 +590,6 @@ h6 {
   .calendar-toggle-container {
     width: 60px;
     padding: 10px;
-
-    .button--primary,
-    .icon {      
-      height: 44px;
-      line-height: 44px;
-      padding: 0;
-      width: 44px;
-    }
   }
 
   .event-toolbar {
@@ -559,85 +620,96 @@ h6 {
   }
 }
 
-.button--primary {
-  display: inline-block;
-  
-  span {
-    font-size: 22px !important;
-  }
-}
+/**
+ * Buttons
+ */
 
-.button--primary,
-.fc-button-primary,
-.fc-event {
-  span {
-    color: #fff;
-    display: inline-block;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    margin: 0;
-    padding: 0 10px;
-  }
-}
+.fc-event,
+.fc-event-container .fc-event,
+.fc-button.fc-button-primary,
+.button {
+  background: $button-bg-color;
+  border: 1px solid $button-border-color;
+  color: $button-color !important;
 
-.button--primary,
-.fc-button-primary,
-.fc-button {
-  border-radius: 50%;
-  padding: 0;
-
-  span.icon,
-  span.fc-icon {
-    font-size: 32px;
-    line-height: 32px;
-    height: 32px;
-    padding: 2px;
-    width: 32px;
-  }
-}
-
-.fc-button.fc-button--primary {
-  color: $color-gray-lightest;
-  height: 30px;
-  line-height: 30px;
-  margin: 10px 0;
-  padding: 5px;
-  text-transform: uppercase;
-  width: 200px;
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: $button-bg-color-hover;
+    border-color: $button-bg-color-hover;
+    box-shadow: none;
+    cursor: pointer;
+  } 
 
   &.disabled {
-    background-color: $color-primary-darkest;
+    background-color: $button-bg-color-disabled;
+    border-color: $button-bg-color-disabled;
+    box-shadow: none;
     cursor: not-allowed;
   }
 }
 
-.button--primary,
-.fc-button-primary,
-.fc-button,
-.fc-event {
-  background: $color-primary-light;
-  border-color: $color-primary-light;
+.button--primary {
+  font-size: 18px;
+  height: $button-size-default;
+  line-height: $button-size-default;
+  margin: 10px 0;
+  width: 200px;
+}
 
-  &:focus,
-  &:active,
-  &:hover {
-    background-color: $color-primary-dark;
-    border-color: $color-primary-dark;
-    box-shadow: none;
-    cursor: pointer;
+.button--large {
+  border-radius: $button-radius;
+  display: inline-block;
+  font-size: 18px;
+  height: $button-size-large;
+  line-height: $button-size-large;
+  padding: 5px;
+  text-transform: uppercase;
+  width: 200px;
+}
+
+.fc-button.fc-button-primary,
+.button--icon {
+  border-radius: $button-radius;
+  display: inline-block;
+  height: $button-size-large;
+  padding: 0;
+  width: $button-size-large;
+
+  .fc-icon,
+  .icon {
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+  }
+
+  .icon {
+    font-size: $button-size-small;
+    line-height: $button-size-large;
+  }
+
+  .fc-icon {
+    font-size: $button-size-default;
   }
 }
 
-.button--square {
-  border-radius: 5px;
-}
+/**
+ * Toolbar
+ */
 
 .fc-dragging.fc-event,
 .event-toolbar .fc-event {
   display: inline-block;
   margin: 0 10px 0 0;
   width: 200px;
+
+  .fc-event-name,
+  .fc-event-count {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 600;
+  }
 
   .fc-event-name {
     text-align: left;
@@ -654,25 +726,12 @@ h6 {
     text-align: center;
 }
 
-.project-header,
-.fc-toolbar.fc-header-toolbar {
-  margin: 0;
-  position: absolute;
-  top: 80px;
-}
+/**
+ * Calendar
+ */
 
-.project-header {
-  .project-title {
-    display: inline-block;
-    margin: 0 0 0 18px;
-    text-align: left;
-  }
-}
-
-.fc-toolbar.fc-header-toolbar {
-  right: 10px;
-  text-transform: uppercase;
-  width: 360px;
+.fc-view-container {
+  overflow: hidden;
 }
 
 .fc-unthemed .fc-content-skeleton {
@@ -681,10 +740,15 @@ h6 {
   padding: 0;
 }
 
+.fc-event .fc-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
 .fc-event,
 .fc-day-header {
-  height: 44px;
-  line-height: 44px;
+  height: $button-size-large;
+  line-height: $button-size-large;
   margin-bottom: 5.5px;
   text-align: center;
 }
@@ -693,27 +757,29 @@ h6 {
   position: relative;
 
   span {    
-    background: $color-gray-dark;
-    border-radius: 5px;
-    color: #fff;
-    display: inline-block;
+    background: $color-primary-darkest;
+    color: $color-gray-lightest;
     font-size: 24px;
-    height: 33px;
-    line-height: 33px;
+    height: $button-size-large;
+    line-height: $button-size-large;
     position: absolute;
-    right: 5px;
-    top: 5px;
-    width: 33px;
-  }
+    right: 0;
+    top: 0;
+    width: $button-size-large;
+  }  
+}
+
+.fc-day-header.fc-today span {
+  background: $color-primary-dark !important;
+}
+
+.fc-today {
+  background: $color-secondary-light !important;
 }
 
 .fc-sun,
 .fc-sat {
   background: $color-gray-light;
-}
-
-.fc-today {
-  background: #fcf8e3 !important;
 }
 
 .fc-dragging,
