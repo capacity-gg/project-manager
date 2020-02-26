@@ -86,7 +86,7 @@
 
 <script>
 
-import csvImport from '@/components/CSV_Import'
+import csvImport from './CSV_Import.vue'
 import FullCalendar from '@fullcalendar/vue'
 import momentPlugin from '@fullcalendar/moment';
 import dayGridPlugin from '@fullcalendar/daygrid'
