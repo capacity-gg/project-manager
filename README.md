@@ -1,6 +1,4 @@
-# project_manager
-
-> A Vue.js project
+# Project Manager
 
 ## Build Setup
 
