@@ -395,9 +395,6 @@ export default {
 
 <style lang='scss'>
 
-@import '~@fullcalendar/core/main.css';
-@import '~@fullcalendar/daygrid/main.css';
-
 /**
  * Variable
  */

@@ -1,10 +1,10 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
 
-Vue.use(VueRouter)
+Vue.use(Router)
 
-const routes = [
-  {
+export default new Router({
+  routes: [{
     path: '/',
     name: 'home',
     component: () => import('../pages/Home.vue')
@@ -12,9 +12,5 @@ const routes = [
     path: '/about',
     name: 'about',
     component: () => import('../pages/About.vue')
-  }
-]
-
-export default new VueRouter({
-  routes
+  }]
 })
