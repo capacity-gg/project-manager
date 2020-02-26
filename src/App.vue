@@ -16,8 +16,37 @@ export default {
 
 <style lang='scss'>
 
+/**
+ * General
+ */
+
 body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0;
   margin: 0;
+}
+
+span {
+  font-size: 12px;
+}
+
+h1 {
+  font-size: 28px !important;
+}
+h2 {
+  font-size: 24px !important;
+}
+h3 {
+  font-size: 22px !important;
+}
+h4 {
+  font-size: 18px !important;
+}
+h5 {
+  font-size: 16px !important;
+}
+h6 {
+  font-size: 12px !important;
 }
 
 #app {

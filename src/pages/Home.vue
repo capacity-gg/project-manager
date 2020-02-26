@@ -426,37 +426,6 @@ $button-bg-color-hover: $color-primary-dark;
 $button-bg-color-disabled: $color-primary-darkest;
 $button-border-color: $color-primary-mid;
 
-/**
- * General
- */
-
-h1 {
-  font-size: 28px !important;
-}
-h2 {
-  font-size: 24px !important;
-}
-h3 {
-  font-size: 22px !important;
-}
-h4 {
-  font-size: 18px !important;
-}
-h5 {
-  font-size: 16px !important;
-}
-h6 {
-  font-size: 12px !important;
-}
-
-
-body,
-div,
-span {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 12px;
-}
-
 .home {
   height: 100vh;
   overflow: hidden;
