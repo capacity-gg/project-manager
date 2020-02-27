@@ -85,6 +85,7 @@
       :droppable="true"
       :height="height"
       :eventRender="handleRender"
+      :eventOrder="handleEventOrder"
       @eventDrop="handleDrop"
       @eventReceive="handleReceive"
       @eventClick="handleClick"
@@ -217,6 +218,39 @@ export default {
       self.eventToolbar.draggable.addEventListener('mouseleave', self.dragScrollEnd);
       self.eventToolbar.draggable.addEventListener('mouseup', self.dragScrollEnd);
       self.eventToolbar.draggable.addEventListener('mousemove', self.dragScrollMove);
+    },
+    handleEventOrder(prevEvent, nextEvent) {
+      var sortOrder = 1;
+
+      var isPrevMilestone = this.isMilestoneEvent(prevEvent);
+      var isNextMilestone = this.isMilestoneEvent(nextEvent);
+
+      // Check whether both events are milestones or users
+      if ((isPrevMilestone && isNextMilestone) || (!isPrevMilestone && !isNextMilestone)) {
+        // Sort same-type events alphabetcally
+        if (prevEvent.title <  nextEvent.title) {
+          sortOrder = -1;
+        }
+      }
+      // Sort events milestones first
+      else if (!isNextMilestone) {
+        sortOrder = -1;
+      }
+
+      return sortOrder;
+    },
+    isMilestoneEvent(event) {
+      var self = this;
+      var isMilestone = false;
+
+      self.milestoneEvents.forEach(function(milestone) {
+        if (milestone.title == event.title) {
+          isMilestone = true;
+          return;
+        }
+      });
+
+      return isMilestone;
     },
     calculateCount() {
       var self = this;
