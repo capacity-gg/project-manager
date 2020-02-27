@@ -32,12 +32,23 @@
     </div>
     <div class="top-bar">
       <div class="calendar-toggle-container">
-        <div class="button button--icon" @click.prevent="toggleMilestonesVisibility">
-          <span class="icon" v-if="areMilestonesVisible">
-            <font-awesome-icon icon="exclamation"/>
-          </span>  
-          <span class="icon" v-else>
+        <div 
+          style="margin: 0 10px 0 0;" 
+          class="button button--icon" 
+          :class="areUsersVisible ? 'inactive' : ''"
+          @click.prevent="setUsersVisibility"
+        >
+          <span class="icon">
             <font-awesome-icon icon="user"/>
+          </span>
+        </div>
+        <div 
+          class="button button--icon"
+          :class="areMilestonesVisible ? 'inactive' : ''"
+          @click.prevent="setMilestonesVisibility"
+        >
+          <span class="icon">
+            <font-awesome-icon icon="exclamation"/>
           </span>  
         </div>
       </div>
@@ -51,7 +62,7 @@
             <span class="fc-event-name">{{ event.title }}</span>
           </div>
         </div>
-        <div v-else>
+        <div v-else-if="areUsersVisible">
           <div 
             class='button button--primary fc-event' 
             v-for="event in userEvents" 
@@ -130,6 +141,7 @@ export default {
       importedCSV: [],
       areSettingsVisible: false,
       areMilestonesVisible: false,
+      areUsersVisible: true,
       eventToolbar: {
         draggable: null,
         isDragging: false,
@@ -222,10 +234,19 @@ export default {
     stopPropagation(e) {
       e.stopPropagation();
     },
-    toggleMilestonesVisibility() {
+    setUsersVisibility() {
       var self = this;
 
-      self.areMilestonesVisible = !self.areMilestonesVisible;
+      self.areUsersVisible = true;
+      self.areMilestonesVisible = false;
+
+      self.$refs.fullCalendar.getApi().rerenderEvents();
+    },
+    setMilestonesVisibility() {
+      var self = this;
+
+      self.areUsersVisible = false;
+      self.areMilestonesVisible = true;
 
       self.$refs.fullCalendar.getApi().rerenderEvents();
     },
@@ -270,7 +291,7 @@ export default {
       var self = this;
       var isRendered = true;
 
-      if (self.areMilestonesVisible) {
+      /*if (self.areMilestonesVisible) {
         self.milestoneEvents.forEach(function(event) {
           if (event.title == info.event.title) {
             isRendered = true;
@@ -285,7 +306,7 @@ export default {
             return;
           }
         });
-      }
+      }*/
 
       return isRendered;
     },
@@ -405,9 +426,11 @@ $color-primary-mid: #2c6cac;
 $color-primary-dark: #1b446c;
 $color-primary-darkest: #102840;
 
-$color-secondary-light: #fef8f5;
-$color-secondary-mid: #fbe4d8;
-$color-secondary-dark: #f4b493;
+$color-secondary-lightest: #fbe6db;
+$color-secondary-light: #f6c1a6;
+$color-secondary-mid: #ed844e;
+$color-secondary-dark: #d57646;
+$color-secondary-darkest: #a55c36;
 
 $color-gray-lightest: #f9f9f9;
 $color-gray-light: #f1f1f1;
@@ -425,6 +448,12 @@ $button-bg-color: $color-primary-light;
 $button-bg-color-hover: $color-primary-dark;
 $button-bg-color-disabled: $color-primary-darkest;
 $button-border-color: $color-primary-mid;
+
+$button-alt-color: $color-gray-lightest;
+$button-alt-bg-color: $color-secondary-mid;
+$button-alt-bg-color-hover: $color-secondary-dark;
+$button-alt-bg-color-disabled: $color-secondary-darkest;
+$button-alt-border-color: $color-secondary-dark;
 
 .home {
   height: 100vh;
@@ -575,7 +604,7 @@ $button-border-color: $color-primary-mid;
   }
   
   .calendar-toggle-container {
-    width: 60px;
+    width: 110px;
     padding: 10px;
   }
 
@@ -585,7 +614,7 @@ $button-border-color: $color-primary-mid;
     padding: 10px 0;
     position: relative;
     white-space: nowrap;
-    width: calc(100% - 80px);
+    width: calc(100% - 130px);
   }
 }
 
@@ -610,11 +639,25 @@ $button-border-color: $color-primary-mid;
     cursor: pointer;
   } 
 
+  &.inactive {
+    background: transparent;
+    border-color: $color-gray-dark;
+    box-shadow: none;
+    color: $color-gray-dark !important;
+    cursor: default;
+  }
+
   &.disabled {
     background-color: $button-bg-color-disabled;
     border-color: $button-bg-color-disabled;
     box-shadow: none;
     cursor: not-allowed;
+  }
+
+  &.event-milestone {
+    background: $button-alt-bg-color;
+    border: 1px solid $button-alt-border-color;
+    color: $button-alt-color !important;
   }
 }
 
@@ -669,6 +712,7 @@ $button-border-color: $color-primary-mid;
 
 .fc-dragging.fc-event,
 .event-toolbar .fc-event {
+  cursor: grab;
   display: inline-block;
   margin: 0 10px 0 0;
   width: 200px;
@@ -689,10 +733,20 @@ $button-border-color: $color-primary-mid;
     text-align: right;
     width: calc(25% - 20px);
   }
+
+  &.event-milestone {
+    .fc-event-name {
+      width: 100%;
+      text-align: center;
+    }
+  }
 }
 
-.event-toolbar .event-milestone .fc-event-name {
+.fc-dragging.fc-event
+.event-toolbar .fc-event {
+  &.event-milestone.fc-event-name {
     text-align: center;
+  }
 }
 
 .fc-toolbar.fc-header-toolbar {
@@ -751,11 +805,11 @@ $button-border-color: $color-primary-mid;
 }
 
 .fc-day-header.fc-today span {
-  background: $color-secondary-dark;
+  background: $color-gray-dark;
 }
 
 .fc-today {
-  background: $color-secondary-light !important;
+  background: $color-secondary-lightest !important;
 }
 
 .fc-sun,
