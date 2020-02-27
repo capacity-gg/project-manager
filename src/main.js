@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import axios from 'axios'
 import router from './router'
 import store from './store/store'
 
@@ -24,7 +25,7 @@ Vue.component('font-awesome-layers-text', FontAwesomeLayersText)
 require('@fullcalendar/core/main.css')
 require('@fullcalendar/daygrid/main.css')
 
-Vue.config.productionTip = false
+axios.defaults.baseURL = 'http://localhost:8081'
 
 new Vue({
   el: '#app',
