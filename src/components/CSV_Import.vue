@@ -12,9 +12,9 @@
                 <slot name="error" v-if="hasError">
                     <div class="invalid-feedback">File type is invalid</div>
                 </slot>
-                <div class="form-group" v-if="canSubmit">
+                <div class="form-group" v-if="canSubmit" style="margin: 10px 0 0">
                     <slot name="submit" :load="load">
-                        <div class="fc-button fc-button--primary" @click.prevent="load">Import</div>
+                        <div class="button button--large" @click.prevent="load">Import</div>
                     </slot>
                 </div>
             </div>
