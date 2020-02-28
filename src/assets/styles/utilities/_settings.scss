@@ -1,9 +1,16 @@
 body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    color: color(gray, darkest);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 0;
     margin: 0;
+    min-height: 100vh;
+    min-width: 100vw;
+    text-align: center;
 }
-  
+
 span {
     font-size: 12px;
 }
@@ -27,37 +34,18 @@ h6 {
     font-size: 12px !important;
 }
 
-
-#app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    min-height: 100vh;
-    min-width: 100vw;
-}
-
-.home {
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
-    width: 100vw;
-}
-
-// Scrollbars
 div {
     &::-webkit-scrollbar {
-        background-color: $color-gray-light;
+        background-color: color(gray, light);
         border-radius: 10px;
         height: 6px;
         width: 6px;
     }
     &::-webkit-scrollbar-track {
-        background-color: $color-gray-light;
+        background-color: color(gray, light);
     }
     &::-webkit-scrollbar-thumb {
-        background-color: $color-gray-dark;
+        background-color: color(gray, dark);
     }
 
     &::-webkit-scrollbar-track,

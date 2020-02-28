@@ -27,8 +27,8 @@
     position: relative;
 
     span {    
-    background: $color-gray-darkest;
-    color: $color-gray-lightest;
+    background: color(gray, darkest);
+    color: color(gray, lightest);
     font-size: 24px;
     height: $button-size-large;
     line-height: $button-size-large;
@@ -40,16 +40,16 @@
 }
 
 .fc-day-header.fc-today span {
-    background: $color-gray-dark;
+    background: color(gray, dark);
 }
 
 .fc-today {
-    background: $color-secondary-lightest !important;
+    background: color(secondary, lightest) !important;
 }
 
 .fc-sun,
 .fc-sat {
-    background: $color-gray-light;
+    background: color(gray, light);
 }
 
 .fc-dragging,

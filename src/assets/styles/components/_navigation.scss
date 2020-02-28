@@ -1,10 +1,10 @@
 .nav-bar {
-    background: $color-gray-darkest;
+    background: color(gray, darkest);
     height: 66px;
     width: 100%;
   
     .title {
-        color: $color-gray-lightest;
+        color: color(gray, lightest);
         display: inline-block;
         margin: 0 0 0 20px;
         height: 100%;

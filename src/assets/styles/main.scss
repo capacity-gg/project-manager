@@ -1,9 +1,15 @@
-@import "base/variables";
-@import "base/layout";
+
+@import "utilities/functions";
+@import "utilities/variables";
+@import "utilities/settings";
+
+@import "globals/footer";
+@import "globals/header";
+@import "globals/layout";
+
+@import "pages/home";
 
 @import "components/buttons";
-@import "components/footer";
-@import "components/header";
 @import "components/modals";
 @import "components/navigation";
 @import "components/toolbar";

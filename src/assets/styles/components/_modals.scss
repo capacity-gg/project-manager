@@ -1,5 +1,5 @@
 .modal__background {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(color(gray, darkest), 0.5);
     height: 100%;
     position: absolute;
     right: 0;
@@ -11,7 +11,7 @@
 .modal {
     background: #ffffff;
     border-radius: 5px;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 2px 4px rgba(color(gray, darkest), 0.5);
     height: 400px;
     left: calc(50% - 300px);
     padding: 10px;
@@ -20,7 +20,7 @@
     width: 600px;
   
     input[type="text"] {
-        color: $color-gray-dark;
+        color: color(gray, dark);
         height: 22px;
         line-height: 22px;
         padding: 0 4px;

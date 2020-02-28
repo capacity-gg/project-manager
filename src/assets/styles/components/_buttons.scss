@@ -17,9 +17,9 @@
 
     &.inactive {
         background: transparent;
-        border-color: $color-gray-dark;
+        border-color: color(gray, dark);
         box-shadow: none;
-        color: $color-gray-dark !important;
+        color: color(gray, dark) !important;
         cursor: default;
     }
 
