@@ -1,3 +1,22 @@
+// Button sizes
+$button-size-small: 22px;
+$button-size-default: 30px;
+$button-size-large: 44px;
+$button-radius: 3px;
+
+// Button colors
+$button-color: color(gray, lightest);
+$button-bg-color: color(primary, light);
+$button-bg-color-hover: color(primary, dark);
+$button-bg-color-disabled: color(primary, darkest);
+$button-border-color: color(primary, mid);
+
+$button-alt-color: color(gray, lightest);
+$button-alt-bg-color: color(secondary, mid);
+$button-alt-bg-color-hover: color(secondary, dark);
+$button-alt-bg-color-disabled: color(secondary, darkest);
+$button-alt-border-color: color(secondary, dark); 
+
 .fc-event,
 .fc-event-container .fc-event,
 .fc-button.fc-button-primary,

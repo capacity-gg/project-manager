@@ -1,3 +1,4 @@
+html,
 body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -51,6 +52,39 @@ div {
     &::-webkit-scrollbar-track,
     &::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        -webkit-box-shadow: inset 0 0 6px rgba(color(gray, darkest), 0.3);
     }
+}
+
+.mobile-only {
+	@include breakpoint($small-screen) { display: none; }
+}
+
+.center {
+	margin-right: auto !important;
+	margin-left: auto !important;
+	display: block !important;
+	text-align: center !important;
+}
+
+.hide {
+	opacity: 0;
+	visibility: hidden;
+	display: none;
+}
+
+.marg-top-0 { 
+	margin-top: 0; 
+}
+
+.marg-bottom-0 { 
+	margin-bottom: 0; 
+}
+
+.marg-left-0 { 
+	margin-left: 0; 
+}
+
+.marg-right-0 { 
+	margin-right: 0; 
 }

@@ -1,17 +1,30 @@
- $button-size-small: 22px;
- $button-size-default: 30px;
- $button-size-large: 44px;
- $button-radius: 3px;
- 
- $button-color: color(gray, lightest);
- $button-bg-color: color(primary, light);
- $button-bg-color-hover: color(primary, dark);
- $button-bg-color-disabled: color(primary, darkest);
- $button-border-color: color(primary, mid);
- 
- $button-alt-color: color(gray, lightest);
- $button-alt-bg-color: color(secondary, mid);
- $button-alt-bg-color-hover: color(secondary, dark);
- $button-alt-bg-color-disabled: color(secondary, darkest);
- $button-alt-border-color: color(secondary, dark);
- 
+// Colors accessible via nested maps
+$color-map: (
+    primary: (
+        lightest: #ebf3fb,
+        light   : #3788d8,
+        mid     : #2c6cac,
+        dark    : #1b446c,
+        darkest : #102840
+    ),
+    secondary: (
+        lightest: #fbe6db,
+        light   : #f6c1a6,
+        mid     : #ed844e,
+        dark    : #d57646,
+        darkest : #a55c36
+    ),
+    gray: (     
+        lightest: #f9f9f9,
+        light   : #f1f1f1,
+        mid     : #dddddd,
+        dark    : #555555,
+        darkest : #333333
+    )
+);
+
+// Media query upper sizes
+$mobile-screen: 480px;
+$small-screen: 768px;
+$medium-screen: 1024px;
+$large-screen: 1366px;

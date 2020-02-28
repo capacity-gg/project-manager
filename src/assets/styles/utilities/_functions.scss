@@ -1,27 +1,3 @@
-// Colors accessible via nested maps
-$color-map: (
-    primary: (
-        lightest: #ebf3fb,
-        light   : #3788d8,
-        mid     : #2c6cac,
-        dark    : #1b446c,
-        darkest : #102840
-    ),
-    secondary: (
-        lightest: #fbe6db,
-        light   : #f6c1a6,
-        mid     : #ed844e,
-        dark    : #d57646,
-        darkest : #a55c36
-    ),
-    gray: (     
-        lightest: #f9f9f9,
-        light   : #f1f1f1,
-        mid     : #dddddd,
-        dark    : #555555,
-        darkest : #333333
-    )
-);
 
 // Generate colors variables from color map 
 @function color($color, $tone: 'light') {
