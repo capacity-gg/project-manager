@@ -1,0 +1,46 @@
+.modal__background {
+    background: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+  
+.modal {
+    background: #ffffff;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    height: 400px;
+    left: calc(50% - 300px);
+    padding: 10px;
+    position: relative;
+    top: calc(50% - 200px);
+    width: 600px;
+  
+    input[type="text"] {
+        color: $color-gray-dark;
+        height: 22px;
+        line-height: 22px;
+        padding: 0 4px;
+        width: calc(100% - 10px);
+    }
+}
+  
+.modal--header {
+    font-size: 24px;
+    font-weight: 600;
+    padding: 10px;
+}
+  
+.modal--row {
+    margin: 0 0 20px;
+}
+  
+.modal--label {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 10px;
+    padding: 4px 0;
+}

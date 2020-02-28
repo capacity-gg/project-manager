@@ -1,0 +1,47 @@
+.fc-dragging.fc-event,
+.event-toolbar .fc-event {
+    cursor: grab;
+    display: inline-block;
+    margin: 0 10px 0 0;
+    width: 200px;
+
+    .fc-event-name,
+    .fc-event-count {
+        display: inline-block;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .fc-event-name {
+        text-align: left;
+        width: calc(75% - 20px);
+    }
+
+    .fc-event-count {
+        text-align: right;
+        width: calc(25% - 20px);
+    }
+
+    &.event-milestone {
+        .fc-event-name {
+        width: 100%;
+        text-align: center;
+        }
+    }
+}
+
+.fc-dragging.fc-event
+.event-toolbar .fc-event {
+    &.event-milestone.fc-event-name {
+        text-align: center;
+    }
+}
+
+.fc-toolbar.fc-header-toolbar {  
+    .fc-left,
+    .fc-right {
+        &:focus {
+        outline: none;
+        }
+    }
+}

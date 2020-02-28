@@ -1,0 +1,83 @@
+.fc-event,
+.fc-event-container .fc-event,
+.fc-button.fc-button-primary,
+.button {
+    background: $button-bg-color;
+    border: 1px solid $button-border-color;
+    color: $button-color !important;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: $button-bg-color-hover;
+        border-color: $button-bg-color-hover;
+        box-shadow: none;
+        cursor: pointer;
+    } 
+
+    &.inactive {
+        background: transparent;
+        border-color: $color-gray-dark;
+        box-shadow: none;
+        color: $color-gray-dark !important;
+        cursor: default;
+    }
+
+    &.disabled {
+        background-color: $button-bg-color-disabled;
+        border-color: $button-bg-color-disabled;
+        box-shadow: none;
+        cursor: not-allowed;
+    }
+
+    &.event-milestone {
+        background: $button-alt-bg-color;
+        border: 1px solid $button-alt-border-color;
+        color: $button-alt-color !important;
+    }
+}
+
+.button--primary {
+    font-size: 18px;
+    height: $button-size-default;
+    line-height: $button-size-default;
+    margin: 10px 0;
+    width: 200px;
+}
+
+.button--large {
+    border-radius: $button-radius;
+    display: inline-block;
+    font-size: 18px;
+    height: $button-size-large;
+    line-height: $button-size-large;
+    padding: 5px;
+    text-transform: uppercase;
+    width: 200px;
+}
+
+.fc-button.fc-button-primary,
+.button--icon {
+    border-radius: $button-radius;
+    display: inline-block;
+    height: $button-size-large;
+    padding: 0;
+    width: $button-size-large;
+
+    .fc-icon,
+    .icon {
+        font-weight: 600;
+        margin: 0;
+        padding: 0;
+        vertical-align: middle;
+    }
+
+    .icon {
+        font-size: $button-size-small;
+        line-height: $button-size-large;
+    }
+
+    .fc-icon {
+        font-size: $button-size-default;
+    }
+}

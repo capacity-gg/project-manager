@@ -1,0 +1,58 @@
+.fc-view-container {
+    overflow: hidden;
+}
+
+.fc-unthemed .fc-content-skeleton {
+    height: 100vh;
+    max-height: calc(100vh - 311px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0;
+}
+
+.fc-event .fc-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.fc-event,
+.fc-day-header {
+    height: $button-size-large;
+    line-height: $button-size-large;
+    margin-bottom: 5.5px;
+    text-align: center;
+}
+
+.fc-day-header {
+    position: relative;
+
+    span {    
+    background: $color-gray-darkest;
+    color: $color-gray-lightest;
+    font-size: 24px;
+    height: $button-size-large;
+    line-height: $button-size-large;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: $button-size-large;
+    }  
+}
+
+.fc-day-header.fc-today span {
+    background: $color-gray-dark;
+}
+
+.fc-today {
+    background: $color-secondary-lightest !important;
+}
+
+.fc-sun,
+.fc-sat {
+    background: $color-gray-light;
+}
+
+.fc-dragging,
+.dragging {
+    cursor: grabbing !important;
+}

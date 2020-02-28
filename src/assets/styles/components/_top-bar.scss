@@ -1,0 +1,25 @@
+.top-bar {
+    margin: 68px 0 10px;
+  
+    .calendar-toggle-container,
+    .event-toolbar {
+        background: $color-gray-mid;
+        display: inline-block;
+        height: 56px;
+        vertical-align: middle;
+    }
+    
+    .calendar-toggle-container {
+        width: 110px;
+        padding: 10px;
+    }
+  
+    .event-toolbar {
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 10px 0;
+        position: relative;
+        white-space: nowrap;
+        width: calc(100% - 130px);
+    }
+}

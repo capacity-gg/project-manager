@@ -1,0 +1,40 @@
+
+/**
+ * Variable
+ */
+
+ $color-primary-lightest: #ebf3fb;
+ $color-primary-light: #3788d8;
+ $color-primary-mid: #2c6cac;
+ $color-primary-dark: #1b446c;
+ $color-primary-darkest: #102840;
+ 
+ $color-secondary-lightest: #fbe6db;
+ $color-secondary-light: #f6c1a6;
+ $color-secondary-mid: #ed844e;
+ $color-secondary-dark: #d57646;
+ $color-secondary-darkest: #a55c36;
+ 
+ $color-gray-lightest: #f9f9f9;
+ $color-gray-light: #f1f1f1;
+ $color-gray-mid: #dddddd;
+ $color-gray-dark: #555555;
+ $color-gray-darkest: #333333;
+ 
+ $button-size-small: 22px;
+ $button-size-default: 30px;
+ $button-size-large: 44px;
+ $button-radius: 3px;
+ 
+ $button-color: $color-gray-lightest;
+ $button-bg-color: $color-primary-light;
+ $button-bg-color-hover: $color-primary-dark;
+ $button-bg-color-disabled: $color-primary-darkest;
+ $button-border-color: $color-primary-mid;
+ 
+ $button-alt-color: $color-gray-lightest;
+ $button-alt-bg-color: $color-secondary-mid;
+ $button-alt-bg-color-hover: $color-secondary-dark;
+ $button-alt-bg-color-disabled: $color-secondary-darkest;
+ $button-alt-border-color: $color-secondary-dark;
+ 

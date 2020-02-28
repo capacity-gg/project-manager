@@ -1,0 +1,68 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0;
+    margin: 0;
+}
+  
+span {
+    font-size: 12px;
+}
+  
+h1 {
+    font-size: 28px !important;
+}
+h2 {
+    font-size: 24px !important;
+}
+h3 {
+    font-size: 22px !important;
+}
+h4 {
+    font-size: 18px !important;
+}
+h5 {
+    font-size: 16px !important;
+}
+h6 {
+    font-size: 12px !important;
+}
+
+
+#app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+.home {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    width: 100vw;
+}
+
+// Scrollbars
+div {
+    &::-webkit-scrollbar {
+        background-color: $color-gray-light;
+        border-radius: 10px;
+        height: 6px;
+        width: 6px;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: $color-gray-light;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: $color-gray-dark;
+    }
+
+    &::-webkit-scrollbar-track,
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    }
+}
