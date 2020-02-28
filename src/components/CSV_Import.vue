@@ -1,23 +1,15 @@
 <template>
     <div class="vue-csv-uploader">
         <div class="form">
-            <div class="form-group csv-import-file">
-                <input 
-                    class="form-control-file" 
-                    type="file" 
-                    name="csv"
-                    ref="csv" 
-                    @change.prevent="validFileMimeType" 
-                >
-                <slot name="error" v-if="hasError">
-                    <div class="invalid-feedback">File type is invalid</div>
-                </slot>
-                <div class="form-group" v-if="canSubmit" style="margin: 10px 0 0">
-                    <slot name="submit" :load="load">
-                        <div class="button button__primary button--large" @click.prevent="load">Import</div>
-                    </slot>
-                </div>
-            </div>
+            <input 
+                type="file" 
+                name="csv"
+                ref="csv" 
+                @change.prevent="validFileMimeType" 
+            >
+            <slot name="error" v-if="hasError">
+                <div class="form-validation form-validation--error">File type is invalid</div>
+            </slot>
         </div>
     </div>
 </template>

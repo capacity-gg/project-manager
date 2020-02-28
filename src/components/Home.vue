@@ -19,16 +19,19 @@
         </div>
         <div class="modal__header">Settings</div>
         <div class="modal__row">
-          <div class="modal__label">Project Name</div>
+          <label class="modal__label">Project Name</label>
           <input type="text" v-model="projectName" :val="projectName" placeholder="Example name">
         </div>
         <div class="modal__row">
-          <div class="modal__label">Import</div>
-          <csvImport v-model="parseCSV"/>
+          <label class="modal__label">Import / Export</label>
+          <csvImport 
+            v-model="parseCSV"
+            ref="csvImport"
+          />
         </div>
-        <div class="modal__row">
-          <div class="modal__label">Export</div>
-          <div class="button button__primary button--large" @click.prevent="exportTableToCSV">Export</div>
+        <div class="flex-content">
+          <div class="button button__primary button--large flex__small--6" @click.prevent="importCSVFile">Import</div>
+          <div class="button button__primary button--large flex__small--6" @click.prevent="exportTableToCSV">Export</div>
         </div>
       </div>
     </div>
@@ -287,6 +290,11 @@ export default {
     },
     setSettingsVisibility(IsVisible) {
       this.areSettingsVisible = IsVisible;
+    },
+    importCSVFile() {
+      var self = this;
+
+      self.$refs.csvImport.load();
     },
     exportTableToCSV() {
       var content = this.eventsNew;

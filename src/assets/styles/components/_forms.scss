@@ -1,0 +1,42 @@
+input[type="text"] {
+    color: color(gray, darkest);
+    height: 22px;
+    line-height: 22px;
+    padding: 0 4px;
+    width: calc(100% - 10px);
+}
+
+input[type="file"] {
+    background: color(gray, mid);
+    border: 1px solid rgba(color(gray, dark), 0.3);
+    display: block;
+    height: auto;
+    min-height: 60px;
+    padding: 11px;
+    text-align: center;
+    width: calc(100% - 22px);
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.form-validation {
+    font-size: 12px;
+    margin: 6px 0;
+}
+
+.form-validation--error {
+    color: color(alert, error);
+}
+
+.form-validation--success {
+    color: color(alert, success);
+}
+
+.dark-mode {
+    input[type="file"] {
+        background: color(gray, darkest);
+        border-color: rgba(color(gray, mid), 0.3);
+    }
+}
