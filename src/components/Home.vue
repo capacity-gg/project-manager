@@ -222,15 +222,13 @@ export default {
     handleEventOrder(prevEvent, nextEvent) {
       var sortOrder = 1;
 
-      var isPrevMilestone = this.isMilestoneEvent(prevEvent);
-      var isNextMilestone = this.isMilestoneEvent(nextEvent);
+      var isPrevMilestone = this.isMilestoneEvent(prevEvent.title);
+      var isNextMilestone = this.isMilestoneEvent(nextEvent.title);
 
       // Check whether both events are milestones or users
       if ((isPrevMilestone && isNextMilestone) || (!isPrevMilestone && !isNextMilestone)) {
         // Sort same-type events alphabetcally
-        if (prevEvent.title <  nextEvent.title) {
-          sortOrder = -1;
-        }
+        if (prevEvent.title <  nextEvent.title) { sortOrder = -1; }
       }
       // Sort events milestones first
       else if (!isNextMilestone) {
@@ -239,12 +237,12 @@ export default {
 
       return sortOrder;
     },
-    isMilestoneEvent(event) {
+    isMilestoneEvent(eventTitle) {
       var self = this;
       var isMilestone = false;
 
       self.milestoneEvents.forEach(function(milestone) {
-        if (milestone.title == event.title) {
+        if (milestone.title == eventTitle) {
           isMilestone = true;
           return;
         }
@@ -324,6 +322,9 @@ export default {
     handleRender(info) {
       var self = this;
       var isRendered = true;
+
+      // Ensure milestone class is added to relevant events
+      if (self.isMilestoneEvent(info.event.title)) { info.el.classList.add('event-milestone'); }
 
       /*if (self.areMilestonesVisible) {
         self.milestoneEvents.forEach(function(event) {
