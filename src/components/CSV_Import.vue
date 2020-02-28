@@ -132,28 +132,3 @@ export default {
 };
 
 </script>
-
-<style lang='scss' scoped>
-
-.csv-import-file {
-  background: #eee;
-  border: 1px solid #ccc;
-  display: block;
-  height: auto;
-  min-height: 60px;
-  padding: 10px;
-}
-
-.form-control-file {
-  padding: 10px;
-  position: relative;
-  top: 10px;
-}
-
-.invalid-feedback {
-  color: #ff0000;
-  font-size: 12px;
-  margin: 6px 0;
-}
-
-</style>

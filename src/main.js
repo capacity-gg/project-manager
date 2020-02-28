@@ -24,6 +24,7 @@ Vue.component('font-awesome-layers-text', FontAwesomeLayersText)
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 require('@fullcalendar/core/main.css')
 require('@fullcalendar/daygrid/main.css')
+require('./assets/style.scss')
 
 axios.defaults.baseURL = 'http://localhost:8081'
 

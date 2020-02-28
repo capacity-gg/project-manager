@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+
 require("babel-polyfill")
 
 module.exports = {
@@ -15,29 +16,30 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          loaders: {
-          }
+          loaders: {}
           // other vue-loader options go here
         }
-      },
-      {
+      }, {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
-      },
-      {
+      }, {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
           name: '[name].[ext]?[hash]'
         }
-      },
-      {
-        test: /\.css/,
-        use: ['vue-style-loader', 'css-loader'] // BOTH are needed!
+      }, {
+        test: /\.(css|sass|scss)$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader'
+        ]
       }
     ]
   },
+  plugins: [],
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
