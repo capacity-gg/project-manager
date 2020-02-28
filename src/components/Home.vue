@@ -15,6 +15,11 @@
     </div>
     <div v-if="areSettingsVisible" class="modal__background" @click.prevent="setSettingsVisibility(false)">
       <div class="modal modal--settings" @click="stopPropagation">
+        <div class="button button__icon--minimal modal__close-button" @click.prevent="setSettingsVisibility(false)">
+          <span class="icon">
+            <font-awesome-icon icon="times"/>
+          </span>  
+        </div>
         <div class="modal--header">Settings</div>
         <div class="modal--row">
           <div class="modal--label">Project Name</div>

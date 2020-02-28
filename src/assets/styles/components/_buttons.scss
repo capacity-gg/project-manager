@@ -101,6 +101,29 @@ $button-alt-border-color: color(secondary, dark);
     }
 }
 
+.button__icon--minimal {
+    height: $button-size-large;
+    padding: 0;
+    width: $button-size-large;
+
+    .fc-icon,
+    .icon {
+        font-weight: 600;
+        margin: 0;
+        padding: 0;
+        vertical-align: middle;
+    }
+
+    .icon {
+        font-size: $button-size-small;
+        line-height: $button-size-large;
+    }
+
+    .fc-icon {
+        font-size: $button-size-default;
+    }
+}
+
 .dark-mode {
     .fc-event,
     .fc-event-container .fc-event,
