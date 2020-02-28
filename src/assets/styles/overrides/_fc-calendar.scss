@@ -27,24 +27,20 @@
     position: relative;
 
     span {    
-    background: color(gray, darkest);
-    color: color(gray, lightest);
-    font-size: 24px;
-    height: $button-size-large;
-    line-height: $button-size-large;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: $button-size-large;
+        background: color(gray, darkest);
+        color: color(gray, lightest);
+        font-size: 24px;
+        height: $button-size-large;
+        line-height: $button-size-large;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: $button-size-large;
     }  
 }
 
-.fc-day-header.fc-today span {
-    background: color(gray, dark);
-}
-
 .fc-today {
-    background: color(secondary, lightest) !important;
+    background: rgba(color(primary, mid), 0.2) !important;
 }
 
 .fc-sun,
@@ -55,4 +51,29 @@
 .fc-dragging,
 .dragging {
     cursor: grabbing !important;
+}
+
+.dark-mode {
+    .fc-unthemed th, 
+    .fc-unthemed td, 
+    .fc-unthemed thead, 
+    .fc-unthemed tbody, 
+    .fc-unthemed .fc-divider, 
+    .fc-unthemed .fc-row, 
+    .fc-unthemed .fc-content, 
+    .fc-unthemed .fc-popover, 
+    .fc-unthemed .fc-list-view, 
+    .fc-unthemed .fc-list-heading td {
+        border-color: rgba(color(gray, mid), 0.2);
+    }
+
+    .fc-day-header span {    
+        background: rgba(color(gray, lightest), 0.5);
+        color: color(gray, darkest);
+    }
+
+    .fc-sun,
+    .fc-sat {
+        background: color(gray, darkest);
+    }
 }

@@ -1,6 +1,6 @@
 .csv-import-file {
-    background: #eee;
-    border: 1px solid #ccc;
+    background: color(gray, mid);
+    border: 1px solid rgba(color(gray, dark), 0.3);
     display: block;
     height: auto;
     min-height: 60px;
@@ -14,7 +14,14 @@
 }
 
 .invalid-feedback {
-    color: #ff0000;
+    color: color(alert, error);
     font-size: 12px;
     margin: 6px 0;
+}
+
+.dark-mode {
+    .csv-import-file {
+        background: color(gray, darkest);
+        border-color: rgba(color(gray, mid), 0.3);
+    }
 }

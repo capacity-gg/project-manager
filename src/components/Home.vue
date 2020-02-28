@@ -30,8 +30,8 @@
         </div>
       </div>
     </div>
-    <div class="top-bar">
-      <div class="calendar-toggle-container">
+    <div class="toolbar">
+      <div class="toolbar__buttons">
         <div 
           style="margin: 0 10px 0 0;" 
           class="button button--icon" 
@@ -52,7 +52,7 @@
           </span>  
         </div>
       </div>
-      <div id="event-toolbar" class="event-toolbar fc-unselectable">
+      <div id="event-toolbar" class="toolbar__events fc-unselectable">
         <div v-if="areMilestonesVisible">
           <div 
             class='button button--primary fc-event event-milestone' 

@@ -9,11 +9,11 @@
 }
   
 .modal {
-    background: #ffffff;
+    background: color(gray, lightest);
     border-radius: 5px;
     box-shadow: 2px 2px 4px rgba(color(gray, darkest), 0.5);
-    height: 400px;
     left: calc(50% - 300px);
+    min-height: 400px;
     padding: 10px;
     position: relative;
     top: calc(50% - 200px);
@@ -43,4 +43,10 @@
     font-weight: 600;
     margin: 0 0 10px;
     padding: 4px 0;
+}
+
+.dark-mode {
+    .modal {
+        background: color(gray, dark);
+    }
 }

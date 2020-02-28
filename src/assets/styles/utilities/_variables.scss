@@ -20,6 +20,11 @@ $color-map: (
         mid     : #dddddd,
         dark    : #555555,
         darkest : #333333
+    ),
+    alert: (
+        error   : #ff0000,
+        caution : #ff9900,
+        success : #009999
     )
 );
 

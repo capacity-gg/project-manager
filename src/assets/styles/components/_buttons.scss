@@ -100,3 +100,15 @@ $button-alt-border-color: color(secondary, dark);
         font-size: $button-size-default;
     }
 }
+
+.dark-mode {
+    .fc-event,
+    .fc-event-container .fc-event,
+    .fc-button.fc-button-primary,
+    .button {
+        &.inactive {
+            border-color: color(gray, lightest);
+            color: color(gray, lightest) !important;
+        }
+    }
+}

@@ -1,5 +1,33 @@
+$toolbar-button-container-width: 130px;
+$toolbar-events-container-width: calc(100% - #{$toolbar-button-container-width});
+
+.toolbar {
+    margin: 68px 0 10px;
+}
+  
+.toolbar__buttons,
+.toolbar__events {
+    background: color(gray, mid);
+    display: inline-block;
+    height: 56px;
+    padding: 10px 0;
+    vertical-align: middle;
+}
+
+.toolbar__buttons {
+    width: $toolbar-button-container-width;
+}
+
+.toolbar__events {
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    white-space: nowrap;
+    width: $toolbar-events-container-width;
+}
+
 .fc-dragging.fc-event,
-.event-toolbar .fc-event {
+.toolbar__events .fc-event {
     cursor: grab;
     display: inline-block;
     margin: 0 10px 0 0;
@@ -31,7 +59,7 @@
 }
 
 .fc-dragging.fc-event
-.event-toolbar .fc-event {
+.toolbar__events .fc-event {
     &.event-milestone.fc-event-name {
         text-align: center;
     }
@@ -41,7 +69,14 @@
     .fc-left,
     .fc-right {
         &:focus {
-        outline: none;
+            outline: none;
         }
+    }
+}
+
+.dark-mode {
+    .toolbar__buttons,
+    .toolbar__events {
+        background: rgba(color(gray, mid), 0.1);
     }
 }
