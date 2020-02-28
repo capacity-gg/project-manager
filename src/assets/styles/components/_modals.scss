@@ -1,5 +1,5 @@
 .modal__background {
-    background: rgba(color(gray, darkest), 0.5);
+    background: rgba(color(mono, black), 0.5);
     height: 100%;
     position: absolute;
     right: 0;
@@ -20,7 +20,7 @@
     width: 600px;
   
     input[type="text"] {
-        color: color(gray, dark);
+        color: color(gray, darkest);
         height: 22px;
         line-height: 22px;
         padding: 0 4px;
@@ -28,23 +28,23 @@
     }
 }
   
-.modal--header {
+.modal__header {
     font-size: 24px;
     font-weight: 600;
     padding: 10px;
 }
   
-.modal--row {
+.modal__row {
     margin: 0 0 20px;
 }
 
-.modal__close-button {
+.modal__button--close {
     position: absolute;
     top: 0;
     right: 0;
 }
   
-.modal--label {
+.modal__label {
     font-size: 14px;
     font-weight: 600;
     margin: 0 0 10px;

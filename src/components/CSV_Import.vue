@@ -14,7 +14,7 @@
                 </slot>
                 <div class="form-group" v-if="canSubmit" style="margin: 10px 0 0">
                     <slot name="submit" :load="load">
-                        <div class="button button--large" @click.prevent="load">Import</div>
+                        <div class="button button__primary button--large" @click.prevent="load">Import</div>
                     </slot>
                 </div>
             </div>

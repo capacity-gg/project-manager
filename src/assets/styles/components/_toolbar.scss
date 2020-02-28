@@ -1,3 +1,6 @@
+$toolbar-header-width: 360px;
+$toolbar-header-spacing: 36px;
+$toolbar-title-width: calc(100% - #{$toolbar-header-width} - #{$toolbar-header-spacing});
 $toolbar-button-container-width: 130px;
 $toolbar-events-container-width: calc(100% - #{$toolbar-button-container-width});
 
@@ -49,23 +52,29 @@ $toolbar-events-container-width: calc(100% - #{$toolbar-button-container-width})
         text-align: right;
         width: calc(25% - 20px);
     }
-
-    &.event-milestone {
-        .fc-event-name {
-        width: 100%;
-        text-align: center;
-        }
-    }
 }
 
-.fc-dragging.fc-event
-.toolbar__events .fc-event {
-    &.event-milestone.fc-event-name {
-        text-align: center;
-    }
+.toolbar__title,
+.fc-toolbar.fc-header-toolbar {
+    overflow: hidden;
+    position: absolute;
+    top: 80px;
+}
+
+.toolbar__title {
+    display: inline-block;
+    line-height: 44px;
+    text-align: left;
+    margin: 0 12px;
+    width: $toolbar-title-width;
+    white-space: nowrap;
 }
 
 .fc-toolbar.fc-header-toolbar {  
+    right: 12px;
+    text-transform: uppercase;
+    width: $toolbar-header-width;
+
     .fc-left,
     .fc-right {
         &:focus {

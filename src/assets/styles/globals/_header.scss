@@ -1,23 +1,25 @@
-.project-header,
-.fc-toolbar.fc-header-toolbar {
-    margin: 0;
-    overflow: hidden;
-    position: absolute;
-    top: 80px;
-    width: calc(100% - 384px);
+.header {
+    background: color(gray, darkest);
+    height: 66px;
+    padding: 0 12px;
 }
-
-.project-header .project-title{
+  
+.header__title {
+    color: color(gray, lightest);
     display: inline-block;
-    line-height: 44px;
-    margin: 0 0 0 18px;
+    margin: 0;
+    height: 100%;
+    line-height: 66px;
     text-align: left;
-    width: calc(100% - 18px);
-    white-space: nowrap;
+    vertical-align: middle;
+    width: calc(100% - 46px);
 }
 
-.fc-toolbar.fc-header-toolbar {
-    right: 12px;
-    text-transform: uppercase;
-    width: 360px;
+.header__buttons {
+    display: inline-block;
+    height: auto;
+
+    .button {
+        vertical-align: middle;
+    }
 }

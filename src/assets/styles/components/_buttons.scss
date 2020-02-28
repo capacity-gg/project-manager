@@ -1,6 +1,6 @@
 // Button sizes
 $button-size-small: 22px;
-$button-size-default: 30px;
+$button-size-default: 33px;
 $button-size-large: 44px;
 $button-radius: 3px;
 
@@ -17,10 +17,54 @@ $button-alt-bg-color-hover: color(secondary, dark);
 $button-alt-bg-color-disabled: color(secondary, darkest);
 $button-alt-border-color: color(secondary, dark); 
 
+.button {
+    display: inline-block;
+    font-size: 18px;
+    height: $button-size-default;
+    line-height: $button-size-default;
+    margin: 4px;
+
+    &:hover,
+    &:focus,
+    &:active {
+        box-shadow: none;
+        cursor: pointer;
+    } 
+
+    &.disabled {
+        background-color: $button-bg-color-disabled;
+        border-color: $button-bg-color-disabled;
+        cursor: not-allowed !important;;
+    }
+
+    &.inactive {
+        background: transparent !important;
+        border-color: color(gray, dark);
+        color: color(gray, dark) !important;
+        cursor: default !important;;
+    }
+}
+
+.button--small {
+    border-radius: $button-radius;
+    font-size: 14px;
+    height: $button-size-small;
+    line-height: $button-size-small;
+}
+
+.button--large {
+    border-radius: $button-radius;
+    height: $button-size-large;
+    line-height: $button-size-large;
+    padding: 5px;
+    text-transform: uppercase;
+    width: 200px;
+}
+
 .fc-event,
 .fc-event-container .fc-event,
 .fc-button.fc-button-primary,
-.button {
+.button__primary {
     background: $button-bg-color;
     border: 1px solid $button-border-color;
     color: $button-color !important;
@@ -30,57 +74,39 @@ $button-alt-border-color: color(secondary, dark);
     &:active {
         background-color: $button-bg-color-hover;
         border-color: $button-bg-color-hover;
-        box-shadow: none;
         cursor: pointer;
     } 
-
-    &.inactive {
-        background: transparent;
-        border-color: color(gray, dark);
-        box-shadow: none;
-        color: color(gray, dark) !important;
-        cursor: default;
-    }
-
-    &.disabled {
-        background-color: $button-bg-color-disabled;
-        border-color: $button-bg-color-disabled;
-        box-shadow: none;
-        cursor: not-allowed;
-    }
-
-    &.event-milestone {
-        background: $button-alt-bg-color;
-        border: 1px solid $button-alt-border-color;
-        color: $button-alt-color !important;
-    }
 }
 
-.button--primary {
-    font-size: 18px;
-    height: $button-size-default;
-    line-height: $button-size-default;
-    margin: 10px 0;
-    width: 200px;
-}
+.button__secondary.fc-event,
+.button__secondary.fc-event-container .fc-event,
+.button__secondary.fc-button.fc-button-primary,
+.button__secondary {
+    background: $button-alt-bg-color;
+    border: 1px solid $button-alt-border-color;
+    color: $button-alt-color !important;
 
-.button--large {
-    border-radius: $button-radius;
-    display: inline-block;
-    font-size: 18px;
-    height: $button-size-large;
-    line-height: $button-size-large;
-    padding: 5px;
-    text-transform: uppercase;
-    width: 200px;
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: $button-alt-bg-color-hover;
+        border-color: $button-alt-bg-color-hover;
+        box-shadow: none;
+        cursor: pointer;
+    }
+
+    span {
+        text-align: center !important;
+    }
 }
 
 .fc-button.fc-button-primary,
-.button--icon {
+.button__icon {
     border-radius: $button-radius;
     display: inline-block;
     height: $button-size-large;
     padding: 0;
+    margin: 0;
     width: $button-size-large;
 
     .fc-icon,

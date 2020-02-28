@@ -1,45 +1,43 @@
 <template>
   <div class="home">
-    <div class="nav-bar">
-      <h1 class="title">Project Management Tool</h1>
-      <div class="nav-bar__buttons">
-        <div class="button button--icon" @click.prevent="setSettingsVisibility(true)">
+    <div class="header">
+      <h1 class="header__title">Project Management Tool</h1>
+      <div class="header__buttons">
+        <div class="button button__primary button__icon" @click.prevent="setSettingsVisibility(true)">
           <span class="icon">
             <font-awesome-icon icon="cog"/>
           </span>  
         </div>
       </div>
     </div>
-    <div class="project-header">
-      <h2 class="project-title">{{ projectName }}</h2>
-    </div>
     <div v-if="areSettingsVisible" class="modal__background" @click.prevent="setSettingsVisibility(false)">
-      <div class="modal modal--settings" @click="stopPropagation">
-        <div class="button button__icon--minimal modal__close-button" @click.prevent="setSettingsVisibility(false)">
+      <div class="modal" @click="stopPropagation">
+        <div class="button button__icon--minimal modal__button--close" @click.prevent="setSettingsVisibility(false)">
           <span class="icon">
             <font-awesome-icon icon="times"/>
           </span>  
         </div>
-        <div class="modal--header">Settings</div>
-        <div class="modal--row">
-          <div class="modal--label">Project Name</div>
+        <div class="modal__header">Settings</div>
+        <div class="modal__row">
+          <div class="modal__label">Project Name</div>
           <input type="text" v-model="projectName" :val="projectName" placeholder="Example name">
         </div>
-        <div class="modal--row">
-          <div class="modal--label">Import</div>
+        <div class="modal__row">
+          <div class="modal__label">Import</div>
           <csvImport v-model="parseCSV"/>
         </div>
-        <div class="modal--row">
-          <div class="modal--label">Export</div>
-          <div class="button button--large" @click.prevent="exportTableToCSV">Export</div>
+        <div class="modal__row">
+          <div class="modal__label">Export</div>
+          <div class="button button__primary button--large" @click.prevent="exportTableToCSV">Export</div>
         </div>
       </div>
     </div>
     <div class="toolbar">
+      <h2 class="toolbar__title">{{ projectName }}</h2>
       <div class="toolbar__buttons">
         <div 
           style="margin: 0 10px 0 0;" 
-          class="button button--icon" 
+          class="button button__primary button__icon" 
           :class="areUsersVisible ? 'inactive' : ''"
           @click.prevent="setUsersVisibility"
         >
@@ -48,7 +46,7 @@
           </span>
         </div>
         <div 
-          class="button button--icon"
+          class="button button__primary button__icon"
           :class="areMilestonesVisible ? 'inactive' : ''"
           @click.prevent="setMilestonesVisibility"
         >
@@ -60,7 +58,7 @@
       <div id="event-toolbar" class="toolbar__events fc-unselectable">
         <div v-if="areMilestonesVisible">
           <div 
-            class='button button--primary fc-event event-milestone' 
+            class='button button__secondary fc-event button__secondary' 
             v-for="event in milestoneEvents" 
             :key="event.title"
           >
@@ -69,7 +67,7 @@
         </div>
         <div v-else-if="areUsersVisible">
           <div 
-            class='button button--primary fc-event' 
+            class='button button__primary fc-event' 
             v-for="event in userEvents" 
             :key="event.title"
           >
@@ -329,7 +327,7 @@ export default {
       var isRendered = true;
 
       // Ensure milestone class is added to relevant events
-      if (self.isMilestoneEvent(info.event.title)) { info.el.classList.add('event-milestone'); }
+      if (self.isMilestoneEvent(info.event.title)) { info.el.classList.add('button__secondary'); }
 
       /*if (self.areMilestonesVisible) {
         self.milestoneEvents.forEach(function(event) {
