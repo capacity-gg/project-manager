@@ -1,25 +1,30 @@
+$header-height: 66px;
+$header-padding: 10px;
+
 .header {
     background: color(gray, darkest);
-    height: 66px;
-    padding: 0 12px;
+    height: $header-height;
+    position: relative;
+}
+
+.header__title,
+.header__buttons {
+    line-height: $header-height;
+    position: absolute;
 }
   
 .header__title {
     color: color(gray, lightest);
     display: inline-block;
     margin: 0;
-    height: 100%;
-    line-height: 66px;
-    text-align: left;
-    vertical-align: middle;
-    width: calc(100% - 46px);
+    left: $header-padding;
 }
 
 .header__buttons {
-    display: inline-block;
-    height: auto;
+    right: $header-padding;
 
     .button {
+        margin-left: 10px;
         vertical-align: middle;
     }
 }

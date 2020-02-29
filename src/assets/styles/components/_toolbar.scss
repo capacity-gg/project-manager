@@ -1,7 +1,7 @@
 $toolbar-header-width: 360px;
 $toolbar-header-spacing: 36px;
 $toolbar-title-width: calc(100% - #{$toolbar-header-width} - #{$toolbar-header-spacing});
-$toolbar-button-container-width: 130px;
+$toolbar-button-container-width: 120px;
 $toolbar-events-container-width: calc(100% - #{$toolbar-button-container-width});
 
 .toolbar {
@@ -65,13 +65,13 @@ $toolbar-events-container-width: calc(100% - #{$toolbar-button-container-width})
     display: inline-block;
     line-height: 44px;
     text-align: left;
-    margin: 0 12px;
+    margin: 0 10px;
     width: $toolbar-title-width;
     white-space: nowrap;
 }
 
 .fc-toolbar.fc-header-toolbar {  
-    right: 12px;
+    right: 10px;
     text-transform: uppercase;
     width: $toolbar-header-width;
 

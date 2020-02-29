@@ -3,6 +3,12 @@
     <div class="header">
       <h1 class="header__title">Project Management Tool</h1>
       <div class="header__buttons">
+        <csvImport v-model="parseCSV" ref="csvImport"/>
+        <div class="button button__primary button__icon" @click.prevent="exportTableToCSV">
+          <span class="icon">
+            <font-awesome-icon icon="file-download"/>
+          </span>  
+        </div>
         <div class="button button__primary button__icon" @click.prevent="setSettingsVisibility(true)">
           <span class="icon">
             <font-awesome-icon icon="cog"/>
@@ -21,17 +27,6 @@
         <div class="modal__row">
           <label class="modal__label">Project Name</label>
           <input type="text" v-model="projectName" :val="projectName" placeholder="Example name">
-        </div>
-        <div class="modal__row">
-          <label class="modal__label">Import / Export</label>
-          <csvImport 
-            v-model="parseCSV"
-            ref="csvImport"
-          />
-        </div>
-        <div class="flex-content">
-          <div class="button button__primary button--large flex__small--6" @click.prevent="importCSVFile">Import</div>
-          <div class="button button__primary button--large flex__small--6" @click.prevent="exportTableToCSV">Export</div>
         </div>
       </div>
     </div>
@@ -290,11 +285,6 @@ export default {
     },
     setSettingsVisibility(IsVisible) {
       this.areSettingsVisible = IsVisible;
-    },
-    importCSVFile() {
-      var self = this;
-
-      self.$refs.csvImport.load();
     },
     exportTableToCSV() {
       var content = this.eventsNew;

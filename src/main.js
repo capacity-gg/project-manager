@@ -5,14 +5,26 @@ import router from './router'
 import store from './store/store'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faChevronLeft, faChevronRight, faCog, faExclamation, faUser, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
+
+import { 
+  faChevronLeft, 
+  faChevronRight, 
+  faCog, 
+  faExclamation, 
+  faFileDownload, 
+  faFileUpload, 
+  faUser, 
+  faTimes 
+} from '@fortawesome/free-solid-svg-icons'
 
 library.add(
   faChevronLeft,
   faChevronRight,
   faCog,
   faExclamation,
+  faFileDownload,
+  faFileUpload,
   faUser,
   faTimes
 )

@@ -1,24 +1,13 @@
 input[type="text"] {
     color: color(gray, darkest);
-    height: 22px;
+    height: 30px;
     line-height: 22px;
     padding: 0 4px;
     width: calc(100% - 10px);
 }
 
 input[type="file"] {
-    background: color(gray, mid);
-    border: 1px solid rgba(color(gray, dark), 0.3);
-    display: block;
-    height: auto;
-    min-height: 60px;
-    padding: 11px;
-    text-align: center;
-    width: calc(100% - 22px);
-
-    &:hover {
-        cursor: pointer;
-    }
+    display: none;
 }
 
 .form-validation {
@@ -35,8 +24,9 @@ input[type="file"] {
 }
 
 .dark-mode {
-    input[type="file"] {
-        background: color(gray, darkest);
-        border-color: rgba(color(gray, mid), 0.3);
+    input[type="text"] {
+        background: rgba(color(gray, mid), 0.2);
+        border-color: rgba(color(gray, darkest), 0.3);
+        color: color(gray, lightest);
     }
 }

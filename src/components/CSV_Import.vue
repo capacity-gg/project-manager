@@ -1,17 +1,15 @@
 <template>
-    <div class="vue-csv-uploader">
-        <div class="form">
-            <input 
-                type="file" 
-                name="csv"
-                ref="csv" 
-                @change.prevent="validFileMimeType" 
-            >
-            <slot name="error" v-if="hasError">
-                <div class="form-validation form-validation--error">File type is invalid</div>
-            </slot>
-        </div>
-    </div>
+    <label class="button button__primary button__icon">
+        <span class="icon">
+            <font-awesome-icon icon="file-upload"/>
+        </span>
+        <input 
+            type="file" 
+            name="csv"
+            ref="csv" 
+            @change.prevent="validFileMimeType" 
+        >
+    </label>
 </template>
 
 <script>
@@ -87,6 +85,9 @@ export default {
             if (file) {
                 this.fileSelected = true;
                 this.isValidFileMimeType = this.validation ? this.validateMimeType(mimeType) : true;
+
+                // Automatically load file when valid
+                if (this.isValidFileMimeType) { this.load(); }
             } 
             else {
                 this.isValidFileMimeType = !this.validation;

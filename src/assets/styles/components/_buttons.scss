@@ -24,6 +24,10 @@ $button-alt-border-color: color(secondary, dark);
     line-height: $button-size-default;
     margin: 4px;
 
+    label {
+        cursor: pointer
+    }
+
     &:hover,
     &:focus,
     &:active {
