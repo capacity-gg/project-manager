@@ -1,11 +1,5 @@
 <template>
-  <div class="home">
-    <div class="header">
-      <h1 class="header__title">Project Management Tool</h1>
-      <div class="header__buttons">
-        
-      </div>
-    </div>
+  <div class="home">    
     <div v-if="areSettingsVisible" class="modal__background" @click.prevent="setSettingsVisibility(false)">
       <div class="modal" @click="stopPropagation">
         <div class="button button__icon--minimal modal__button--close" @click.prevent="setSettingsVisibility(false)">
@@ -95,15 +89,12 @@
       @eventReceive="handleReceive"
       @eventClick="handleClick"
     />
-  <div class="footer">
-    <span class="copyright">Copyright © Capacity 2020</span>
-  </div>
   </div>
 </template>
 
 <script>
 
-import csvImport from './csvImport.vue'
+import csvImport from '../partials/csvImport.vue'
 import fullCalendar from '@fullcalendar/vue'
 import momentPlugin from '@fullcalendar/moment';
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -114,8 +105,7 @@ export default {
     fullCalendar,
     csvImport
   },
-  data: function() {
-    return {
+  data: () => ({
       projectName: "Example Project",
       title: '{{MMM D}}',
       height: 'auto',
@@ -155,8 +145,7 @@ export default {
         dragStart: 0
       },
       fullCalendarApi: null
-    }
-  },
+  }),
   mounted() {
     var self = this;
 
