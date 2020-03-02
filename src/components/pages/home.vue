@@ -1,23 +1,9 @@
 <template>
   <div class="home">    
-    <div v-if="areSettingsVisible" class="modal__background" @click.prevent="setSettingsVisibility(false)">
-      <div class="modal" @click="stopPropagation">
-        <div class="button button__icon--minimal modal__button--close" @click.prevent="setSettingsVisibility(false)">
-          <span class="icon">
-            <font-awesome-icon icon="times"/>
-          </span>  
-        </div>
-        <div class="modal__header">Settings</div>
-        <div class="modal__row">
-          <label class="modal__label">Project Name</label>
-          <input type="text" v-model="projectName" :val="projectName" placeholder="Example name">
-        </div>
-      </div>
-    </div>
     <div class="toolbar">
       <h2 class="toolbar__title">{{ projectName }}</h2>
       <div class="toolbar__buttons">
-        <div class="button button__primary button__icon tooltip" @click.prevent="setSettingsVisibility(true)">
+        <div class="button button__primary button__icon tooltip" @click.prevent="$emit('displayModal', projectSettings)">
           <span class="icon">
             <font-awesome-icon icon="cog"/>
           </span>
@@ -107,6 +93,7 @@ export default {
   },
   data: () => ({
       projectName: "Example Project",
+      projectSettings: {},
       title: '{{MMM D}}',
       height: 'auto',
       column: '{{D}}',
@@ -152,6 +139,10 @@ export default {
     self.setupDraggable();
 
     self.calculateCount();
+
+    self.projectSettings = {
+      name: this.projectName
+    }
   },
   computed: {
     parseCSV: {
@@ -257,9 +248,6 @@ export default {
         });
       });
     },
-    stopPropagation(e) {
-      e.stopPropagation();
-    },
     setUsersVisibility() {
       var self = this;
 
@@ -275,9 +263,6 @@ export default {
       self.areMilestonesVisible = true;
 
       self.$refs.fullCalendar.getApi().rerenderEvents();
-    },
-    setSettingsVisibility(IsVisible) {
-      this.areSettingsVisible = IsVisible;
     },
     exportTableToCSV() {
       var content = this.eventsNew;

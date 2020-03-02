@@ -5,8 +5,9 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>-->
-    <router-view/>
+    <router-view v-on:displayModal="displayModal"/>
     <globalFooter ref="header"/>
+    <modal ref="modal"/>
   </div>
 </template>
 
@@ -14,18 +15,24 @@
 
 import globalHeader from './components/globals/header.vue'
 import globalFooter from './components/globals/footer.vue'
+import modal from './components/partials/modal.vue'
 
 export default {
   name: 'App',
   components: {
     globalHeader,
-    globalFooter
+    globalFooter,
+    modal
   },
   props: {},
   data: () => ({}),
   computed: {},
   watch: {},
-  methods: {}
+  methods: {
+    displayModal(info) {
+      this.$refs.modal.display(info);
+    }
+  }
 }
 
 </script>
