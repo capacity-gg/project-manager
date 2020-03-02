@@ -1,0 +1,29 @@
+$tooltip-height: 30px;
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    
+    &:hover .tooltip__text {
+        visibility: visible;
+    }
+}
+  
+.tooltip__text {
+    background-color: color(gray, darkest);
+    border: 1px solid color(gray, dark);
+    border-radius: 3px;
+    bottom: calc(100% + 10px);
+    color: color(gray, lightest);
+    height: $tooltip-height;
+    left: 50%;
+    line-height: $tooltip-height;
+    padding: 0 5px;
+    position: absolute;
+    text-align: center;
+    transform: translateX(-50%);
+    min-width: 40px;
+    width: auto;
+    visibility: hidden;
+    z-index: $z-index-tooltip;
+}

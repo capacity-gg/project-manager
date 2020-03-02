@@ -23,34 +23,38 @@
     <div class="toolbar">
       <h2 class="toolbar__title">{{ projectName }}</h2>
       <div class="toolbar__buttons">
-        <div class="button button__primary button__icon" @click.prevent="setSettingsVisibility(true)">
+        <div class="button button__primary button__icon tooltip" @click.prevent="setSettingsVisibility(true)">
           <span class="icon">
             <font-awesome-icon icon="cog"/>
-          </span>  
+          </span>
+          <span class="tooltip__text">Settings</span>
         </div>
         <csvImport v-model="parseCSV" ref="csvImport"/>
-        <div class="button button__primary button__icon" @click.prevent="exportTableToCSV">
+        <div class="button button__primary button__icon tooltip" @click.prevent="exportTableToCSV">
           <span class="icon">
             <font-awesome-icon icon="file-download"/>
-          </span>  
+          </span>
+          <span class="tooltip__text">Export</span>
         </div>
         <div 
-          class="button button__primary button__icon" 
+          class="button button__primary button__icon tooltip" 
           :class="areUsersVisible ? 'inactive' : ''"
           @click.prevent="setUsersVisibility"
         >
           <span class="icon">
             <font-awesome-icon icon="user"/>
           </span>
+          <span class="tooltip__text">Users</span>
         </div>
         <div 
-          class="button button__primary button__icon"
+          class="button button__primary button__icon tooltip"
           :class="areMilestonesVisible ? 'inactive' : ''"
           @click.prevent="setMilestonesVisibility"
         >
           <span class="icon">
             <font-awesome-icon icon="exclamation"/>
           </span>  
+          <span class="tooltip__text">Milestones</span>
         </div>
       </div>
       <div id="event-toolbar" class="toolbar__events fc-unselectable">
