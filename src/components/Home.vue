@@ -3,17 +3,7 @@
     <div class="header">
       <h1 class="header__title">Project Management Tool</h1>
       <div class="header__buttons">
-        <csvImport v-model="parseCSV" ref="csvImport"/>
-        <div class="button button__primary button__icon" @click.prevent="exportTableToCSV">
-          <span class="icon">
-            <font-awesome-icon icon="file-download"/>
-          </span>  
-        </div>
-        <div class="button button__primary button__icon" @click.prevent="setSettingsVisibility(true)">
-          <span class="icon">
-            <font-awesome-icon icon="cog"/>
-          </span>  
-        </div>
+        
       </div>
     </div>
     <div v-if="areSettingsVisible" class="modal__background" @click.prevent="setSettingsVisibility(false)">
@@ -33,8 +23,18 @@
     <div class="toolbar">
       <h2 class="toolbar__title">{{ projectName }}</h2>
       <div class="toolbar__buttons">
+        <div class="button button__primary button__icon" @click.prevent="setSettingsVisibility(true)">
+          <span class="icon">
+            <font-awesome-icon icon="cog"/>
+          </span>  
+        </div>
+        <csvImport v-model="parseCSV" ref="csvImport"/>
+        <div class="button button__primary button__icon" @click.prevent="exportTableToCSV">
+          <span class="icon">
+            <font-awesome-icon icon="file-download"/>
+          </span>  
+        </div>
         <div 
-          style="margin: 0 10px 0 0;" 
           class="button button__primary button__icon" 
           :class="areUsersVisible ? 'inactive' : ''"
           @click.prevent="setUsersVisibility"
@@ -75,7 +75,7 @@
         </div>
       </div>
     </div>
-    <FullCalendar 
+    <fullCalendar 
       defaultView="dayGridWeek" 
       ref="fullCalendar"
       :titleFormat="title"
@@ -99,15 +99,15 @@
 
 <script>
 
-import csvImport from './CSV_Import.vue'
-import FullCalendar from '@fullcalendar/vue'
+import csvImport from './csvImport.vue'
+import fullCalendar from '@fullcalendar/vue'
 import momentPlugin from '@fullcalendar/moment';
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 
 export default {
   components: {
-    FullCalendar,
+    fullCalendar,
     csvImport
   },
   data: function() {

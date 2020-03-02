@@ -1,7 +1,7 @@
 $toolbar-header-width: 360px;
 $toolbar-header-spacing: 36px;
 $toolbar-title-width: calc(100% - #{$toolbar-header-width} - #{$toolbar-header-spacing});
-$toolbar-button-container-width: 120px;
+$toolbar-button-container-width: 290px;
 $toolbar-events-container-width: calc(100% - #{$toolbar-button-container-width});
 
 .toolbar {
@@ -19,6 +19,10 @@ $toolbar-events-container-width: calc(100% - #{$toolbar-button-container-width})
 
 .toolbar__buttons {
     width: $toolbar-button-container-width;
+
+    .button {
+        margin-right: 10px;
+    }
 }
 
 .toolbar__events {
