@@ -38,7 +38,9 @@ $small-screen: 768px;
 $medium-screen: 1024px;
 $large-screen: 1366px;
 
+// Z indices
 $z-index-modal-bg: 999;
 $z-index-modal: 1000;
 $z-index-modal-header: 1001;
 $z-index-modal-close: 1002;
+$z-index-tooltip: 2000;

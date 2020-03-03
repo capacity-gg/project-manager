@@ -29,12 +29,12 @@ library.add(
   faTimes
 )
 
+// Global font components
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('font-awesome-layers', FontAwesomeLayers)
 Vue.component('font-awesome-layers-text', FontAwesomeLayersText)
 
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+// Global style sheets
 require('@fullcalendar/core/main.css')
 require('@fullcalendar/daygrid/main.css')
 require('./assets/styles/main.scss')

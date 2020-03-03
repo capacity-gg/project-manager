@@ -1,8 +1,9 @@
 <template>
-    <label class="button button__primary button__icon">
+    <label class="button button__primary button__icon tooltip">
         <span class="icon">
             <font-awesome-icon icon="file-upload"/>
         </span>
+        <span class="tooltip__text">Import</span>
         <input 
             type="file" 
             name="csv"

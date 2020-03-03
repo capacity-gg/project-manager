@@ -1,56 +1,40 @@
 <template>
-  <div class="home">
-    <div class="header">
-      <h1 class="header__title">Project Management Tool</h1>
-      <div class="header__buttons">
-        <csvImport v-model="parseCSV" ref="csvImport"/>
-        <div class="button button__primary button__icon" @click.prevent="exportTableToCSV">
-          <span class="icon">
-            <font-awesome-icon icon="file-download"/>
-          </span>  
-        </div>
-        <div class="button button__primary button__icon" @click.prevent="setSettingsVisibility(true)">
-          <span class="icon">
-            <font-awesome-icon icon="cog"/>
-          </span>  
-        </div>
-      </div>
-    </div>
-    <div v-if="areSettingsVisible" class="modal__background" @click.prevent="setSettingsVisibility(false)">
-      <div class="modal" @click="stopPropagation">
-        <div class="button button__icon--minimal modal__button--close" @click.prevent="setSettingsVisibility(false)">
-          <span class="icon">
-            <font-awesome-icon icon="times"/>
-          </span>  
-        </div>
-        <div class="modal__header">Settings</div>
-        <div class="modal__row">
-          <label class="modal__label">Project Name</label>
-          <input type="text" v-model="projectName" :val="projectName" placeholder="Example name">
-        </div>
-      </div>
-    </div>
+  <div class="home">    
     <div class="toolbar">
       <h2 class="toolbar__title">{{ projectName }}</h2>
       <div class="toolbar__buttons">
+        <div class="button button__primary button__icon tooltip" @click.prevent="$emit('displayModal', projectSettings)">
+          <span class="icon">
+            <font-awesome-icon icon="cog"/>
+          </span>
+          <span class="tooltip__text">Settings</span>
+        </div>
+        <csvImport v-model="parseCSV" ref="csvImport"/>
+        <div class="button button__primary button__icon tooltip" @click.prevent="exportTableToCSV">
+          <span class="icon">
+            <font-awesome-icon icon="file-download"/>
+          </span>
+          <span class="tooltip__text">Export</span>
+        </div>
         <div 
-          style="margin: 0 10px 0 0;" 
-          class="button button__primary button__icon" 
+          class="button button__primary button__icon tooltip" 
           :class="areUsersVisible ? 'inactive' : ''"
           @click.prevent="setUsersVisibility"
         >
           <span class="icon">
             <font-awesome-icon icon="user"/>
           </span>
+          <span class="tooltip__text">Users</span>
         </div>
         <div 
-          class="button button__primary button__icon"
+          class="button button__primary button__icon tooltip"
           :class="areMilestonesVisible ? 'inactive' : ''"
           @click.prevent="setMilestonesVisibility"
         >
           <span class="icon">
             <font-awesome-icon icon="exclamation"/>
           </span>  
+          <span class="tooltip__text">Milestones</span>
         </div>
       </div>
       <div id="event-toolbar" class="toolbar__events fc-unselectable">
@@ -75,7 +59,7 @@
         </div>
       </div>
     </div>
-    <FullCalendar 
+    <fullCalendar 
       defaultView="dayGridWeek" 
       ref="fullCalendar"
       :titleFormat="title"
@@ -91,28 +75,25 @@
       @eventReceive="handleReceive"
       @eventClick="handleClick"
     />
-  <div class="footer">
-    <span class="copyright">Copyright © Capacity 2020</span>
-  </div>
   </div>
 </template>
 
 <script>
 
-import csvImport from './CSV_Import.vue'
-import FullCalendar from '@fullcalendar/vue'
+import csvImport from '../partials/csvImport.vue'
+import fullCalendar from '@fullcalendar/vue'
 import momentPlugin from '@fullcalendar/moment';
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction';
 
 export default {
   components: {
-    FullCalendar,
+    fullCalendar,
     csvImport
   },
-  data: function() {
-    return {
+  data: () => ({
       projectName: "Example Project",
+      projectSettings: {},
       title: '{{MMM D}}',
       height: 'auto',
       column: '{{D}}',
@@ -151,14 +132,17 @@ export default {
         dragStart: 0
       },
       fullCalendarApi: null
-    }
-  },
+  }),
   mounted() {
     var self = this;
 
     self.setupDraggable();
 
     self.calculateCount();
+
+    self.projectSettings = {
+      name: this.projectName
+    }
   },
   computed: {
     parseCSV: {
@@ -264,9 +248,6 @@ export default {
         });
       });
     },
-    stopPropagation(e) {
-      e.stopPropagation();
-    },
     setUsersVisibility() {
       var self = this;
 
@@ -282,9 +263,6 @@ export default {
       self.areMilestonesVisible = true;
 
       self.$refs.fullCalendar.getApi().rerenderEvents();
-    },
-    setSettingsVisibility(IsVisible) {
-      this.areSettingsVisible = IsVisible;
     },
     exportTableToCSV() {
       var content = this.eventsNew;
