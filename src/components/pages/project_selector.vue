@@ -20,26 +20,20 @@
 
 <script>
 
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+
 export default {
   components: {},
   props: {},
-  data: () => ({
-    projects: [
-      {
-        id: 1,
-        name: "Example Project 1"
-      },
-      {
-        id: 2,
-        name: "Example Project 2"
-      },
-      {
-        id: 3,
-        name: "Example Project 3"
-      }
-    ]
-  }),
-  computed: {},
+  data: () => ({}),
+  mounted() {
+    var self = this;
+
+    self.$store.dispatch("getProjects").then((response) => {});
+  },
+  computed: {
+    ...mapGetters(['projects'])
+  },
   watch: {},
   methods: {
     createNewProject() {

@@ -1,7 +1,7 @@
 <template>
   <div class="project-editor">    
     <div class="toolbar">
-      <h2 class="toolbar__title">{{ projectName }}</h2>
+      <h2 class="toolbar__title">{{ project.name }}</h2>
       <div class="toolbar__buttons">
         <div class="button button__primary button__icon tooltip" @click.prevent="$emit('displayModal', projectSettings)">
           <span class="icon">
@@ -41,7 +41,7 @@
         <div v-if="areMilestonesVisible">
           <div 
             class='button button__secondary fc-event button__secondary' 
-            v-for="event in milestoneEvents" 
+            v-for="event in project.milestones" 
             :key="event.title"
           >
             <span class="fc-event-name">{{ event.title }}</span>
@@ -50,7 +50,7 @@
         <div v-else-if="areUsersVisible">
           <div 
             class='button button__primary fc-event' 
-            v-for="event in userEvents" 
+            v-for="event in project.users" 
             :key="event.title"
           >
             <span class="fc-event-name">{{ event.title }}</span>
@@ -80,6 +80,8 @@
 
 <script>
 
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+
 import csvImport from '../partials/csvImport.vue'
 import fullCalendar from '@fullcalendar/vue'
 import momentPlugin from '@fullcalendar/moment';
@@ -92,7 +94,6 @@ export default {
     csvImport
   },
   data: () => ({
-      projectName: "Example Project",
       projectSettings: {},
       title: '{{MMM D}}',
       height: 'auto',
@@ -107,22 +108,8 @@ export default {
         interactionPlugin,
         momentPlugin
       ],
-      userEvents: [
-        { title: 'Melissa', count: '0' },
-        { title: 'Dan', count: '0' },
-        { title: 'Jamie', count: '0' },
-        { title: 'Daryl', count: '0' },
-        { title: 'Benji', count: '0' },
-        { title: 'Ellerey', count: '0' }
-      ],
-      milestoneEvents: [
-        { title: 'Presentation' },
-        { title: 'Feedback' },
-        { title: 'Delivery' }
-      ],
       eventsNew: [],
       importedCSV: [],
-      areSettingsVisible: false,
       areMilestonesVisible: false,
       areUsersVisible: true,
       eventToolbar: {
@@ -130,21 +117,35 @@ export default {
         isDragging: false,
         dragLeft: 0,
         dragStart: 0
-      },
-      fullCalendarApi: null
+      }
   }),
   mounted() {
     var self = this;
 
-    self.setupDraggable();
+    const promise = new Promise((resolve, reject) => {
+      if (self.$store.dispatch('getProjects')) {
+        resolve();
+      }
+      else {
+        reject(Error('Unable to get project data'));
+      }
+    });
+    
+    promise.then(response => {
+      self.setupDraggable();
 
-    self.calculateCount();
+      self.calculateCount();
 
-    self.projectSettings = {
-      name: this.projectName
-    }
+      self.projectSettings = {
+        name: self.project.name
+      }
+    }, 
+    err => {
+        console.log(err);
+    });
   },
   computed: {
+    ...mapGetters(['project']),
     parseCSV: {
       get: function() {
         return this.importedCSV;
@@ -226,7 +227,7 @@ export default {
       var self = this;
       var isMilestone = false;
 
-      self.milestoneEvents.forEach(function(milestone) {
+      self.project.milestones.forEach(function(milestone) {
         if (milestone.title == eventTitle) {
           isMilestone = true;
           return;
@@ -238,7 +239,7 @@ export default {
     calculateCount() {
       var self = this;
 
-      self.userEvents.forEach(function(unique_event) {
+      self.project.users.forEach(function(unique_event) {
         unique_event.count = 0;
 
         self.eventsNew.forEach(function(new_event) {
@@ -265,6 +266,7 @@ export default {
       self.$refs.fullCalendar.getApi().rerenderEvents();
     },
     exportTableToCSV() {
+      var self = this;
       var content = this.eventsNew;
 
       if (content == undefined || content.length == 0) { return; }
@@ -279,7 +281,7 @@ export default {
       const link = document.createElement("a");
 
       link.setAttribute("href", encodeURI(data));
-      link.setAttribute("download", this.projectName + ".csv");
+      link.setAttribute("download", self.project.name + ".csv");
       link.click();
     },
     importCSVRow(row) {
@@ -306,7 +308,7 @@ export default {
       if (self.isMilestoneEvent(info.event.title)) { info.el.classList.add('button__secondary'); }
 
       /*if (self.areMilestonesVisible) {
-        self.milestoneEvents.forEach(function(event) {
+        self.project.milestone.forEach(function(event) {
           if (event.title == info.event.title) {
             isRendered = true;
             return;
@@ -314,7 +316,7 @@ export default {
         });
       }
       else {
-        self.milestoneEvents.forEach(function(event) {
+        self.project.milestone.forEach(function(event) {
           if (event.title == info.event.title) {
             isRendered = false;
             return;
