@@ -14,6 +14,7 @@ import {
   faExclamation, 
   faFileDownload, 
   faFileUpload, 
+  faPlusSquare,
   faUser, 
   faTimes 
 } from '@fortawesome/free-solid-svg-icons'
@@ -25,6 +26,7 @@ library.add(
   faExclamation,
   faFileDownload,
   faFileUpload,
+  faPlusSquare,
   faUser,
   faTimes
 )

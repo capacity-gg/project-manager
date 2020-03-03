@@ -1,4 +1,47 @@
+$project-slot-height: 60px;
+
 .project-selector {
+    min-height: calc(100vh - #{$header-height} - #{$footer-height});
     overflow: hidden;
     position: relative;
+}
+
+.project__container {
+    margin: 20px auto;
+    width: 100%;
+}
+
+.project__slot {
+    background: color(gray, lightest);
+    border: 2px solid color(gray, mid);
+    border-radius: 3px;
+    color: color(gray, darkest);
+    display: block;
+    height: $project-slot-height;
+    line-height: $project-slot-height;
+    margin: 0 10px 20px;
+    padding: 10px;
+    text-decoration: none;
+    transition: 0.1s ease-out all;
+    width: calc(100% - 44px);
+
+    &:hover {
+        cursor: pointer;
+        box-shadow: 4px 4px 8px color(gray, darkest);
+        transform: translateY(-2px);
+    }
+}
+
+.project__slot--new {
+    background: color(primary, light);
+    border-color: color(primary, mid);
+
+    .icon {
+        color: color(gray, lightest);
+        font-size: 48px;
+    }
+}
+
+.project__slot--title {
+    font-size: 18px;
 }
