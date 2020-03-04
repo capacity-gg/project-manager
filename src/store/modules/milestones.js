@@ -11,7 +11,7 @@ const getters = {
 }
 
 const mutations = {
-    SetMilestones(state, payload) {
+    setMilestones(state, payload) {
         state.milestones = payload;
     }
 }
@@ -26,7 +26,7 @@ const actions = {
   
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                commit('SetMilestones', milestones);
+                commit('setMilestones', milestones);
                 resolve();
             }, 100);
         })

@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     ...mapGetters("projects", [
-        "project"
+        "projects"
     ]),
   },
   watch: {},
