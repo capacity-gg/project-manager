@@ -41,7 +41,7 @@ Vue.component('font-awesome-layers-text', FontAwesomeLayersText)
 // Global style sheets
 require('@fullcalendar/core/main.css')
 require('@fullcalendar/daygrid/main.css')
-require('./assets/styles/main.scss')
+require('../static/styles/main.scss')
 
 axios.defaults.baseURL = 'http://localhost:8081'
 
