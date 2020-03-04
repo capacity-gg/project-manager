@@ -18,7 +18,7 @@
     "@fullcalendar/moment": "^4.3.0",
     "@fullcalendar/timegrid": "^4.3.0",
     "@fullcalendar/vue": "^4.3.1",
-    "axios": "^0.17.0",
+    "axios": "^0.18.1",
     "chat-engine": "^0.9.18",
     "crypto-js": "^3.1.9-1",
     "downloadjs": "^1.4.7",
