@@ -8,23 +8,27 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 
 import { 
+  faBars,
   faChevronLeft, 
   faChevronRight, 
   faCog, 
   faExclamation, 
   faFileDownload, 
   faFileUpload, 
+  faPlusSquare,
   faUser, 
   faTimes 
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
+  faBars,
   faChevronLeft,
   faChevronRight,
   faCog,
   faExclamation,
   faFileDownload,
   faFileUpload,
+  faPlusSquare,
   faUser,
   faTimes
 )

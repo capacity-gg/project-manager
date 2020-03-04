@@ -1,10 +1,6 @@
 <template>
   <div id="app" class="dark-mode">
     <globalHeader ref="header"/>
-    <!--<div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>-->
     <router-view v-on:displayModal="displayModal"/>
     <globalFooter ref="header"/>
     <modal ref="modal"/>

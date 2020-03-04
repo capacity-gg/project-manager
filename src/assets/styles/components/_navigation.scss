@@ -1,0 +1,36 @@
+.nav {
+    background: color(gray, darkest);
+    bottom: 0;
+    height: calc(100vh - #{$header-height} - #{$footer-height});
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    transition: 0.1s ease-out all;
+    width: 0px;
+    z-index: $z-index-header;
+}
+
+.nav--visible {
+    width: 250px;
+}
+
+.nav__item-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav__item {    
+    color: color(gray, lightest);
+    display: block;
+    font-size: 18px;
+    padding: 10px 20px;
+    text-align: left;
+    text-decoration: none;
+
+    &:hover {
+        background: color(primary, mid);
+        cursor: pointer;
+    }    
+}
