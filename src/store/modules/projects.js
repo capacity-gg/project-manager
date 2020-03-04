@@ -10,12 +10,12 @@ const getters = {
         var activeProject = {};
 
         if (state.projects) {
-        state.projects.forEach(function(project) {
-            if (project.ID == state.projectID) {
-            activeProject = project;
-            return;
-            }
-        });
+            state.projects.forEach(function(project) {
+                if (project.ID == state.projectID) {
+                    activeProject = project;
+                    return;
+                }
+            });
         }
 
         return activeProject;
@@ -81,8 +81,8 @@ const actions = {
   
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-            commit('setProjects', projects);
-            resolve();
+                commit('setProjects', projects);
+                resolve();
             }, 100);
         })
     },
