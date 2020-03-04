@@ -41,7 +41,7 @@ export default {
       var projectCount = self.projects.length + 1;
 
       var project = {
-        id: projectCount,
+        ID: projectCount,
         name: "Example Project " + projectCount
       };
 

@@ -8,6 +8,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 
 import { 
+  faBars,
   faChevronLeft, 
   faChevronRight, 
   faCog, 
@@ -20,6 +21,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
+  faBars,
   faChevronLeft,
   faChevronRight,
   faCog,
