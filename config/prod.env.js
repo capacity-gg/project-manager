@@ -1,5 +1,5 @@
 module.exports = {
     NODE_ENV:       '"production"',
-    resourceBase:   '"/project_manager/"',
-    routeBase:      '"/project_manager/"'
+    resourceBase:   '"/project_manager/dist/"',
+    routeBase:      '"/project_manager/dist/"'
 }
