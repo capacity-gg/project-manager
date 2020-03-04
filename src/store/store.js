@@ -5,11 +5,23 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    projectID: null,
     projects: []
   },
   getters: {
     project(state, getters, rootState, rootGetters) {
-      return state.projects.length > 0 ? state.projects[0] : {};
+      var activeProject = {};
+
+      if (state.projects) {
+        state.projects.forEach(function(project) {
+          if (project.ID == state.projectID) {
+            activeProject = project;
+            return;
+          }
+        });
+      }
+
+      return activeProject;
     },
     projects(state, getters, rootState, rootGetters) {
       return state.projects;
@@ -21,6 +33,9 @@ export default new Vuex.Store({
     },
     setProjects(state, payload) {
       state.projects = payload;
+    },
+    setActiveProject(state, payload) {
+      state.projectID = payload.ID;
     },
     updateProject(state, payload) {
       state.projects[payload.index] = payload.project;
@@ -45,19 +60,19 @@ export default new Vuex.Store({
 
       var projects = [
         {
-          id: 1,
+          ID: 1,
           name: "Example Project 1",
           users: users,
           milestones: milestones,
           events: []
         }, {
-          id: 2,
+          ID: 2,
           name: "Example Project 2",
           users: users,
           milestones: milestones,
           events: []
         }, {
-          id: 3,
+          ID: 3,
           name: "Example Project 3",
           users: users,
           milestones: milestones,
@@ -71,6 +86,9 @@ export default new Vuex.Store({
           resolve();
         }, 100);
       })
+    },
+    getProject({commit}) {
+
     }
   },
   modules: {}

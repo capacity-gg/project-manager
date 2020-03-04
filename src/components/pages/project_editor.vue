@@ -122,16 +122,9 @@ export default {
   mounted() {
     var self = this;
 
-    const promise = new Promise((resolve, reject) => {
-      if (self.$store.dispatch('getProjects')) {
-        resolve();
-      }
-      else {
-        reject(Error('Unable to get project data'));
-      }
-    });
-    
-    promise.then(response => {
+    self.$store.dispatch("getProjects").then((response) => {
+      self.$store.commit("setActiveProject", { ID: self.$route.params.ID});
+
       self.setupDraggable();
 
       self.calculateCount();
@@ -139,9 +132,9 @@ export default {
       self.projectSettings = {
         name: self.project.name
       }
-    }, 
+    },
     err => {
-        console.log(err);
+      console.log(err);
     });
   },
   computed: {
@@ -239,15 +232,17 @@ export default {
     calculateCount() {
       var self = this;
 
-      self.project.users.forEach(function(unique_event) {
-        unique_event.count = 0;
+      if (self.project.users) {
+        self.project.users.forEach(function(unique_event) {
+          unique_event.count = 0;
 
-        self.eventsNew.forEach(function(new_event) {
-          if (unique_event.title == new_event.title) {
-              unique_event.count++;
-          }
+          self.eventsNew.forEach(function(new_event) {
+            if (unique_event.title == new_event.title) {
+                unique_event.count++;
+            }
+          });
         });
-      });
+      }
     },
     setUsersVisibility() {
       var self = this;

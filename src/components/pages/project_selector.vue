@@ -4,7 +4,7 @@
       <router-link
         v-for="project in projects" 
         :key="project.id"
-        to="/project"
+        :to="{name: 'project', params: {ID: project.ID}}"
         class="project__slot"
       >
         <span class="project__slot--title">{{project.name}}</span>

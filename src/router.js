@@ -10,8 +10,8 @@ export default new Router({
     name: 'project_selector',
     component: Home
   }, {
-    path: '/project',
-    name: 'project_editor',
+    path: '/project:ID',
+    name: 'project',
     component: () => import('./components/pages/project_editor.vue')
   }]
 })
