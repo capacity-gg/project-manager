@@ -122,8 +122,8 @@ export default {
   mounted() {
     var self = this;
 
-    self.$store.dispatch("getProjects").then((response) => {
-      self.$store.commit("setActiveProject", { ID: self.$route.params.ID});
+    self.$store.dispatch("projects/getProjects").then((response) => {
+      self.$store.commit("projects/setActiveProject", { ID: self.$route.params.ID});
 
       self.setupDraggable();
 
@@ -138,7 +138,9 @@ export default {
     });
   },
   computed: {
-    ...mapGetters(['project']),
+    ...mapGetters("projects", [
+        "project"
+    ]),
     parseCSV: {
       get: function() {
         return this.importedCSV;

@@ -29,10 +29,12 @@ export default {
   mounted() {
     var self = this;
 
-    self.$store.dispatch("getProjects").then((response) => {});
+    self.$store.dispatch("projects/getProjects").then((response) => {});
   },
   computed: {
-    ...mapGetters(['projects'])
+    ...mapGetters("projects", [
+        "project"
+    ]),
   },
   watch: {},
   methods: {
