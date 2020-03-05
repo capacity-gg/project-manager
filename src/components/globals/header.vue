@@ -31,7 +31,10 @@ export default {
     },
     watch: {},
     methods: {
-      toggleNavigationVisibility() {
+      toggleNavigationVisibility(e) {
+        // Prevent App.vue from hiding navigation
+        e.stopPropagation();
+
         this.$store.commit("navigation/toggleNavigationVisibility");
       }
     }

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="dark-mode">
+  <div id="app" class="dark-mode" @click.prevent="hideNavigation">
     <globalHeader ref="header"/>
     <router-view v-on:displayModal="displayModal"/>
     <globalFooter ref="header"/>
@@ -9,6 +9,8 @@
 </template>
 
 <script>
+
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 
 import globalHeader from './components/globals/header.vue'
 import globalFooter from './components/globals/footer.vue'
@@ -25,11 +27,18 @@ export default {
   },
   props: {},
   data: () => ({}),
-  computed: {},
+  computed: {
+    ...mapGetters("navigation", [
+        "isNavigationVisible"
+    ]),
+  },
   watch: {},
   methods: {
     displayModal(info) {
       this.$refs.modal.display(info);
+    },
+    hideNavigation() {
+      this.$store.commit("navigation/setNavigationVisibility", false);
     }
   }
 }

@@ -1,5 +1,10 @@
 <template>    
-    <div id="nav" :class="isNavigationVisible ? 'nav--visible' : ''" class="nav">
+    <div 
+      id="nav" 
+      class="nav" 
+      :class="isNavigationVisible ? 'nav--visible' : ''" 
+      @click.prevent="stopPropagation"
+    >
       <ul class="nav__item-list">
         <li class="nav__item" @click.prevent="navigateToLink('project_selector')">Projects</li>
       </ul>
@@ -27,6 +32,9 @@ export default {
         if (this.$router.history.current.name != link) {
             this.$router.push({name: link});
         }
+      },
+      stopPropagation(e) {
+          e.stopPropagation();
       }
     }
 };
