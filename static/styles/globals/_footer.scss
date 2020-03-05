@@ -3,9 +3,9 @@ $footer-height: 44px;
 .footer {
     background: color(gray, darkest);
     height: $footer-height;
+}
   
-    .copyright {
-        color: color(gray, lightest);
-        line-height: $footer-height;
-    }
+.footer__copyright {
+    color: color(gray, lightest);
+    line-height: $footer-height;
 }

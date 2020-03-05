@@ -1,6 +1,8 @@
 <template>    
   <div id="footer" class="footer">
-    <span class="copyright">Copyright © Capacity 2020</span>
+    <div class="content__container">
+      <span class="footer__copyright">Copyright © Capacity 2020</span>
+    </div>
   </div>
 </template>
 

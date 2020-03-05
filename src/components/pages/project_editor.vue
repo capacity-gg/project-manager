@@ -1,5 +1,5 @@
 <template>
-  <div class="project-editor">    
+  <div class="project-editor content__container">  
     <div class="toolbar">
       <h2 class="toolbar__title">{{ project.name }}</h2>
       <div class="toolbar__buttons">

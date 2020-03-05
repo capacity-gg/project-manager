@@ -11,6 +11,12 @@ body {
     min-width: 100vw;
     text-align: center;
 }
+
+.content__container {
+    margin: 0 auto;
+    max-width: $max-content-width;
+    position: relative;
+}
   
 h1 {
     font-size: 28px !important;

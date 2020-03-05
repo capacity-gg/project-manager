@@ -1,15 +1,17 @@
 <template>
   <div id="header" class="header">
-    <h1 class="header__title">Project Management Tool</h1>
-    <div class="header__buttons">
-      <div 
-        class="button button__icon button__icon--minimal" 
-        @click.prevent="toggleNavigationVisibility"
-      >
-        <span class="icon">
-          <font-awesome-icon v-if="isNavigationVisible" icon="times"/>
-          <font-awesome-icon v-else icon="bars"/>
-        </span>
+    <div class="content__container">
+      <h1 class="header__title">Project Management Tool</h1>
+      <div class="header__buttons">
+        <div 
+          class="button button__icon button__icon--minimal" 
+          @click.prevent="toggleNavigationVisibility"
+        >
+          <span class="icon">
+            <font-awesome-icon v-if="isNavigationVisible" icon="times"/>
+            <font-awesome-icon v-else icon="bars"/>
+          </span>
+        </div>
       </div>
     </div>
   </div>

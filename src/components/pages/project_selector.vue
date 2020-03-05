@@ -1,5 +1,5 @@
 <template>
-  <div class="project-selector">
+  <div class="project-selector content__container">
     <div class="project__container">
       <router-link
         v-for="project in projects" 
