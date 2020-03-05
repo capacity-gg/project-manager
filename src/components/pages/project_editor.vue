@@ -121,15 +121,21 @@ export default {
   mounted() {
     var self = this;
 
-    self.$store.dispatch("projects/getProjects").then((response) => {
-      self.$store.commit("projects/setActiveProject", { ID: self.$route.params.ID});
+    self.$store.dispatch("projects/getProjects", {
+      onSuccess: function(response) {
+        self.$store.commit('projects/setProjects', response);
 
-      self.setupDraggable();
+        self.$store.commit('projects/setActiveProject', { 
+          ID: self.$route.params.ID
+        });
 
-      self.calculateCount();
-    },
-    err => {
-      console.log(err);
+        self.setupDraggable();
+
+        self.calculateCount();
+      },
+      onError: function(err) {
+        console.log(err);
+      }
     });
   },
   computed: {

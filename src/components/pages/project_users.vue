@@ -39,7 +39,14 @@ export default {
   mounted() {
     var self = this;
 
-    self.$store.dispatch("users/getUsers").then((response) => {});
+    self.$store.dispatch("users/getUsers", {
+      onSuccess: function(response) {
+        self.$store.commit('users/setUsers', response);
+      },
+      onError: function(err) {
+        console.log(err);
+      }
+    });
   },
   computed: {
     ...mapGetters("users", [

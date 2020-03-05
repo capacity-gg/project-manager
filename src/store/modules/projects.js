@@ -1,5 +1,10 @@
 const namespaced = true;
 
+import axios from '@/utils/custom_axios.js';
+import utils from '@/utils/utils.js';
+
+const projectBaseURL = process.env.switchboardBaseURL + "projects/";
+
 const state = {
     projectID: null,
     projects: []
@@ -41,7 +46,12 @@ const mutations = {
 }
 
 const actions = {
-    getProjects({commit}) {
+    getProjects(state, opts) {
+        opts = utils.objPlus({
+            "onSuccess": function() {},
+            "onError": function() {}
+        }, opts);
+
         var users = [
             { title: 'Melissa', count: '0' },
             { title: 'Dan', count: '0' },
@@ -81,10 +91,17 @@ const actions = {
   
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                commit('setProjects', projects);
-                resolve();
+                opts.onSuccess(projects);
             }, 100);
+        });
+        
+        /*axios.get(projectBaseURL)
+        .then(response => { 
+            opts.onSuccess(response.data); 
         })
+        .catch(function(err) { 
+            opts.onError(); 
+        });*/
     },
     getProject({commit}) {
 

@@ -1,5 +1,10 @@
 const namespaced = true;
 
+import axios from '@/utils/custom_axios.js';
+import utils from '@/utils/utils.js';
+
+const milestoneBaseURL = process.env.switchboardBaseURL + "milestones/";
+
 const state = {
     milestones: []
 }
@@ -20,7 +25,12 @@ const mutations = {
 }
 
 const actions = {
-    getMilestones({commit}) {
+    getMilestones(state, opts) {
+        opts = utils.objPlus({
+            "onSuccess": function() {},
+            "onError": function() {}
+        }, opts);
+
         var milestones = [
             { ID: 1, title: 'Presentation' },
             { ID: 2, title: 'Feedback' },
@@ -29,10 +39,17 @@ const actions = {
   
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                commit('setMilestones', milestones);
-                resolve();
+                opts.onSuccess(milestones);
             }, 100);
+        });
+        
+        /*axios.get(milestoneBaseURL)
+        .then(response => { 
+            opts.onSuccess(response.data); 
         })
+        .catch(function(err) { 
+            opts.onError(); 
+        });*/
     }
 }
 

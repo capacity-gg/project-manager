@@ -31,7 +31,14 @@ export default {
   mounted() {
     var self = this;
 
-    self.$store.dispatch("projects/getProjects").then((response) => {});
+    self.$store.dispatch("projects/getProjects", {
+      onSuccess: function(response) {
+        self.$store.commit('projects/setProjects', response);
+      },
+      onError: function(err) {
+        console.log(err);
+      }
+    });
   },
   computed: {
     ...mapGetters("projects", [
