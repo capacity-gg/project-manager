@@ -5,6 +5,7 @@ import Home from './components/pages/project_selector.vue'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [{
     path: '/',
     name: 'project_selector',
