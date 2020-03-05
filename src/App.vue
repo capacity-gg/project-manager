@@ -3,6 +3,7 @@
     <globalHeader ref="header"/>
     <router-view v-on:displayModal="displayModal"/>
     <globalFooter ref="header"/>
+    <globalNav ref="nav"/>
     <modal ref="modal"/>
   </div>
 </template>
@@ -11,6 +12,7 @@
 
 import globalHeader from './components/globals/header.vue'
 import globalFooter from './components/globals/footer.vue'
+import globalNav from './components/globals/navigation.vue'
 import modal from './components/partials/modal.vue'
 
 export default {
@@ -18,6 +20,7 @@ export default {
   components: {
     globalHeader,
     globalFooter,
+    globalNav,
     modal
   },
   props: {},

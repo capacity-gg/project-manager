@@ -12,34 +12,25 @@
         </span>
       </div>
     </div>
-    <div :class="isNavigationVisible ? 'nav--visible' : ''" class="nav">
-      <ul class="nav__item-list">
-        <li class="nav__item" @click.prevent="navigateToLink('project_selector')">Projects</li>
-      </ul>
-    </div>
   </div>
 </template>
 
 <script>
 
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+
 export default {
     props: {},
-    data: () => ({
-      isNavigationVisible: false
-    }),
-    computed: {},
+    data: () => ({}),
+    computed: {
+      ...mapGetters("navigation", [
+          "isNavigationVisible"
+      ]),
+    },
     watch: {},
     methods: {
       toggleNavigationVisibility() {
-        this.isNavigationVisible = !this.isNavigationVisible;
-      },
-      navigateToLink(link) {
-        this.isNavigationVisible = false;
-
-        // Ignore navigation attempts to current page
-        if (this.$router.history.current.name != link) {
-            this.$router.push({name: link});
-        }
+        this.$store.commit("navigation/toggleNavigationVisibility");
       }
     }
 };
