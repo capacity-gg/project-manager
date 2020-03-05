@@ -1,7 +1,9 @@
 <template>
   <div id="header" class="header">
     <div class="content__container">
-      <h1 class="header__title">Project Management Tool</h1>
+      <h1 class="header__title">
+        <router-link to="/">Project Management Tool</router-link>
+      </h1>
       <div class="header__buttons">
         <div 
           class="button button__icon button__icon--minimal" 

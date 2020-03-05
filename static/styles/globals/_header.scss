@@ -14,10 +14,14 @@ $header-padding: 10px;
 }
   
 .header__title {
-    color: color(gray, lightest);
     display: inline-block;
     margin: 0;
     left: $header-padding;
+
+    a {
+        color: color(gray, lightest);
+        text-decoration: none;
+    }
 }
 
 .header__buttons {
