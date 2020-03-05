@@ -3,7 +3,7 @@
     <div class="toolbar">
       <h2 class="toolbar__title">{{ project.name }}</h2>
       <div class="toolbar__buttons">
-        <div class="button button__primary button__icon tooltip" @click.prevent="$emit('displayModal', projectSettings)">
+        <div class="button button__primary button__icon tooltip" @click.prevent="$emit('displayModal', project)">
           <span class="icon">
             <font-awesome-icon icon="cog"/>
           </span>
@@ -94,7 +94,6 @@ export default {
     csvImport
   },
   data: () => ({
-      projectSettings: {},
       title: '{{MMM D}}',
       height: 'auto',
       column: '{{D}}',
@@ -128,10 +127,6 @@ export default {
       self.setupDraggable();
 
       self.calculateCount();
-
-      self.projectSettings = {
-        name: self.project.name
-      }
     },
     err => {
       console.log(err);

@@ -16,9 +16,10 @@ $modal-spacing: 10px;
     box-shadow: 2px 4px 8px rgba(color(mono, black), 0.3);
     left: calc(50% - 300px);
     min-height: 200px;
-    padding: 88px $modal-spacing $modal-spacing;
+    padding: 88px $modal-spacing 76px;
     position: relative;
-    top: calc(50% - 200px);
+    top: 50%;
+    transform: translateY(-50%);
     width: 600px;
     z-index: $z-index-modal;
 }
@@ -61,11 +62,12 @@ $modal-spacing: 10px;
 }
   
 .modal__label {
-    display: inline-block;
-    font-size: 14px;
+    display: block;
+    font-size: 16px;
     font-weight: 600;
     margin: 0 0 10px;
     padding: 4px 0;
+    text-align: left;
 }
 
 .dark-mode {

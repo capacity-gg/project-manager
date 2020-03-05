@@ -10,7 +10,6 @@ $toolbar-events-container-width: calc(100% - #{$toolbar-button-container-width})
   
 .toolbar__buttons,
 .toolbar__events {
-    background: color(gray, mid);
     display: inline-block;
     height: 56px;
     padding: 10px 0;
@@ -90,6 +89,6 @@ $toolbar-events-container-width: calc(100% - #{$toolbar-button-container-width})
 .dark-mode {
     .toolbar__buttons,
     .toolbar__events {
-        background: rgba(color(gray, mid), 0.1);
+        
     }
 }

@@ -9,7 +9,7 @@
             <div class="modal__header">Settings</div>
             <div class="modal__row">
                 <label class="modal__label">Project Name</label>
-                <input type="text" v-model="projectName" :val="projectName" placeholder="Example name">
+                <input type="text" v-model="project.name" :val="project.name" placeholder="Example name">
             </div>
             <div class="modal__buttons flex-content">
                 <div class="button button--large button__primary flex__small--6" @click.prevent="save()">Save</div>
@@ -26,14 +26,14 @@ export default {
     components: {},
     data: () => ({
         isVisible: false,
-        projectName: ""
+        project: {}
     }),
     computed: {},
     watch: {},
     methods: {
         display(info) {
             this.isVisible = true;
-            this.projectName = info.name;
+            this.project = info;
         },
         close() {
             this.isVisible = false;
