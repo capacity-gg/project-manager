@@ -7,6 +7,8 @@
     >
       <ul class="nav__item-list">
         <li class="nav__item" @click.prevent="navigateToLink('project_selector')">Projects</li>
+        <li class="nav__item" @click.prevent="navigateToLink('project_users')">Users</li>
+        <li class="nav__item" @click.prevent="navigateToLink('project_milestones')">Milestones</li>
       </ul>
     </div>
 </template>

@@ -32,6 +32,16 @@ $project-slot-height: 60px;
     }
 }
 
+.project__container .project__slot input[type="text"] {
+    background: transparent;
+    border-color: transparent;
+    color: color(gray, darkest);
+    font-size: 18px;
+    text-align: center;
+    width: auto;
+    vertical-align: middle;
+}
+
 .project__slot--new {
     background: color(primary, light);
     border-color: color(primary, mid);

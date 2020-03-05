@@ -9,7 +9,7 @@
       >
         <span class="project__slot--title">{{project.name}}</span>
       </router-link>
-      <a class="project__slot project__slot--new" @click.prevent="createNewProject">
+      <a class="project__slot project__slot--new" @click.prevent="createProject">
         <span class="icon">
           <font-awesome-icon icon="plus-square"/>
         </span>
@@ -25,7 +25,9 @@ import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
   components: {},
   props: {},
-  data: () => ({}),
+  data: () => ({
+    editingProject: {}
+  }),
   mounted() {
     var self = this;
 
@@ -38,7 +40,7 @@ export default {
   },
   watch: {},
   methods: {
-    createNewProject() {
+    createProject() {
       var self = this;
       var projectCount = self.projects.length + 1;
 
@@ -46,9 +48,20 @@ export default {
         ID: projectCount,
         name: "Example Project " + projectCount
       };
+      
+      self.$store.commit("projects/addProject", project);
+    },
+    editProject(project) {
+      var self = this;
+      self.editingProject = project;
 
-      self.projects.push(project);
-    }
+      self.$nextTick(function() {
+        if (self.$refs.editingProject && 
+            self.$refs.editingProject.length > 0) {
+            self.$refs.editingProject[0].focus();
+        }
+      });
+    },
   }
 }
 

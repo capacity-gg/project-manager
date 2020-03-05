@@ -11,6 +11,9 @@ const getters = {
 }
 
 const mutations = {
+    addUser(state, payload) {
+        state.users.push(payload);
+    },
     setUsers(state, payload) {
         state.users = payload;
     }
@@ -19,12 +22,12 @@ const mutations = {
 const actions = {
     getUsers({commit}) {
         var users = [
-            { title: 'Melissa' },
-            { title: 'Dan' },
-            { title: 'Jamie' },
-            { title: 'Daryl' },
-            { title: 'Benji' },
-            { title: 'Ellerey' }
+            { ID: 1, title: 'Melissa' },
+            { ID: 2, title: 'Dan' },
+            { ID: 3, title: 'Jamie' },
+            { ID: 4, title: 'Daryl' },
+            { ID: 5, title: 'Benji' },
+            { ID: 6, title: 'Ellerey' }
         ];
   
         return new Promise((resolve, reject) => {

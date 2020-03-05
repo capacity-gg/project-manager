@@ -27,7 +27,7 @@ const getters = {
 
 const mutations = {
     addProject(state, payload) {
-        state.projects.push(payload.project);
+        state.projects.push(payload);
     },
     setProjects(state, payload) {
         state.projects = payload;

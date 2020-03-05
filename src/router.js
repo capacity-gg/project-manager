@@ -14,5 +14,13 @@ export default new Router({
     path: '/project:ID',
     name: 'project',
     component: () => import('./components/pages/project_editor.vue')
+  }, {
+    path: '/users',
+    name: 'project_users',
+    component: () => import('./components/pages/project_users.vue')
+  }, {
+    path: '/milestones',
+    name: 'project_milestones',
+    component: () => import('./components/pages/project_milestones.vue')
   }]
 })

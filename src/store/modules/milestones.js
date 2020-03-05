@@ -11,6 +11,9 @@ const getters = {
 }
 
 const mutations = {
+    addMilestone(state, payload) {
+        state.milestones.push(payload);
+    },
     setMilestones(state, payload) {
         state.milestones = payload;
     }
@@ -19,9 +22,9 @@ const mutations = {
 const actions = {
     getMilestones({commit}) {
         var milestones = [
-            { title: 'Presentation' },
-            { title: 'Feedback' },
-            { title: 'Delivery' }
+            { ID: 1, title: 'Presentation' },
+            { ID: 2, title: 'Feedback' },
+            { ID: 3, title: 'Delivery' }
         ];
   
         return new Promise((resolve, reject) => {
