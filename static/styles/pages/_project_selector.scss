@@ -17,13 +17,10 @@ $project-slot-height: 60px;
     border-radius: 3px;
     color: color(gray, darkest);
     display: block;
-    height: $project-slot-height;
-    line-height: $project-slot-height;
     margin: 0 10px 20px;
-    padding: 10px;
+    overflow: hidden;
     text-decoration: none;
     transition: 0.1s ease-out all;
-    width: calc(100% - 44px);
 
     &:hover {
         cursor: pointer;
@@ -32,26 +29,28 @@ $project-slot-height: 60px;
     }
 }
 
-.project__container .project__slot input[type="text"] {
+.project__container .project__slot .project__slot--title {
     background: transparent;
-    border-color: transparent;
-    color: color(gray, darkest);
+    border: 0px;
+    color: #333333;
+    display: inline-block;
     font-size: 18px;
+    height: $project-slot-height;
+    line-height: $project-slot-height;
+    margin: 0;
+    padding: 10px;
     text-align: center;
-    width: auto;
+    width: 100%;
     vertical-align: middle;
 }
 
 .project__slot--new {
     background: color(primary, light);
     border-color: color(primary, mid);
+    padding: 10px;
 
     .icon {
         color: color(gray, lightest);
         font-size: 48px;
     }
-}
-
-.project__slot--title {
-    font-size: 18px;
 }
