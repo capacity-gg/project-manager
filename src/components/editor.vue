@@ -82,7 +82,7 @@
 
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 
-import csvImport from '../partials/csvImport.vue'
+import csvImport from './partials/csvImport.vue'
 import fullCalendar from '@fullcalendar/vue'
 import momentPlugin from '@fullcalendar/moment';
 import dayGridPlugin from '@fullcalendar/daygrid'

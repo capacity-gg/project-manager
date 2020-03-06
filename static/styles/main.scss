@@ -8,8 +8,9 @@
 @import "globals/header";
 @import "globals/layout";
 
-@import "pages/project_editor";
-@import "pages/project_selector";
+@import "pages/editor";
+@import "pages/home";
+@import "pages/not-found";
 
 @import "components/buttons";
 @import "components/forms";
