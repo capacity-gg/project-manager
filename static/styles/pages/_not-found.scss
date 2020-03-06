@@ -1,0 +1,18 @@
+.not-found {
+    margin: 20vh auto 0;
+
+    .not-found__title,
+    .not-found__subtitle {
+        display: block;
+    }
+
+    .not-found__title {
+        font-size: 68px;
+        margin: 0 0 20px;
+    }
+
+    .not-found__subtitle {
+        font-size: 36px;
+        text-transform: uppercase;
+    }
+}
