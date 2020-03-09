@@ -1,30 +1,13 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-import Home from './components/home.vue'
-import NotFound from './components/notFound.vue'
+import VueRouter from 'vue-router'
+import utils from './utils/utils'
 
-Vue.use(Router)
+import { routes } from './routes';
 
-export default new Router({
+Vue.use(VueRouter)
+
+export default new VueRouter({
   mode: 'history',
-  routes: [{
-    path: '/',
-    name: 'project_selector',
-    component: Home
-  }, {
-    path: '/project:ID',
-    name: 'project',
-    component: () => import('./components/editor.vue')
-  }, {
-    path: '/users',
-    name: 'project_users',
-    component: () => import('./components/users.vue')
-  }, {
-    path: '/milestones',
-    name: 'project_milestones',
-    component: () => import('./components/milestones.vue')
-  }, { 
-    path: '*', 
-    component: NotFound 
-  }]
+  base: utils.getRouterBase(),
+  routes: routes
 })

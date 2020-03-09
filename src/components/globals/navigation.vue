@@ -6,9 +6,9 @@
       @click.prevent="stopPropagation"
     >
       <ul class="nav__item-list">
-        <li class="nav__item" @click.prevent="navigateToLink('project_selector')">Projects</li>
-        <li class="nav__item" @click.prevent="navigateToLink('project_users')">Users</li>
-        <li class="nav__item" @click.prevent="navigateToLink('project_milestones')">Milestones</li>
+        <li class="nav__item" @click.prevent="navigateToLink('home')">Projects</li>
+        <li class="nav__item" @click.prevent="navigateToLink('users')">Users</li>
+        <li class="nav__item" @click.prevent="navigateToLink('milestones')">Milestones</li>
       </ul>
     </div>
 </template>
