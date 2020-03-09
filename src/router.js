@@ -8,6 +8,6 @@ Vue.use(VueRouter)
 
 export default new VueRouter({
   mode: 'history',
-  base: utils.getRouterBase(),
+  base: '/project-manager/',//utils.getRouterBase(),
   routes: routes
 })
