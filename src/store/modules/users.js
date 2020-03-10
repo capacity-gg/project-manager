@@ -47,7 +47,9 @@ const actions = {
             { ID: 3, title: 'Jamie' },
             { ID: 4, title: 'Daryl' },
             { ID: 5, title: 'Benji' },
-            { ID: 6, title: 'Ellerey' }
+            { ID: 6, title: 'Ellerey' },
+            { ID: 7, title: 'Mitsuka' },
+            { ID: 8, title: 'Patrick' }
         ];
   
         return new Promise((resolve, reject) => {
