@@ -11,12 +11,14 @@ import {
   faChevronLeft, 
   faChevronRight, 
   faCog, 
+  faEdit,
   faExclamation, 
   faFileDownload, 
   faFileUpload, 
   faPlusSquare,
   faUser, 
-  faTimes 
+  faTimes, 
+  faTrash 
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -24,12 +26,14 @@ library.add(
   faChevronLeft,
   faChevronRight,
   faCog,
+  faEdit,
   faExclamation,
   faFileDownload,
   faFileUpload,
   faPlusSquare,
   faUser,
-  faTimes
+  faTimes, 
+  faTrash
 )
 
 // Global font components

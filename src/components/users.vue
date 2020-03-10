@@ -1,23 +1,38 @@
 <template>
-  <div class="project-selector content__container">
-    <div class="project__container">
-      <a
+  <div class="content">
+    <div class="content__container pad-vert-4">
+      <h2>Users</h2>
+      <div
         v-for="user in users" 
         :key="user.ID"        
-        class="project__slot"
+        class="slot"
       >
         <input 
           v-if="isEditing(user.ID)" 
           v-model="editingUser.title" 
           :val="editingUser.title"  
-          class="project__slot--title"
+          class="slot__title slot__title--full"
           ref="editingUser"            
           type="text" 
           placeholder="Example name"
         >
-        <span v-else class="project__slot--title" @click.prevent="editUser(user)">{{user.title}}</span>
-      </a>
-      <a class="project__slot project__slot--new" @click.prevent="createUser">
+        <div v-else>
+          <div class="button button__primary button__icon slot__button slot__button--left tooltip" @click.prevent="editUser(user)">
+            <span class="icon">
+              <font-awesome-icon icon="edit"/>
+            </span>
+            <span class="tooltip__text">Edit</span>
+          </div>
+          <span class="slot__title">{{user.title}}</span>
+          <div class="button button__primary button__icon slot__button slot__button--right tooltip" @click.prevent="removeUser(user)">
+            <span class="icon">
+              <font-awesome-icon icon="trash"/>
+            </span>
+            <span class="tooltip__text">Delete</span>
+          </div>
+        </div>
+      </div>
+      <a class="slot slot__new" @click.prevent="createUser">
         <span class="icon">
           <font-awesome-icon icon="plus-square"/>
         </span>
@@ -78,6 +93,13 @@ export default {
             self.$refs.editingUser[0].focus();
         }
       });
+    },
+    removeUser(user) {
+      var self = this;
+
+      self.editUser({});
+      
+      self.$store.commit("users/removeUser", user);
     },
     isEditing(ID) {
       return this.editingUser && this.editingUser.ID == ID;

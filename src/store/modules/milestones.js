@@ -19,6 +19,16 @@ const mutations = {
     addMilestone(state, payload) {
         state.milestones.push(payload);
     },
+    removeMilestone(state, payload) {
+        var milestones = state.milestones;
+
+        for (var x = 0; x < milestones.length; x++) {
+            if (milestones[x].ID == payload.ID) {
+                milestones.splice(x, 1);
+                break;
+            }
+        }
+    },
     setMilestones(state, payload) {
         state.milestones = payload;
     }

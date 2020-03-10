@@ -1,0 +1,75 @@
+$project-slot-height: 60px;
+
+.slot {
+    background: color(gray, lightest);
+    border: 2px solid color(gray, mid);
+    border-radius: 3px;
+    color: color(gray, darkest);
+    display: block;
+    margin: 0 10px 20px;
+    position: relative;
+    text-decoration: none;
+    transition: 0.1s ease-out all;
+
+    .slot__button {
+        opacity: 0;
+        transition: 0.1s ease-out opacity;
+    }
+
+    &:hover {
+        cursor: pointer;
+        box-shadow: 4px 4px 8px color(gray, darkest);
+        transform: translateY(-2px);
+
+        .slot__button {
+            opacity: 1;
+        }
+    }
+}
+
+.slot__title {
+    background: transparent;
+    border: 0px;
+    color: #333333 !important;
+    display: block;
+    font-size: 18px;
+    height: $project-slot-height !important;
+    line-height: $project-slot-height !important;
+    margin: 0;
+    text-align: center;
+}
+
+.slot__title--full {
+    width: 100%;
+}
+
+.slot__button {
+    height: $project-slot-height;
+    line-height: $project-slot-height;
+    width: $project-slot-height;
+}
+
+.slot__button--left {
+    left: 0;
+    position: absolute !important;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.slot__button--right {
+    position: absolute !important;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.slot__new {
+    background: color(primary, light);
+    border-color: color(primary, mid);
+    padding: 10px;
+
+    .icon {
+        color: color(gray, lightest);
+        font-size: 48px;
+    }
+}

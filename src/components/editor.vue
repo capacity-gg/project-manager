@@ -1,5 +1,6 @@
 <template>
-  <div class="project-editor content__container">  
+  <div class="content">
+    <div class="content__container">  
     <div class="toolbar">
       <h2 class="toolbar__title">{{ project.name }}</h2>
       <div class="toolbar__buttons">
@@ -75,6 +76,7 @@
       @eventReceive="handleReceive"
       @eventClick="handleClick"
     />
+  </div>
   </div>
 </template>
 

@@ -1,15 +1,16 @@
 <template>
-  <div class="project-selector content__container">
-    <div class="project__container">
+  <div class="content">
+    <div class="content__container pad-vert-4">
+      <h2>Projects</h2>
       <router-link
         v-for="project in projects" 
         :key="project.id"
         :to="{name: 'project', params: {ID: project.ID}}"
-        class="project__slot"
+        class="slot"
       >
-        <span class="project__slot--title">{{project.name}}</span>
+        <span class="slot__title slot__title--full">{{project.name}}</span>
       </router-link>
-      <a class="project__slot project__slot--new" @click.prevent="createProject">
+      <a class="slot slot__new" @click.prevent="createProject">
         <span class="icon">
           <font-awesome-icon icon="plus-square"/>
         </span>

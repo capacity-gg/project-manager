@@ -19,6 +19,16 @@ const mutations = {
     addUser(state, payload) {
         state.users.push(payload);
     },
+    removeUser(state, payload) {
+        var users = state.users;
+
+        for (var x = 0; x < users.length; x++) {
+            if (users[x].ID == payload.ID) {
+                users.splice(x, 1);
+                break;
+            }
+        }
+    },
     setUsers(state, payload) {
         state.users = payload;
     }

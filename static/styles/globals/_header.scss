@@ -5,6 +5,7 @@ $header-padding: 10px;
     background: color(gray, darkest);
     height: $header-height;
     position: relative;
+    z-index: $z-index-header;
 }
 
 .header__title,
