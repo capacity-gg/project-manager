@@ -29,24 +29,28 @@ const mutations = {
         state.milestones.push(payload);
     },
     removeMilestone(state, payload) {
-        if (utils.isNil(state.milestones)) { return; }
+        var milestones = state.milestones;
 
-        state.milestones.forEach(function(milestone, index) {
-            if (milestone.ID == payload.ID) {
-                state.milestones.splice(index, 1);
-                return;
+        if (utils.isNil(milestones)) { return; }
+
+        for (var x = 0; x < milestones.length; x++) {
+            if (milestones[x].ID == payload.ID) {
+                milestones.splice(x, 1);
+                break;
             }
-        });
+        }
     },
     updateMilestone(state, payload) {
-        if (utils.isNil(state.milestones)) { return; }
+        var milestones = state.milestones;
 
-        state.milestones.forEach(function(milestone) {
-            if (milestone.ID == payload.ID) {
-                milestone = payload;
-                return;
+        if (utils.isNil(milestones)) { return; }
+
+        for (var x = 0; x < milestones.length; x++) {
+            if (milestones[x].ID == payload.ID) {
+                milestones.splice(x, 1, payload);
+                break;
             }
-        });
+        }
     }
 }
 

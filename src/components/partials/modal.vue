@@ -16,9 +16,11 @@
                 <label class="modal__label flex__small--6" style="text-align: center">Available Users</label>
                 <div class="flex__small--6">
                     <draggable 
-                        v-model="project.users" 
+                        v-model="project.users"
+                        v-bind="options"
                         @start="drag=true" 
                         @end="drag=false"
+                        class="draggable__container" 
                     >
                         <div 
                             v-for="(user, index) in project.users" :key="index"
@@ -30,8 +32,10 @@
                 <div class="flex__small--6">
                     <draggable 
                         v-model="availableUsers" 
+                        v-bind="options"
                         @start="drag=true" 
                         @end="drag=false"
+                        class="draggable__container" 
                     >
                         <div 
                             v-for="(user, index) in availableUsers" :key="index"
@@ -64,6 +68,9 @@ export default {
     data: () => ({
         isVisible: false,
         project: {},
+        options: {
+            group: "users"
+        },
         availableUsers: []
     }),
     mounted() {
@@ -113,6 +120,12 @@ export default {
             this.isVisible = false;
         },
         save() {
+            var self = this;
+            
+            self.$store.dispatch("projects/updateProject", {
+                project: self.project
+            });
+
             this.close();
         },
         revert() {

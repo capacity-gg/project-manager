@@ -29,24 +29,28 @@ const mutations = {
         state.users.push(payload);
     },
     removeUser(state, payload) {
-        if (utils.isNil(state.users)) { return; }
+        var users = state.users;
 
-        state.users.forEach(function(user, index) {
-            if (user.ID == payload.ID) {
-                state.users.splice(index, 1);
-                return;
+        if (utils.isNil(users)) { return; }
+
+        for (var x = 0; x < users.length; x++) {
+            if (users[x].ID == payload.ID) {
+                users.splice(x, 1);
+                break;
             }
-        });
+        }
     },
     updateUser(state, payload) {
-        if (utils.isNil(state.users)) { return; }
+        var users = state.users;
 
-        state.users.forEach(function(user) {
-            if (user.ID == payload.ID) {
-                user = payload;
-                return;
+        if (utils.isNil(users)) { return; }
+
+        for (var x = 0; x < users.length; x++) {
+            if (users[x].ID == payload.ID) {
+                users.splice(x, 1, payload);
+                break;
             }
-        });
+        }
     }
 }
 
