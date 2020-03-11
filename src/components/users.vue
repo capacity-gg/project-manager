@@ -10,6 +10,7 @@
         <input 
           v-if="isEditing(user.ID)" 
           v-model="editingUser.title" 
+          v-on:keyup="updateUser"
           :val="editingUser.title"  
           class="slot__title slot__title--full"
           ref="editingUser"            
@@ -91,6 +92,17 @@ export default {
             self.$refs.editingUser[0].focus();
         }
       });
+    },
+    updateUser(e) {
+      if (e.keyCode !== 13) { return; }
+
+      var self = this;
+      
+      self.$store.dispatch("users/updateUser", {
+        user: self.editingUser
+      });
+
+      self.editUser({});
     },
     removeUser(user) {
       var self = this;

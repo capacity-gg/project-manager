@@ -9,7 +9,8 @@
       >
         <input 
           v-if="isEditing(milestone.ID)" 
-          v-model="editingMilestone.title" 
+          v-model="editingMilestone.title"
+          v-on:keyup="updateMilestone" 
           :val="editingMilestone.title"  
           class="slot__title slot__title--full"
           ref="editingMilestone"            
@@ -91,6 +92,17 @@ export default {
             self.$refs.editingMilestone[0].focus();
         }
       });
+    },
+    updateMilestone(e) {
+      if (e.keyCode !== 13) { return; }
+
+      var self = this;
+      
+      self.$store.dispatch("milestones/updateMilestone", {
+        milestone: self.editingMilestone
+      });
+
+      self.editMilestone({});
     },
     removeMilestone(milestone) {
       var self = this;
