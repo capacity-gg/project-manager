@@ -51,8 +51,10 @@ export default {
     createProject() {
       var self = this;
       
-      self.$store.commit("projects/addProject", {
-        name: "Example Project"
+      self.$store.dispatch("projects/addProject", {
+        project: {
+          name: "Example Project"
+        }
       });
     },
     editProject(project) {
