@@ -50,14 +50,10 @@ export default {
   methods: {
     createProject() {
       var self = this;
-      var projectCount = self.projects.length + 1;
-
-      var project = {
-        ID: projectCount,
-        name: "Example Project " + projectCount
-      };
       
-      self.$store.commit("projects/addProject", project);
+      self.$store.commit("projects/addProject", {
+        name: "Example Project"
+      });
     },
     editProject(project) {
       var self = this;

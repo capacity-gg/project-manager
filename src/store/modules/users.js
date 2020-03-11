@@ -18,6 +18,10 @@ const getters = {
 
 const mutations = {
     addUser(state, payload) {
+        payload = utils.objPlus({
+            "ID": utils.uuidv4()
+        }, payload);
+
         state.users.push(payload);
     },
     removeUser(state, payload) {

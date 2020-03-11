@@ -33,6 +33,10 @@ const getters = {
 
 const mutations = {
     addProject(state, payload) {
+        payload = utils.objPlus({
+            "ID": utils.uuidv4()
+        }, payload);
+
         state.projects.push(payload);
     },
     setProjects(state, payload) {

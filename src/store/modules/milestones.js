@@ -18,6 +18,10 @@ const getters = {
 
 const mutations = {
     addMilestone(state, payload) {
+        payload = utils.objPlus({
+            "ID": utils.uuidv4()
+        }, payload);
+
         state.milestones.push(payload);
     },
     removeMilestone(state, payload) {

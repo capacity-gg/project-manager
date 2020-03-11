@@ -43,8 +43,6 @@
 
 <script>
 
-import utils from '../utils/utils'
-
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -75,14 +73,11 @@ export default {
     createUser() {
       var self = this;
 
-      var user = {
-        ID: utils.uuidv4(),
-        title: "New User"
-      };
-
-      self.editUser(user);
+      //self.editUser(user);
       
-      self.$store.commit("users/addUser", user);
+      self.$store.commit("users/addUser", {
+        title: "New User"
+      });
     },
     editUser(user) {
       var self = this;
