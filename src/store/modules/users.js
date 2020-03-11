@@ -17,25 +17,36 @@ const getters = {
 }
 
 const mutations = {
+    setUsers(state, payload) {
+        state.users = payload;
+    },
+    setActiveUser(state, payload) {
+        state.userID = payload.ID;
+    },
     addUser(state, payload) {
-        payload = utils.objPlus({
-            "ID": utils.uuidv4()
-        }, payload);
+        if (utils.isNil(state.users)) { state.users = []; }
 
         state.users.push(payload);
     },
     removeUser(state, payload) {
-        var users = state.users;
+        if (utils.isNil(state.users)) { return; }
 
-        for (var x = 0; x < users.length; x++) {
-            if (users[x].ID == payload.ID) {
-                users.splice(x, 1);
-                break;
+        state.users.forEach(function(user, index) {
+            if (user.ID == payload.ID) {
+                state.users.splice(index, 1);
+                return;
             }
-        }
+        });
     },
-    setUsers(state, payload) {
-        state.users = payload;
+    updateUser(state, payload) {
+        if (utils.isNil(state.users)) { return; }
+
+        state.users.forEach(function(user) {
+            if (user.ID == payload.ID) {
+                user = payload;
+                return;
+            }
+        });
     }
 }
 
@@ -46,16 +57,7 @@ const actions = {
             "onError": function() {}
         }, opts);
 
-        var users = [
-            { ID: utils.uuidv4(), title: 'Melissa' },
-            { ID: utils.uuidv4(), title: 'Dan' },
-            { ID: utils.uuidv4(), title: 'Jamie' },
-            { ID: utils.uuidv4(), title: 'Daryl' },
-            { ID: utils.uuidv4(), title: 'Benji' },
-            { ID: utils.uuidv4(), title: 'Ellerey' },
-            { ID: utils.uuidv4(), title: 'Mitsuka' },
-            { ID: utils.uuidv4(), title: 'Patrick' }
-        ];
+        var users = JSON.parse(VueCookie.get('users'));
   
         return new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -64,6 +66,88 @@ const actions = {
         });
         
         /*axios.get(userBaseURL)
+        .then(response => { 
+            opts.onSuccess(response.data); 
+        })
+        .catch(function(err) { 
+            opts.onError(); 
+        });*/
+    },
+    updateUser(state, opts) {
+        opts = utils.objPlus({
+            "onSuccess": function() {},
+            "onError": function() {}
+        }, opts);
+
+        state.commit("updateUser", opts.user);
+
+        var users = state.getters.users || [];
+
+        VueCookie.set('users', JSON.stringify(users), {"expires": "10Y" });
+  
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                opts.onSuccess(opts.user);
+            }, 100);
+        });
+        
+        /*axios.put(userBaseURL, opts.user)
+        .then(response => { 
+            opts.onSuccess(response.data); 
+        })
+        .catch(function(err) { 
+            opts.onError(); 
+        });*/
+    },
+    addUser(state, opts) {
+        opts = utils.objPlus({
+            "onSuccess": function() {},
+            "onError": function() {}
+        }, opts);
+
+        opts.user = utils.objPlus({
+            "ID": utils.uuidv4()
+        }, opts.user);
+
+        state.commit("addUser", opts.user);
+
+        var users = state.getters.users || [];
+
+        VueCookie.set('users', JSON.stringify(users), {"expires": "10Y" });
+  
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                opts.onSuccess(users);
+            }, 100);
+        });
+        
+        /*axios.post(userBaseURL, opts.user)
+        .then(response => { 
+            opts.onSuccess(response.data); 
+        })
+        .catch(function(err) { 
+            opts.onError(); 
+        });*/
+    },
+    removeUser(state, opts) {
+        opts = utils.objPlus({
+            "onSuccess": function() {},
+            "onError": function() {}
+        }, opts);
+
+        state.commit("removeUser", opts.user);
+
+        var users = state.getters.users || [];
+
+        VueCookie.set('users', JSON.stringify(users), {"expires": "10Y" });
+  
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                opts.onSuccess(users);
+            }, 100);
+        });
+        
+        /*axios.post(userBaseURL, opts.user)
         .then(response => { 
             opts.onSuccess(response.data); 
         })

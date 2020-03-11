@@ -75,8 +75,10 @@ export default {
 
       //self.editUser(user);
       
-      self.$store.commit("users/addUser", {
-        title: "New User"
+      self.$store.dispatch("users/addUser", {
+        user: {
+          title: "New User"
+        }
       });
     },
     editUser(user) {
@@ -95,7 +97,9 @@ export default {
 
       self.editUser({});
       
-      self.$store.commit("users/removeUser", user);
+      self.$store.dispatch("users/removeUser", {
+        user: user
+      });
     },
     isEditing(ID) {
       return this.editingUser && this.editingUser.ID == ID;

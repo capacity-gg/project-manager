@@ -52,6 +52,7 @@
 <script>
 
 import draggable from 'vuedraggable'
+import utils from '@/utils/utils.js';
 
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 
@@ -88,8 +89,10 @@ export default {
             var self = this;
 
             self.isVisible = true;
-            self.project = info;            
             self.availableUsers = [];
+            self.project = utils.objPlus({
+                "users": []
+            }, info);
 
             self.users.forEach(function(user) {
                 var isUserAvailable = true;

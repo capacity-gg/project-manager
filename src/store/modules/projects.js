@@ -32,16 +32,26 @@ const getters = {
 }
 
 const mutations = {
-    addProject(state, payload) {
-        if (utils.isNil(state.projects)) { state.projects = []; }
-
-        state.projects.push(payload);
-    },
     setProjects(state, payload) {
         state.projects = payload;
     },
     setActiveProject(state, payload) {
         state.projectID = payload.ID;
+    },
+    addProject(state, payload) {
+        if (utils.isNil(state.projects)) { state.projects = []; }
+
+        state.projects.push(payload);
+    },
+    removeProject(state, payload) {
+        if (utils.isNil(state.projects)) { return; }
+
+        state.projects.forEach(function(project, index) {
+            if (project.ID == payload.ID) {
+                state.projects.splice(index, 1);
+                return;
+            }
+        });
     },
     updateProject(state, payload) {
         if (utils.isNil(state.projects)) { return; }
@@ -52,7 +62,7 @@ const mutations = {
                 return;
             }
         });
-    }        
+    }     
 }
 
 const actions = {

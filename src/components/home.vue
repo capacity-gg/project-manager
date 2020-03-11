@@ -53,7 +53,7 @@ export default {
       
       self.$store.dispatch("projects/addProject", {
         project: {
-          name: "Example Project"
+          name: "New Project"
         }
       });
     },

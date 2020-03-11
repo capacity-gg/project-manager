@@ -75,8 +75,10 @@ export default {
 
       //self.editMilestone(milestone);
       
-      self.$store.commit("milestones/addMilestone", {
-        title: "New Milestone"
+      self.$store.dispatch("milestones/addMilestone", {
+        milestone: {
+          title: "New Milestone"
+        }
       });
     },
     editMilestone(milestone) {
@@ -95,7 +97,9 @@ export default {
 
       self.editMilestone({});
       
-      self.$store.commit("milestones/removeMilestone", milestone);
+      self.$store.dispatch("milestones/removeMilestone", {
+        milestone: milestone
+      });
     },
     isEditing(ID) {
       return this.editingMilestone && this.editingMilestone.ID == ID;
