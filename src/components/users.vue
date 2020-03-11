@@ -43,6 +43,8 @@
 
 <script>
 
+import utils from '../utils/utils'
+
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -72,10 +74,9 @@ export default {
   methods: {
     createUser() {
       var self = this;
-      var userCount = self.users.length + 1;
 
       var user = {
-        ID: userCount,
+        ID: utils.uuidv4(),
         title: "New User"
       };
 

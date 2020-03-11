@@ -69,19 +69,19 @@ const actions = {
 
         var projects = [
             {
-                ID: 1,
+                ID: utils.uuidv4(),
                 name: "Example Project 1",
                 users: users,
                 milestones: milestones,
                 events: []
             }, {
-                ID: 2,
+                ID: utils.uuidv4(),
                 name: "Example Project 2",
                 users: users,
                 milestones: milestones,
                 events: []
             }, {
-                ID: 3,
+                ID: utils.uuidv4(),
                 name: "Example Project 3",
                 users: users,
                 milestones: milestones,

@@ -43,6 +43,8 @@
 
 <script>
 
+import utils from '../utils/utils'
+
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -72,10 +74,9 @@ export default {
   methods: {
     createMilestone() {
       var self = this;
-      var milestoneCount = self.milestones.length + 1;
 
       var milestone = {
-        ID: milestoneCount,
+        ID: utils.uuidv4(),
         title: "New Milestone"
       };
 

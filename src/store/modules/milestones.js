@@ -42,9 +42,9 @@ const actions = {
         }, opts);
 
         var milestones = [
-            { ID: 1, title: 'Presentation' },
-            { ID: 2, title: 'Feedback' },
-            { ID: 3, title: 'Delivery' }
+            { ID: utils.uuidv4(), title: 'Presentation' },
+            { ID: utils.uuidv4(), title: 'Feedback' },
+            { ID: utils.uuidv4(), title: 'Delivery' }
         ];
   
         return new Promise((resolve, reject) => {

@@ -42,14 +42,14 @@ const actions = {
         }, opts);
 
         var users = [
-            { ID: 1, title: 'Melissa' },
-            { ID: 2, title: 'Dan' },
-            { ID: 3, title: 'Jamie' },
-            { ID: 4, title: 'Daryl' },
-            { ID: 5, title: 'Benji' },
-            { ID: 6, title: 'Ellerey' },
-            { ID: 7, title: 'Mitsuka' },
-            { ID: 8, title: 'Patrick' }
+            { ID: utils.uuidv4(), title: 'Melissa' },
+            { ID: utils.uuidv4(), title: 'Dan' },
+            { ID: utils.uuidv4(), title: 'Jamie' },
+            { ID: utils.uuidv4(), title: 'Daryl' },
+            { ID: utils.uuidv4(), title: 'Benji' },
+            { ID: utils.uuidv4(), title: 'Ellerey' },
+            { ID: utils.uuidv4(), title: 'Mitsuka' },
+            { ID: utils.uuidv4(), title: 'Patrick' }
         ];
   
         return new Promise((resolve, reject) => {
