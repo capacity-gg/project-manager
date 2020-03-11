@@ -1,6 +1,6 @@
 <template>
-  <div class="project-selector content__container">
-    <div class="not-found">
+  <div class="content">
+    <div class="content__container not-found">
       <span class="not-found__title">404</span>
       <span class="not-found__subtitle">Page Not Found</span>
     </div>
