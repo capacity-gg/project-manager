@@ -3,6 +3,7 @@ const namespaced = true;
 import axios from '@/utils/custom_axios.js';
 import utils from '@/utils/utils.js';
 
+const VueCookie = require('vue-cookie');
 const projectBaseURL = process.env.switchboardBaseURL + "projects/";
 
 const state = {
@@ -31,18 +32,41 @@ const getters = {
 }
 
 const mutations = {
-    addProject(state, payload) {
-        state.projects.push(payload);
-    },
     setProjects(state, payload) {
         state.projects = payload;
     },
     setActiveProject(state, payload) {
         state.projectID = payload.ID;
     },
+    addProject(state, payload) {
+        if (utils.isNil(state.projects)) { state.projects = []; }
+
+        state.projects.push(payload);
+    },
+    removeProject(state, payload) {
+        var projects = state.projects;
+
+        if (utils.isNil(projects)) { return; }
+
+        for (var x = 0; x < projects.length; x++) {
+            if (projects[x].ID == payload.ID) {
+                projects.splice(x, 1);
+                break;
+            }
+        }
+    },
     updateProject(state, payload) {
-        state.projects[payload.index] = payload.project;
-    }        
+        var projects = state.projects;
+
+        if (utils.isNil(projects)) { return; }
+
+        for (var x = 0; x < projects.length; x++) {
+            if (projects[x].ID == payload.ID) {
+                projects.splice(x, 1, payload);
+                break;
+            }
+        }
+    }
 }
 
 const actions = {
@@ -52,42 +76,7 @@ const actions = {
             "onError": function() {}
         }, opts);
 
-        var users = [
-            { title: 'Melissa', count: '0' },
-            { title: 'Dan', count: '0' },
-            { title: 'Jamie', count: '0' },
-            { title: 'Daryl', count: '0' },
-            { title: 'Benji', count: '0' },
-            { title: 'Ellerey', count: '0' }
-        ];
-
-        var milestones = [
-            { title: 'Presentation' },
-            { title: 'Feedback' },
-            { title: 'Delivery' }
-        ];
-
-        var projects = [
-            {
-                ID: 1,
-                name: "Example Project 1",
-                users: users,
-                milestones: milestones,
-                events: []
-            }, {
-                ID: 2,
-                name: "Example Project 2",
-                users: users,
-                milestones: milestones,
-                events: []
-            }, {
-                ID: 3,
-                name: "Example Project 3",
-                users: users,
-                milestones: milestones,
-                events: []
-            }
-        ];
+        var projects = JSON.parse(VueCookie.get('projects'));
   
         return new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -103,8 +92,89 @@ const actions = {
             opts.onError(); 
         });*/
     },
-    getProject({commit}) {
+    updateProject(state, opts) {
+        opts = utils.objPlus({
+            "onSuccess": function() {},
+            "onError": function() {}
+        }, opts);
 
+        state.commit("updateProject", opts.project);
+
+        var projects = state.getters.projects || [];
+
+        VueCookie.set('projects', JSON.stringify(projects), {"expires": "10Y" });
+  
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                opts.onSuccess(opts.project);
+            }, 100);
+        });
+        
+        /*axios.put(projectBaseURL, opts.project)
+        .then(response => { 
+            opts.onSuccess(response.data); 
+        })
+        .catch(function(err) { 
+            opts.onError(); 
+        });*/
+    },
+    addProject(state, opts) {
+        opts = utils.objPlus({
+            "onSuccess": function() {},
+            "onError": function() {}
+        }, opts);
+
+        opts.project = utils.objPlus({
+            "ID": utils.uuidv4(),
+            "users": [],
+            "milestones": []
+        }, opts.project);
+
+        state.commit("addProject", opts.project);
+
+        var projects = state.getters.projects || [];
+
+        VueCookie.set('projects', JSON.stringify(projects), {"expires": "10Y" });
+  
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                opts.onSuccess(projects);
+            }, 100);
+        });
+        
+        /*axios.post(projectBaseURL, opts.project)
+        .then(response => { 
+            opts.onSuccess(response.data); 
+        })
+        .catch(function(err) { 
+            opts.onError(); 
+        });*/
+    },
+    removeProject(state, opts) {
+        opts = utils.objPlus({
+            "onSuccess": function() {},
+            "onError": function() {}
+        }, opts);
+
+        state.commit("removeProject", opts.project);
+
+        var projects = state.getters.projects || [];
+
+        VueCookie.set('projects', JSON.stringify(projects), {"expires": "10Y" });
+  
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                opts.onSuccess(projects);
+            }, 100);
+        });
+        
+        /*axios.post(projectBaseURL, opts.project)
+        .then(response => { 
+            opts.onSuccess(response.data); 
+        })
+        .catch(function(err) { 
+            opts.onError(); 
+        });*/
     }
 }
 

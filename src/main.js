@@ -2,7 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store/store'
+import utils from './utils/utils';
 
+// Third-party plugins
+import VueRouter from 'vue-router';
+import VueCookie from 'vue-cookie';
+
+// Fonts
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 
@@ -11,12 +17,14 @@ import {
   faChevronLeft, 
   faChevronRight, 
   faCog, 
+  faEdit,
   faExclamation, 
   faFileDownload, 
   faFileUpload, 
   faPlusSquare,
   faUser, 
-  faTimes 
+  faTimes, 
+  faTrash 
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -24,12 +32,14 @@ library.add(
   faChevronLeft,
   faChevronRight,
   faCog,
+  faEdit,
   faExclamation,
   faFileDownload,
   faFileUpload,
   faPlusSquare,
   faUser,
-  faTimes
+  faTimes, 
+  faTrash
 )
 
 // Global font components
@@ -42,9 +52,18 @@ require('@fullcalendar/core/main.css')
 require('@fullcalendar/daygrid/main.css')
 require('../static/styles/main.scss')
 
-new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App)
-})
+try {  
+  Vue.use(VueRouter);  
+  Vue.use(VueCookie);
+  Vue.prototype.utils = utils; 
+
+  new Vue({
+    el: '#app',
+    router,
+    store,
+    render: h => h(App)
+  })
+}
+catch(err) {
+  console.log(err);
+}

@@ -16,8 +16,10 @@
 @import "components/forms";
 @import "components/modals";
 @import "components/navigation";
+@import "components/slots";
 @import "components/toolbar";
 @import "components/tooltips";
 
 @import "overrides/csv-import";
+@import "overrides/draggable";
 @import "overrides/fc-calendar";

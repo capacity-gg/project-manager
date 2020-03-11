@@ -2,7 +2,7 @@
   <div id="header" class="header">
     <div class="content__container">
       <h1 class="header__title">
-        <router-link to="/">Project Management Tool</router-link>
+        <router-link to="/">Project Manager</router-link>
       </h1>
       <div class="header__buttons">
         <div 

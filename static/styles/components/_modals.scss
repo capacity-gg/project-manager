@@ -26,6 +26,7 @@ $modal-spacing: 10px;
   
 .modal__header {
     background: color(gray, darkest);
+    border-radius: 3px 3px 0 0;
     font-size: 24px;
     font-weight: 600;
     height: 44px;

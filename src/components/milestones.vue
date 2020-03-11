@@ -1,23 +1,39 @@
 <template>
-  <div class="project-selector content__container">
-    <div class="project__container">
+  <div class="content">
+    <div class="content__container pad-vert-4">
+      <h2>Milestones</h2>
       <a
         v-for="milestone in milestones" 
         :key="milestone.ID"
-        class="project__slot"
+        class="slot"
       >
         <input 
           v-if="isEditing(milestone.ID)" 
-          v-model="editingMilestone.title" 
+          v-model="editingMilestone.title"
+          v-on:keyup="updateMilestone" 
           :val="editingMilestone.title"  
-          class="project__slot--title"
+          class="slot__title slot__title--full"
           ref="editingMilestone"            
           type="text" 
           placeholder="Example name"
         >
-        <span v-else class="project__slot--title" @click.prevent="editMilestone(milestone)">{{milestone.title}}</span>
+        <div v-else>
+          <div class="button button__primary button__icon slot__button slot__button--left tooltip" @click.prevent="editMilestone(milestone)">
+            <span class="icon">
+              <font-awesome-icon icon="edit"/>
+            </span>
+            <span class="tooltip__text">Edit</span>
+          </div>
+          <span class="slot__title">{{milestone.title}}</span>
+          <div class="button button__primary button__icon slot__button slot__button--right tooltip" @click.prevent="removeMilestone(milestone)">
+            <span class="icon">
+              <font-awesome-icon icon="trash"/>
+            </span>
+            <span class="tooltip__text">Delete</span>
+          </div>
+        </div>
       </a>
-      <a class="project__slot project__slot--new" @click.prevent="createMilestone">
+      <a class="slot slot__new" @click.prevent="createMilestone">
         <span class="icon">
           <font-awesome-icon icon="plus-square"/>
         </span>
@@ -57,16 +73,14 @@ export default {
   methods: {
     createMilestone() {
       var self = this;
-      var milestoneCount = self.milestones.length + 1;
 
-      var milestone = {
-        ID: milestoneCount,
-        title: "New Milestone"
-      };
-
-      self.editMilestone(milestone);
+      //self.editMilestone(milestone);
       
-      self.$store.commit("milestones/addMilestone", milestone);
+      self.$store.dispatch("milestones/addMilestone", {
+        milestone: {
+          title: "New Milestone"
+        }
+      });
     },
     editMilestone(milestone) {
       var self = this;
@@ -77,6 +91,26 @@ export default {
             self.$refs.editingMilestone.length > 0) {
             self.$refs.editingMilestone[0].focus();
         }
+      });
+    },
+    updateMilestone(e) {
+      if (e.keyCode !== 13) { return; }
+
+      var self = this;
+      
+      self.$store.dispatch("milestones/updateMilestone", {
+        milestone: self.editingMilestone
+      });
+
+      self.editMilestone({});
+    },
+    removeMilestone(milestone) {
+      var self = this;
+
+      self.editMilestone({});
+      
+      self.$store.dispatch("milestones/removeMilestone", {
+        milestone: milestone
       });
     },
     isEditing(ID) {
