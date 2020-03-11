@@ -7,7 +7,7 @@ export const routes = [
     name: 'home',
     component: Home
   }, {
-    path: '/project:ID',
+    path: '/project-:ID',
     name: 'project',
     component: () => import('./components/editor.vue')
   }, {

@@ -3,6 +3,7 @@ const namespaced = true;
 import axios from '@/utils/custom_axios.js';
 import utils from '@/utils/utils.js';
 
+const VueCookie = require('vue-cookie');
 const milestoneBaseURL = process.env.switchboardBaseURL + "milestones/";
 
 const state = {
