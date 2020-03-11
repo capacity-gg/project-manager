@@ -1,3 +1,6 @@
 .draggable__container {
+    max-height: 20vh;
     min-height: 100px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
