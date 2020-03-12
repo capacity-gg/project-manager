@@ -286,5 +286,30 @@ export default {
             var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
+    },
+    convertDate(date) {
+      var date_month = date.getMonth() + 1;
+      var date_day = date.getDate();
+
+      var dateStr_month = (date_month < 10) ? ("0" + date_month) : date_month;
+      var dateStr_day = (date_day < 10) ? ("0" + date_day) : date_day;
+      
+      return (date.getFullYear() + "-" + dateStr_month + "-" + dateStr_day);
+    },
+    exportTableToCSV(content, fileName) {
+      if (content == undefined || content.length == 0) { return; }
+
+      var data = "data:text/csv;charset=utf-8," + [
+        Object.keys(content[0]).join(","),
+        ...content.map(item => Object.values(item).join(","))
+      ]
+      .join("\n")
+      .replace(/(^\[)|(\]$)/gm, "");
+
+      const link = document.createElement("a");
+
+      link.setAttribute("href", encodeURI(data));
+      link.setAttribute("download", fileName + ".csv");
+      link.click();
     }
 }

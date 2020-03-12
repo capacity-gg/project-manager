@@ -43,7 +43,8 @@
           <div 
             class='button button__secondary fc-event button__secondary' 
             v-for="event in project.milestones" 
-            :key="event.title"
+            :key="event.ID"
+            :id="event.ID"
           >
             <span class="fc-event-name">{{ event.title }}</span>
           </div>
@@ -52,7 +53,8 @@
           <div 
             class='button button__primary fc-event' 
             v-for="event in project.users" 
-            :key="event.title"
+            :key="event.ID"
+            :id="event.ID"
           >
             <span class="fc-event-name">{{ event.title }}</span>
             <span class="fc-event-count">{{ event.count }}</span>
@@ -131,10 +133,16 @@ export default {
           ID: self.$route.params.ID
         });
 
-        var events = self.project.events || [];
+        var projectEvents = self.project.events || [];
 
-        events.forEach(function(event, index) {
-          self.$refs.fullCalendar.getApi().addEvent(event);
+        projectEvents.forEach(function(projectEvent, index) {
+            var calendarEvent = {
+              id: projectEvent.ID,
+              title: projectEvent.name,
+              date: projectEvent.date
+            }
+            
+            self.$refs.fullCalendar.getApi().addEvent(calendarEvent);
         });
 
         self.setupDraggable();
@@ -198,8 +206,11 @@ export default {
         eventData: function(eventEl) {
           var elements = eventEl.getElementsByClassName("fc-event-name");
           var title = (elements.length > 0) ? elements[0].innerText : "";
-          let event = { title: title };
-          return event;
+          let calendarEvent = { 
+            id: eventEl.id,
+            title: title
+          };
+          return calendarEvent;
         }
       });
 
@@ -243,18 +254,18 @@ export default {
     calculateCount() {
       var self = this;
       var users = self.project.users;
-      var events = self.project.events;
+      var projectEvents = self.project.events;
 
       if (users) {
-        users.forEach(function(unique_event) {
-          unique_event.count = 0;
+          users.forEach(function(unique_event) {
+              unique_event.count = 0;
 
-          events.forEach(function(new_event) {
-            if (unique_event.title == new_event.title) {
-                unique_event.count++;
-            }
+              projectEvents.forEach(function(new_event) {
+                  if (unique_event.ID == new_event.ID) {
+                      unique_event.count++;
+                  }
+              });
           });
-        });
       }
     },
     setUsersVisibility() {
@@ -274,23 +285,7 @@ export default {
       self.$refs.fullCalendar.getApi().rerenderEvents();
     },
     exportTableToCSV() {
-      var self = this;
-      var content = self.project.events || [];
-
-      if (content == undefined || content.length == 0) { return; }
-
-      var data = "data:text/csv;charset=utf-8," + [
-        Object.keys(content[0]).join(","),
-        ...content.map(item => Object.values(item).join(","))
-      ]
-      .join("\n")
-      .replace(/(^\[)|(\]$)/gm, "");
-
-      const link = document.createElement("a");
-
-      link.setAttribute("href", encodeURI(data));
-      link.setAttribute("download", self.project.name + ".csv");
-      link.click();
+      utils.exportTableToCSV(this.project.events, this.project.name);
     },
     importCSVRow(row) {
       var self = this;
@@ -298,15 +293,6 @@ export default {
       self.$refs.fullCalendar.getApi().addEvent(row);
 
       self.addEventTolist(row);
-    },
-    convertDate(date) {
-      var date_month = date.getMonth() + 1;
-      var date_day = date.getDate();
-
-      var dateStr_month = (date_month < 10) ? ("0" + date_month) : date_month;
-      var dateStr_day = (date_day < 10) ? ("0" + date_day) : date_day;
-      
-      return (date.getFullYear() + "-" + dateStr_month + "-" + dateStr_day);
     },
     handleRender(info) {
       var self = this;
@@ -321,26 +307,28 @@ export default {
       var self = this;
 
       var oldEvent = {
+        id: info.oldEvent.id,
         title: info.oldEvent.title,
-        date: self.convertDate(new Date(info.oldEvent.start))
+        date: utils.convertDate(new Date(info.oldEvent.start))
       };
 
       var newEvent = {
+        id: info.event.id,
         title: info.event.title,
-        date: self.convertDate(new Date(info.event.start))
+        date: utils.convertDate(new Date(info.event.start))
       };
 
-      var events = self.project.events || [];
+      var projectEvents = self.project.events || [];
 
-      for (var x = 0; x < events.length; x++) {
-        if (events[x].date == oldEvent.date &&
-            events[x].title == oldEvent.title) {
-            events[x].date = newEvent.date;
+      for (var x = 0; x < projectEvents.length; x++) {
+        if (projectEvents[x].date == oldEvent.date &&
+            projectEvents[x].ID == oldEvent.id) {
+            projectEvents[x].date = newEvent.date;
             break;
         }
       }
 
-      if (self.getFilteredEvents(newEvent.title, newEvent.date).length > 1) { 
+      if (self.getFilteredEvents(newEvent.id, newEvent.date).length > 1) { 
           self.removeEventFromList(newEvent); 
       }
       else {
@@ -351,8 +339,9 @@ export default {
       var self = this;
 
       var thisEvent = {
+        id: info.event.id,
         title: info.event.title,
-        date: self.convertDate(new Date(info.event.start))
+        date: utils.convertDate(new Date(info.event.start))
       };
 
       self.addEventTolist(thisEvent);
@@ -361,37 +350,44 @@ export default {
       var self = this;
 
       var thisEvent = {
+        id: info.event.id,
         title: info.event.title,
-        date: self.convertDate(new Date(info.event.start))
+        date: utils.convertDate(new Date(info.event.start))
       }
 
       self.removeEventFromList(thisEvent)
     },
-    addEventTolist(event) {
+    addEventTolist(calendarEvent) {
       var self = this;
 
       // Ensure this event is not a duplicate
-      if (self.getFilteredEvents(event.title, event.date).length > 1) { 
-          self.removeEventFromList(event); 
+      if (self.getFilteredEvents(calendarEvent.id, calendarEvent.date).length > 1) { 
+          self.removeEventFromList(calendarEvent); 
+      }
+
+      var projectEvent = {
+        ID: calendarEvent.id,
+        name: calendarEvent.title,
+        date: calendarEvent.date
       }
       
-      self.project.events.push(event);
+      self.project.events.push(projectEvent);
 
       self.onEventsUpdated();
     },
-    removeEventFromList(event) {
+    removeEventFromList(calendarEvent) {
       var self = this;
-      var events = self.$refs.fullCalendar.getApi().getEvents();
+      var calendarEvents = self.$refs.fullCalendar.getApi().getEvents();
       
-      for (var x = 0; x < events.length; x++) {
+      for (var x = 0; x < calendarEvents.length; x++) {
         // Find event with matching name
-        if (events[x].title == event.title) {
-          var thisDate = self.convertDate(new Date(events[x].start));
+        if (calendarEvents[x].id == calendarEvent.id) {
+          var thisDate = utils.convertDate(new Date(calendarEvents[x].start));
 
           // Ensure matching event is on the same day
-          if (thisDate == event.date) {
+          if (thisDate == calendarEvent.date) {
             self.project.events.splice(x, 1);
-            events[x].remove();
+            calendarEvents[x].remove();
             break;
           }
         }
@@ -399,18 +395,18 @@ export default {
 
       self.onEventsUpdated();
     },
-    getFilteredEvents(title, date) {
+    getFilteredEvents(id, date) {
       var self = this;
-      var events = self.$refs.fullCalendar.getApi().getEvents();
+      var calendarEvents = self.$refs.fullCalendar.getApi().getEvents();
       var foundEvents = [];
 
-      for (var x = 0; x < events.length; x++) {
+      for (var x = 0; x < calendarEvents.length; x++) {
         // Find event with matching name
-        if (events[x].title == title) {
-          var thisDate = self.convertDate(new Date(events[x].start));
+        if (calendarEvents[x].id == id) {
+          var thisDate = utils.convertDate(new Date(calendarEvents[x].start));
 
           // Ensure matching event is on the same day
-          if (thisDate == date) { foundEvents.push(events[x]); }
+          if (thisDate == date) { foundEvents.push(calendarEvents[x]); }
         }
       }
 
