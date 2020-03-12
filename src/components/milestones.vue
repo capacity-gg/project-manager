@@ -1,7 +1,18 @@
 <template>
   <div class="content">
     <div class="content__container pad-vert-4">
-      <h2>Milestones</h2>
+      <div class="toolbar toolbar--alt">
+        <h2 class="toolbar__title">Milestones</h2>
+        <div class="toolbar__buttons">
+          <csvImport v-model="parseCSV" ref="csvImport"/>
+          <div class="button button__primary button__icon tooltip" @click.prevent="exportTableToCSV">
+            <span class="icon">
+              <font-awesome-icon icon="file-download"/>
+            </span>
+            <span class="tooltip__text">Export</span>
+          </div>
+        </div>
+      </div>
       <a
         v-for="milestone in milestones" 
         :key="milestone.ID"
@@ -46,11 +57,17 @@
 
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 
+import utils from '@/utils/utils.js';
+import csvImport from './partials/csvImport.vue'
+
 export default {
-  components: {},
+  components: {
+    csvImport
+  },
   props: {},
   data: () => ({
-    editingMilestone: {}
+    editingMilestone: {},
+    importedCSV: []
   }),
   mounted() {
     var self = this;
@@ -67,10 +84,31 @@ export default {
   computed: {
     ...mapGetters("milestones", [
         "milestones"
-    ])
+    ]),
+    parseCSV: {
+      get: function() {
+        return this.importedCSV;
+      },
+      set: function(value) {
+        var self = this;
+
+        self.importedCSV = value;
+
+        self.importedCSV.forEach(function(row) {
+          console.log(row);
+        });
+
+        /*self.$store.dispatch("milestones/setMilestones", {
+          milestones: self.importedCSV
+        });*/
+      } 
+    }
   },
   watch: {},
   methods: {
+    exportTableToCSV() {
+      utils.exportTableToCSV(this.milestones, "Milestones");
+    },
     createMilestone() {
       var self = this;
 

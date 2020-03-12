@@ -292,7 +292,7 @@ export default {
 
       self.$refs.fullCalendar.getApi().addEvent(row);
 
-      self.addEventTolist(row);
+      self.addEventToList(row);
     },
     handleRender(info) {
       var self = this;
@@ -344,7 +344,7 @@ export default {
         date: utils.convertDate(new Date(info.event.start))
       };
 
-      self.addEventTolist(thisEvent);
+      self.addEventToList(thisEvent);
     },
     handleClick(info) {
       var self = this;
@@ -357,7 +357,7 @@ export default {
 
       self.removeEventFromList(thisEvent)
     },
-    addEventTolist(calendarEvent) {
+    addEventToList(calendarEvent) {
       var self = this;
 
       // Ensure this event is not a duplicate

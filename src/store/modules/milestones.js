@@ -77,6 +77,34 @@ const actions = {
             opts.onError(); 
         });*/
     },
+    setMilestones(state, opts) {
+        opts = utils.objPlus({
+            "onSuccess": function() {},
+            "onError": function() {}
+        }, opts);
+
+        var milestones = state.getters.milestones || [];
+
+        milestones = milestones.concat(opts.milestones);
+
+        VueCookie.set('milestones', JSON.stringify(milestones), {"expires": "10Y" });
+
+        state.commit("setMilestones", opts.milestones);
+  
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                opts.onSuccess(opts.milestones);
+            }, 100);
+        });
+        
+        /*axios.put(milestoneBaseURL, opts.milestones)
+        .then(response => { 
+            opts.onSuccess(response.data); 
+        })
+        .catch(function(err) { 
+            opts.onError(); 
+        });*/
+    },
     updateMilestone(state, opts) {
         opts = utils.objPlus({
             "onSuccess": function() {},

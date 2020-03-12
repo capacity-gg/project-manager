@@ -77,6 +77,34 @@ const actions = {
             opts.onError(); 
         });*/
     },
+    setUsers(state, opts) {
+        opts = utils.objPlus({
+            "onSuccess": function() {},
+            "onError": function() {}
+        }, opts);
+
+        var users = state.getters.users || [];
+
+        users = users.concat(opts.users);
+
+        VueCookie.set('users', JSON.stringify(users), {"expires": "10Y" });
+
+        state.commit("setUsers", opts.users);
+  
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                opts.onSuccess(opts.users);
+            }, 100);
+        });
+        
+        /*axios.put(userBaseURL, opts.users)
+        .then(response => { 
+            opts.onSuccess(response.data); 
+        })
+        .catch(function(err) { 
+            opts.onError(); 
+        });*/
+    },
     updateUser(state, opts) {
         opts = utils.objPlus({
             "onSuccess": function() {},
