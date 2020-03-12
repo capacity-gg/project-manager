@@ -126,8 +126,9 @@ const actions = {
 
         opts.project = utils.objPlus({
             "ID": utils.uuidv4(),
-            "users": [],
-            "milestones": []
+            "events": [],
+            "milestones": [],
+            "users": []
         }, opts.project);
 
         state.commit("addProject", opts.project);

@@ -84,6 +84,7 @@
 
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 
+import utils from '@/utils/utils.js';
 import csvImport from './partials/csvImport.vue'
 import fullCalendar from '@fullcalendar/vue'
 import momentPlugin from '@fullcalendar/moment';
@@ -109,7 +110,6 @@ export default {
         interactionPlugin,
         momentPlugin
       ],
-      eventsNew: [],
       importedCSV: [],
       areMilestonesVisible: false,
       areUsersVisible: true,
@@ -129,6 +129,12 @@ export default {
 
         self.$store.commit('projects/setActiveProject', { 
           ID: self.$route.params.ID
+        });
+
+        var events = self.project.events || [];
+
+        events.forEach(function(event, index) {
+          self.$refs.fullCalendar.getApi().addEvent(event);
         });
 
         self.setupDraggable();
@@ -236,12 +242,14 @@ export default {
     },
     calculateCount() {
       var self = this;
+      var users = self.project.users;
+      var events = self.project.events;
 
-      if (self.project.users) {
-        self.project.users.forEach(function(unique_event) {
+      if (users) {
+        users.forEach(function(unique_event) {
           unique_event.count = 0;
 
-          self.eventsNew.forEach(function(new_event) {
+          events.forEach(function(new_event) {
             if (unique_event.title == new_event.title) {
                 unique_event.count++;
             }
@@ -267,7 +275,7 @@ export default {
     },
     exportTableToCSV() {
       var self = this;
-      var content = this.eventsNew;
+      var content = self.project.events || [];
 
       if (content == undefined || content.length == 0) { return; }
 
@@ -307,23 +315,6 @@ export default {
       // Ensure milestone class is added to relevant events
       if (self.isMilestoneEvent(info.event.title)) { info.el.classList.add('button__secondary'); }
 
-      /*if (self.areMilestonesVisible) {
-        self.project.milestone.forEach(function(event) {
-          if (event.title == info.event.title) {
-            isRendered = true;
-            return;
-          }
-        });
-      }
-      else {
-        self.project.milestone.forEach(function(event) {
-          if (event.title == info.event.title) {
-            isRendered = false;
-            return;
-          }
-        });
-      }*/
-
       return isRendered;
     },
     handleDrop(info) {
@@ -339,16 +330,21 @@ export default {
         date: self.convertDate(new Date(info.event.start))
       };
 
-      for (var x = 0; x < self.eventsNew.length; x++) {
-        if (self.eventsNew[x].date == oldEvent.date &&
-            self.eventsNew[x].title == oldEvent.title) {
-            self.eventsNew[x].date = newEvent.date;
+      var events = self.project.events || [];
+
+      for (var x = 0; x < events.length; x++) {
+        if (events[x].date == oldEvent.date &&
+            events[x].title == oldEvent.title) {
+            events[x].date = newEvent.date;
             break;
         }
       }
 
       if (self.getFilteredEvents(newEvent.title, newEvent.date).length > 1) { 
           self.removeEventFromList(newEvent); 
+      }
+      else {
+          self.onEventsUpdated();
       }
     },
     handleReceive(info) {
@@ -379,7 +375,7 @@ export default {
           self.removeEventFromList(event); 
       }
       
-      self.eventsNew.push(event);
+      self.project.events.push(event);
 
       self.onEventsUpdated();
     },
@@ -394,7 +390,7 @@ export default {
 
           // Ensure matching event is on the same day
           if (thisDate == event.date) {
-            self.eventsNew.splice(x, 1);
+            self.project.events.splice(x, 1);
             events[x].remove();
             break;
           }
@@ -422,6 +418,14 @@ export default {
     },
     onEventsUpdated() {
       var self = this;
+
+      var project = utils.objPlus({
+        "events": self.project.events
+      }, self.project);
+            
+      self.$store.dispatch("projects/updateProject", {
+          project: project
+      });
 
       // Updated unique events count after adding/removing event in calendar
       self.$nextTick(() => { self.calculateCount(); });
