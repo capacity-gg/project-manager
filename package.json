@@ -31,7 +31,7 @@
     "loadjs": "^3.5.1",
     "mime-types": "^2.1.26",
     "npm": "^5.5.1",
-    "papaparse": "^5.1.1",
+    "papaparse": "^5.2.0",
     "resize-observer-polyfill": "^1.5.0",
     "vue": "^2.5.2",
     "vue-cookie": "^1.1.4",
